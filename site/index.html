@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CozyCLI - Your Friendly Terminal Coach</title>
+  <meta name="description" content="CozyCLI makes the terminal approachable for everyone. Powered by Claude AI, it teaches terminal concepts through use, not lectures.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --bg-card: #161b22;
+      --bg-terminal: #0d1117;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-dim: #8b949e;
+      --accent: #58a6ff;
+      --accent-glow: rgba(88, 166, 255, 0.15);
+      --green: #3fb950;
+      --green-dim: rgba(63, 185, 80, 0.15);
+      --purple: #bc8cff;
+      --yellow: #d29922;
+      --red: #f85149;
+      --pink: #f778ba;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Nav */
+    nav {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(13, 17, 23, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--text-dim); }
+
+    nav .links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    nav .links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    nav .links a:hover { color: var(--text); }
+
+    .gh-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text) !important;
+      font-size: 0.85rem;
+      transition: border-color 0.2s;
+    }
+
+    .gh-btn:hover { border-color: var(--accent); }
+
+    .gh-btn svg { width: 18px; height: 18px; fill: var(--text); }
+
+    /* Hero */
+    .hero {
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: var(--green-dim);
+      border: 1px solid var(--green);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: var(--green);
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-dim);
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+
+    /* Install box */
+    .install-box {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .install-cmd {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .install-cmd:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .install-cmd .prompt { color: var(--green); }
+    .install-cmd .cmd { color: var(--text); }
+
+    .install-cmd .copy-icon {
+      width: 18px;
+      height: 18px;
+      color: var(--text-dim);
+      transition: color 0.2s;
+    }
+
+    .install-cmd:hover .copy-icon { color: var(--accent); }
+
+    .install-cmd .tooltip {
+      position: absolute;
+      top: -32px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--green);
+      color: var(--bg);
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-family: 'Inter', sans-serif;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .install-cmd.copied .tooltip { opacity: 1; }
+
+    .install-note {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .install-note code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-card);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+
+    /* Terminal mockup */
+    .terminal-section {
+      padding: 40px 0 80px;
+    }
+
+    .terminal-window {
+      background: var(--bg-terminal);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+
+    .terminal-titlebar {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      gap: 8px;
+    }
+
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .terminal-dot.red { background: var(--red); }
+    .terminal-dot.yellow { background: var(--yellow); }
+    .terminal-dot.green { background: var(--green); }
+
+    .terminal-title {
+      flex: 1;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .terminal-body {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      grid-template-rows: auto 1fr auto;
+      min-height: 420px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.7;
+    }
+
+    .term-suggestions {
+      grid-column: 1 / -1;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+    }
+
+    .term-chip {
+      padding: 4px 12px;
+      background: rgba(88, 166, 255, 0.1);
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+
+    .term-sidebar {
+      border-right: 1px solid var(--border);
+      padding: 8px 0;
+      grid-row: 2 / 4;
+    }
+
+    .term-sidebar-title {
+      padding: 4px 12px;
+      color: var(--text-dim);
+      font-weight: 600;
+      font-size: 0.75rem;
+      margin-bottom: 4px;
+    }
+
+    .term-file {
+      padding: 2px 12px 2px 16px;
+      color: var(--text-dim);
+      font-size: 0.75rem;
+    }
+
+    .term-file.dir { color: var(--accent); }
+    .term-file.dir::before { content: '📁 '; }
+    .term-file.file::before { content: '📄 '; }
+
+    .term-chat {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .chat-bubble {
+      margin-bottom: 12px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      max-width: 90%;
+    }
+
+    .chat-bubble.user {
+      background: rgba(88, 166, 255, 0.1);
+      border: 1px solid rgba(88, 166, 255, 0.3);
+    }
+
+    .chat-bubble.assistant {
+      background: rgba(63, 185, 80, 0.08);
+      border: 1px solid rgba(63, 185, 80, 0.2);
+    }
+
+    .chat-role {
+      font-weight: 700;
+      font-size: 0.7rem;
+      margin-bottom: 4px;
+    }
+
+    .chat-bubble.user .chat-role { color: var(--accent); }
+    .chat-bubble.assistant .chat-role { color: var(--green); }
+    .chat-bubble .chat-text { color: var(--text); font-size: 0.78rem; }
+    .chat-bubble .chat-text code {
+      background: rgba(255,255,255,0.08);
+      padding: 1px 5px;
+      border-radius: 3px;
+      color: var(--pink);
+    }
+
+    .term-terminal {
+      padding: 12px 16px;
+    }
+
+    .term-terminal-title {
+      color: var(--text-dim);
+      font-weight: 600;
+      font-size: 0.75rem;
+      margin-bottom: 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .term-line { color: var(--text-dim); }
+    .term-line .prompt-sign { color: var(--green); font-weight: 700; }
+    .term-line .cmd-text { color: var(--text); }
+    .term-line .output { color: var(--text-dim); }
+    .term-line .highlight-green { color: var(--green); }
+
+    .term-footer {
+      grid-column: 1 / -1;
+      padding: 6px 12px;
+      border-top: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-dim);
+      font-size: 0.7rem;
+      display: flex;
+      gap: 24px;
+    }
+
+    .term-footer kbd {
+      color: var(--accent);
+      font-family: inherit;
+    }
+
+    /* Features */
+    .features {
+      padding: 80px 0;
+    }
+
+    .features h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 48px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      transition: border-color 0.2s;
+    }
+
+    .feature-card:hover {
+      border-color: var(--accent);
+    }
+
+    .feature-icon {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+
+    /* How it works */
+    .how-it-works {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .how-it-works h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 48px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .step {
+      text-align: center;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background: var(--accent-glow);
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .step h3 { margin-bottom: 8px; }
+    .step p { color: var(--text-dim); font-size: 0.9rem; }
+
+    .step code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-card);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+
+    /* Footer */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    footer p {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .terminal-body { grid-template-columns: 1fr; }
+      .term-sidebar { display: none; }
+      .steps { grid-template-columns: 1fr; }
+      .term-sidebar { grid-row: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="/" class="logo">cozy<span>cli</span></a>
+    <div class="links">
+      <a href="#features">Features</a>
+      <a href="#install">Install</a>
+      <a href="https://github.com/engindearing-projects/cozycli" class="gh-btn" target="_blank">
+        <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">Powered by Claude AI</div>
+    <h1>The terminal doesn't<br>have to be <span class="highlight">scary</span></h1>
+    <p>CozyCLI is a friendly terminal coach that teaches you the command line through doing, not lectures. Ask questions, run commands, and learn along the way.</p>
+
+    <div id="install" class="install-box">
+      <div class="install-cmd" onclick="copyInstall(this, 'pip install git+https://github.com/engindearing-projects/cozycli.git')">
+        <span class="tooltip">Copied!</span>
+        <span class="prompt">$</span>
+        <span class="cmd">pip install git+https://github.com/engindearing-projects/cozycli.git</span>
+        <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      </div>
+    </div>
+    <p class="install-note">Then run <code>cozycli</code> or <code>python -m cozycli</code> &mdash; requires Python 3.10+ and an <code>ANTHROPIC_API_KEY</code></p>
+  </div>
+</section>
+
+<section class="terminal-section">
+  <div class="container">
+    <div class="terminal-window">
+      <div class="terminal-titlebar">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+        <div class="terminal-title">CozyCLI &mdash; Your friendly terminal coach</div>
+      </div>
+      <div class="terminal-body">
+        <div class="term-suggestions">
+          <div class="term-chip">ls -la</div>
+          <div class="term-chip">git status</div>
+          <div class="term-chip">pwd</div>
+        </div>
+        <div class="term-sidebar">
+          <div class="term-sidebar-title">Files</div>
+          <div class="term-file dir">src/</div>
+          <div class="term-file dir">tests/</div>
+          <div class="term-file dir">docs/</div>
+          <div class="term-file file">README.md</div>
+          <div class="term-file file">pyproject.toml</div>
+          <div class="term-file file">.gitignore</div>
+        </div>
+        <div class="term-chat">
+          <div class="chat-bubble user">
+            <div class="chat-role">You</div>
+            <div class="chat-text">What does <code>git status</code> do?</div>
+          </div>
+          <div class="chat-bubble assistant">
+            <div class="chat-role">Claude</div>
+            <div class="chat-text">
+              <code>git status</code> shows you the current state of your project. Think of it like checking your to-do list &mdash; it tells you which files you've changed, which ones are ready to be saved, and which ones Git doesn't know about yet. It's completely safe and doesn't change anything!
+            </div>
+          </div>
+        </div>
+        <div class="term-terminal">
+          <div class="term-terminal-title">Terminal</div>
+          <div class="term-line"><span class="prompt-sign">$ </span><span class="cmd-text">git status</span></div>
+          <div class="term-line"><span class="output">On branch main</span></div>
+          <div class="term-line"><span class="output">Your branch is up to date with 'origin/main'.</span></div>
+          <div class="term-line">&nbsp;</div>
+          <div class="term-line"><span class="highlight-green">nothing to commit, working tree clean</span></div>
+        </div>
+      </div>
+      <div class="term-footer">
+        <span><kbd>Ctrl+B</kbd> Files</span>
+        <span><kbd>Ctrl+E</kbd> Explain</span>
+        <span><kbd>Ctrl+T</kbd> Terminal</span>
+        <span><kbd>Ctrl+L</kbd> Chat</span>
+        <span><kbd>Ctrl+Q</kbd> Quit</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="container">
+    <h2>Built for learning by doing</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <h3>Ask anything</h3>
+        <p>Chat with Claude about terminal concepts, commands, errors &mdash; anything. Get warm, patient explanations in plain language.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>Auto-explain mode</h3>
+        <p>Every command you run gets a brief, friendly explanation. Learn what happened and why without having to ask.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>Safety rails</h3>
+        <p>Destructive commands trigger a warning before running. Learn which commands are dangerous and why, before anything bad happens.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📂</div>
+        <h3>File explorer</h3>
+        <p>Click any file in the sidebar to learn what it is and what it does. Explore your project structure visually.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💡</div>
+        <h3>Smart suggestions</h3>
+        <p>Contextual command suggestions appear as clickable chips. Try new commands with confidence.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🖥️</div>
+        <h3>Works everywhere</h3>
+        <p>Same app in your terminal or browser. No code changes needed &mdash; just run and learn.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how-it-works">
+  <div class="container">
+    <h2>Get started in 30 seconds</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Install</h3>
+        <p><code>pip install git+https://github.com/engindearing-projects/cozycli.git</code></p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Set your key</h3>
+        <p><code>export ANTHROPIC_API_KEY=sk-ant-...</code></p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Launch</h3>
+        <p><code>cozycli</code> and start exploring!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>
+      Built by <a href="https://engindearing.soy" target="_blank">engindearing</a> &bull;
+      <a href="https://github.com/engindearing-projects/cozycli" target="_blank">GitHub</a> &bull;
+      Open source under MIT
+    </p>
+  </div>
+</footer>
+
+<script>
+function copyInstall(el, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    el.classList.add('copied');
+    setTimeout(() => el.classList.remove('copied'), 1500);
+  });
+}
+</script>
+
+</body>
+</html>
