@@ -488,6 +488,110 @@
 
     footer a:hover { text-decoration: underline; }
 
+    /* ---- Animation keyframes ---- */
+    @keyframes typing-cursor {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Terminal input cursor */
+    .term-footer .input-cursor {
+      display: inline-block;
+      width: 7px;
+      height: 14px;
+      background: var(--accent);
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: typing-cursor 1s step-end infinite;
+    }
+
+    /* ---- Initial hidden states for animated elements ---- */
+    .terminal-window.anim-ready .chat-bubble.user .chat-text {
+      overflow: hidden;
+      white-space: nowrap;
+      width: 0;
+    }
+
+    .terminal-window.anim-ready .chat-bubble.assistant,
+    .terminal-window.anim-ready .term-terminal .term-line,
+    .terminal-window.anim-ready .term-suggestions .term-chip {
+      opacity: 0;
+    }
+
+    /* ---- Playing states ---- */
+
+    /* Step 1: user message types out (width expands) */
+    .terminal-window.anim-playing .chat-bubble.user .chat-text {
+      animation: typingWidth 1.2s steps(28, end) 0.3s forwards;
+    }
+
+    @keyframes typingWidth {
+      from { width: 0; }
+      to   { width: 100%; }
+    }
+
+    /* Step 2: assistant bubble fades in after user finishes */
+    .terminal-window.anim-playing .chat-bubble.assistant {
+      animation: fadeIn 0.6s ease 1.8s forwards;
+    }
+
+    /* Step 3: terminal command line types in */
+    .terminal-window.anim-playing .term-terminal .term-line:nth-child(2) {
+      animation: fadeIn 0.3s ease 2.8s forwards;
+    }
+
+    /* Step 4: output lines appear one by one */
+    .terminal-window.anim-playing .term-terminal .term-line:nth-child(3) {
+      animation: fadeIn 0.3s ease 3.2s forwards;
+    }
+    .terminal-window.anim-playing .term-terminal .term-line:nth-child(4) {
+      animation: fadeIn 0.3s ease 3.5s forwards;
+    }
+    .terminal-window.anim-playing .term-terminal .term-line:nth-child(5) {
+      animation: fadeIn 0.3s ease 3.8s forwards;
+    }
+    .terminal-window.anim-playing .term-terminal .term-line:nth-child(6) {
+      animation: fadeIn 0.3s ease 4.1s forwards;
+    }
+
+    /* Step 5: suggestion chips fade in */
+    .terminal-window.anim-playing .term-suggestions .term-chip:nth-child(1) {
+      animation: fadeIn 0.4s ease 4.5s forwards;
+    }
+    .terminal-window.anim-playing .term-suggestions .term-chip:nth-child(2) {
+      animation: fadeIn 0.4s ease 4.7s forwards;
+    }
+    .terminal-window.anim-playing .term-suggestions .term-chip:nth-child(3) {
+      animation: fadeIn 0.4s ease 4.9s forwards;
+    }
+
+    /* ---- Feature card scroll-in ---- */
+    .feature-card {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    .feature-card.visible {
+      animation: fadeInUp 0.5s ease forwards;
+    }
+
+    /* stagger each card */
+    .feature-card:nth-child(2).visible { animation-delay: 0.1s; }
+    .feature-card:nth-child(3).visible { animation-delay: 0.2s; }
+    .feature-card:nth-child(4).visible { animation-delay: 0.3s; }
+    .feature-card:nth-child(5).visible { animation-delay: 0.4s; }
+    .feature-card:nth-child(6).visible { animation-delay: 0.5s; }
+
     /* Responsive */
     @media (max-width: 768px) {
       .terminal-body { grid-template-columns: 1fr; }
@@ -533,7 +637,7 @@
 
 <section class="terminal-section">
   <div class="container">
-    <div class="terminal-window">
+    <div class="terminal-window anim-ready">
       <div class="terminal-titlebar">
         <div class="terminal-dot red"></div>
         <div class="terminal-dot yellow"></div>
@@ -582,6 +686,7 @@
         <span><kbd>Ctrl+T</kbd> Terminal</span>
         <span><kbd>Ctrl+L</kbd> Chat</span>
         <span><kbd>Ctrl+Q</kbd> Quit</span>
+        <span style="margin-left:auto; color:var(--text-dim);">Ask something...<span class="input-cursor"></span></span>
       </div>
     </div>
   </div>
@@ -665,6 +770,37 @@ function copyInstall(el, text) {
     setTimeout(() => el.classList.remove('copied'), 1500);
   });
 }
+
+/* --- Scroll-triggered animations --- */
+(function() {
+  // Terminal mockup animation: play once when scrolled into view
+  var terminalWin = document.querySelector('.terminal-window');
+  if (terminalWin) {
+    var termObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          terminalWin.classList.add('anim-playing');
+          termObserver.unobserve(terminalWin);
+        }
+      });
+    }, { threshold: 0.3 });
+    termObserver.observe(terminalWin);
+  }
+
+  // Feature cards: fade in with stagger when scrolled into view
+  var cards = document.querySelectorAll('.feature-card');
+  if (cards.length) {
+    var cardObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    cards.forEach(function(card) { cardObserver.observe(card); });
+  }
+})();
 </script>
 
 </body>

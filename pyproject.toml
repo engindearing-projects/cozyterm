@@ -6,7 +6,41 @@ build-backend = "hatchling.build"
 name = "cozyterm"
 version = "0.1.0"
 description = "A cozy terminal coach powered by Claude"
+readme = "README.md"
+license = "MIT"
 requires-python = ">=3.10"
+authors = [
+    { name = "engindearing" },
+]
+keywords = [
+    "terminal",
+    "cli",
+    "coach",
+    "ai",
+    "claude",
+    "tui",
+    "textual",
+    "assistant",
+    "cozy",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: System :: Shells",
+    "Topic :: Terminals",
+    "Topic :: Utilities",
+]
 dependencies = [
     "textual>=0.75.0",
     "anthropic>=0.42.0",
@@ -14,6 +48,11 @@ dependencies = [
 
 [project.optional-dependencies]
 web = ["textual-web>=0.7.0"]
+
+[project.urls]
+Homepage = "https://cozyterm.com"
+Repository = "https://github.com/engindearing/cozyterm"
+Issues = "https://github.com/engindearing/cozyterm/issues"
 
 [project.scripts]
 cozyterm = "cozyterm.__main__:main"

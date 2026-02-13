@@ -8,6 +8,7 @@ from pathlib import Path
 from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal, Vertical
+from textual.design import ColorSystem
 from textual.widgets import Footer, Header
 
 from cozyterm.claude.message_handler import extract_suggestions, strip_suggestions
@@ -22,12 +23,31 @@ from cozyterm.widgets.file_browser import FileBrowser
 from cozyterm.widgets.suggestion_bar import SuggestionBar
 
 
+COZY_COLORS = ColorSystem(
+    primary="#7eb8da",
+    secondary="#b8a9c9",
+    accent="#f0a06c",
+    warning="#e8c547",
+    error="#e06c75",
+    success="#98c379",
+    background="#1e2127",
+    surface="#282c34",
+    panel="#2c323c",
+    dark=True,
+)
+
+
 class CozyTerm(App):
     """A cozy terminal coach powered by Claude."""
 
     TITLE = "CozyTerm"
     SUB_TITLE = "Your friendly terminal coach"
     CSS_PATH = "styles.tcss"
+
+    def get_theme(self, theme_name: str) -> ColorSystem | None:
+        if theme_name == "dark":
+            return COZY_COLORS
+        return super().get_theme(theme_name)
 
     BINDINGS = [
         Binding("ctrl+b", "toggle_sidebar", "Files", show=True),

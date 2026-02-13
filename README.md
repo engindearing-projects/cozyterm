@@ -6,6 +6,10 @@ CozyTerm makes the terminal approachable for everyone. It wraps your shell in a 
 
 **[cozyterm.com](https://cozyterm.com)**
 
+<p align="center">
+  <img src="demo.svg" alt="CozyTerm demo" width="100%">
+</p>
+
 ## Install
 
 ```bash
