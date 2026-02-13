@@ -1,22 +1,22 @@
-# CozyCLI
+# CozyTerm
 
 **Your friendly terminal coach, powered by Claude.**
 
-CozyCLI makes the terminal approachable for everyone. It wraps your shell in a three-panel TUI with an AI coach that explains commands, answers questions, and keeps you safe from destructive mistakes.
+CozyTerm makes the terminal approachable for everyone. It wraps your shell in a three-panel TUI with an AI coach that explains commands, answers questions, and keeps you safe from destructive mistakes.
 
-**[cozycli.vercel.app](https://cozycli.vercel.app)**
+**[cozyterm.vercel.app](https://cozyterm.vercel.app)**
 
 ## Install
 
 ```bash
-pip install git+https://github.com/engindearing-projects/cozycli.git
+pip install git+https://github.com/engindearing-projects/cozyterm.git
 ```
 
 Requires Python 3.10+ and an [Anthropic API key](https://console.anthropic.com/).
 
 ```bash
 export ANTHROPIC_API_KEY=sk-ant-...
-cozycli
+cozyterm
 ```
 
 ## Features
@@ -41,7 +41,7 @@ cozycli
 ## Architecture
 
 ```
-src/cozycli/
+src/cozyterm/
 ├── app.py              # Main App class, widget composition, event routing
 ├── styles.tcss         # Layout & styling
 ├── widgets/

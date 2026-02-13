@@ -8,7 +8,7 @@ from typing import AsyncIterator
 
 from anthropic import AsyncAnthropic
 
-from cozycli.claude.prompts import SYSTEM_PROMPT
+from cozyterm.claude.prompts import SYSTEM_PROMPT
 
 
 @dataclass

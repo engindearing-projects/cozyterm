@@ -1,4 +1,4 @@
-/* CozyCLI - Warm, approachable terminal styling */
+/* CozyTerm - Warm, approachable terminal styling */
 
 Screen {
     layout: vertical;

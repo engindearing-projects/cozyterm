@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "cozycli"
+name = "cozyterm"
 version = "0.1.0"
 description = "A cozy terminal coach powered by Claude"
 requires-python = ">=3.10"
@@ -16,7 +16,7 @@ dependencies = [
 web = ["textual-web>=0.7.0"]
 
 [project.scripts]
-cozycli = "cozycli.__main__:main"
+cozyterm = "cozyterm.__main__:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/cozycli"]
+packages = ["src/cozyterm"]

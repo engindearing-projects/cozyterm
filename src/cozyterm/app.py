@@ -1,4 +1,4 @@
-"""Main CozyCLI application - widget composition and event routing."""
+"""Main CozyTerm application - widget composition and event routing."""
 
 from __future__ import annotations
 
@@ -10,22 +10,22 @@ from textual.binding import Binding
 from textual.containers import Horizontal, Vertical
 from textual.widgets import Footer, Header
 
-from cozycli.claude.message_handler import extract_suggestions, strip_suggestions
-from cozycli.claude.session import ClaudeSession
-from cozycli.core.command_runner import run_command
-from cozycli.core.safety import check_command
-from cozycli.screens.safety_confirm import SafetyConfirmScreen
-from cozycli.screens.welcome import WelcomeScreen
-from cozycli.widgets.chat_panel import ChatPanel
-from cozycli.widgets.command_panel import CommandPanel
-from cozycli.widgets.file_browser import FileBrowser
-from cozycli.widgets.suggestion_bar import SuggestionBar
+from cozyterm.claude.message_handler import extract_suggestions, strip_suggestions
+from cozyterm.claude.session import ClaudeSession
+from cozyterm.core.command_runner import run_command
+from cozyterm.core.safety import check_command
+from cozyterm.screens.safety_confirm import SafetyConfirmScreen
+from cozyterm.screens.welcome import WelcomeScreen
+from cozyterm.widgets.chat_panel import ChatPanel
+from cozyterm.widgets.command_panel import CommandPanel
+from cozyterm.widgets.file_browser import FileBrowser
+from cozyterm.widgets.suggestion_bar import SuggestionBar
 
 
-class CozyCLI(App):
+class CozyTerm(App):
     """A cozy terminal coach powered by Claude."""
 
-    TITLE = "CozyCLI"
+    TITLE = "CozyTerm"
     SUB_TITLE = "Your friendly terminal coach"
     CSS_PATH = "styles.tcss"
 

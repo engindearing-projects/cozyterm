@@ -15,10 +15,10 @@ class WelcomeScreen(ModalScreen[bool]):
 
     def compose(self) -> ComposeResult:
         with Vertical(id="welcome-container"):
-            yield Static("Welcome to CozyCLI!", id="welcome-title")
+            yield Static("Welcome to CozyTerm!", id="welcome-title")
             yield Static(
                 "Your friendly terminal coach, powered by Claude.\n\n"
-                "CozyCLI helps you learn the terminal by doing.\n"
+                "CozyTerm helps you learn the terminal by doing.\n"
                 "Ask questions, run commands, and explore files\n"
                 "- Claude will explain everything along the way.\n\n"
                 "[bold]Tips:[/bold]\n"
