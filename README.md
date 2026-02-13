@@ -4,7 +4,7 @@
 
 CozyTerm makes the terminal approachable for everyone. It wraps your shell in a three-panel TUI with an AI coach that explains commands, answers questions, and keeps you safe from destructive mistakes.
 
-**[cozyterm.vercel.app](https://cozyterm.vercel.app)**
+**[cozyterm.com](https://cozyterm.com)**
 
 ## Install
 
