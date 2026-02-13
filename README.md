@@ -1,5 +1,9 @@
 # CozyTerm
 
+[![CI](https://github.com/engindearing-projects/cozyterm/actions/workflows/ci.yml/badge.svg)](https://github.com/engindearing-projects/cozyterm/actions/workflows/ci.yml)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 **Your friendly terminal coach, powered by Claude.**
 
 CozyTerm makes the terminal approachable for everyone. It wraps your shell in a three-panel TUI with an AI coach that explains commands, answers questions, and keeps you safe from destructive mistakes.
