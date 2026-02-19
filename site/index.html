@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CozyTerm - Your Friendly Terminal Coach</title>
-  <meta name="description" content="CozyTerm makes the terminal approachable for everyone. Powered by Claude AI, it teaches terminal concepts through use, not lectures.">
+  <title>CozyTerm - Your AI Project Manager in the Terminal</title>
+  <meta name="description" content="CozyTerm is a Bun/Ink TUI AI project manager powered by Engie. Track projects, get coaching, and manage tasks right from your terminal.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -143,10 +143,10 @@
     /* Install box */
     .install-box {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
       gap: 12px;
       margin-bottom: 16px;
-      flex-wrap: wrap;
     }
 
     .install-cmd {
@@ -158,7 +158,7 @@
       border-radius: 12px;
       padding: 14px 24px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 1rem;
+      font-size: 0.9rem;
       cursor: pointer;
       transition: all 0.2s;
       position: relative;
@@ -199,6 +199,16 @@
 
     .install-cmd.copied .tooltip { opacity: 1; }
 
+    .install-step {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      font-family: 'Inter', sans-serif;
+      margin-right: 8px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
     .install-note {
       font-size: 0.85rem;
       color: var(--text-dim);
@@ -211,6 +221,13 @@
       border-radius: 4px;
       font-size: 0.8rem;
     }
+
+    .install-note a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .install-note a:hover { text-decoration: underline; }
 
     /* Terminal mockup */
     .terminal-section {
@@ -300,13 +317,29 @@
     }
 
     .term-file.dir { color: var(--accent); }
-    .term-file.dir::before { content: '📁 '; }
-    .term-file.file::before { content: '📄 '; }
+    .term-file.dir::before { content: '\01F4C1 '; }
+    .term-file.file::before { content: '\01F4C4 '; }
 
     .term-chat {
       padding: 12px 16px;
       border-bottom: 1px solid var(--border);
-      overflow: hidden;
+    }
+
+    .term-banner {
+      padding: 8px 14px;
+      margin-bottom: 12px;
+      color: var(--purple);
+      font-size: 0.78rem;
+    }
+
+    .term-banner .iris {
+      display: inline-block;
+      animation: irisPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes irisPulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.15); }
     }
 
     .chat-bubble {
@@ -341,6 +374,15 @@
       border-radius: 3px;
       color: var(--pink);
     }
+
+    .chat-bubble .chat-text .status-line {
+      display: block;
+      margin-top: 4px;
+    }
+
+    .chat-bubble .chat-text .status-green { color: var(--green); }
+    .chat-bubble .chat-text .status-yellow { color: var(--yellow); }
+    .chat-bubble .chat-text .status-red { color: var(--red); }
 
     .term-terminal {
       padding: 12px 16px;
@@ -532,7 +574,7 @@
 
     /* Step 1: user message types out (width expands) */
     .terminal-window.anim-playing .chat-bubble.user .chat-text {
-      animation: typingWidth 1.2s steps(28, end) 0.3s forwards;
+      animation: typingWidth 1.2s steps(36, end) 0.3s forwards;
     }
 
     @keyframes typingWidth {
@@ -597,7 +639,7 @@
       .terminal-body { grid-template-columns: 1fr; }
       .term-sidebar { display: none; }
       .steps { grid-template-columns: 1fr; }
-      .term-sidebar { grid-row: auto; }
+      .install-cmd { font-size: 0.75rem; padding: 12px 16px; }
     }
   </style>
 </head>
@@ -619,19 +661,27 @@
 
 <section class="hero">
   <div class="container">
-    <div class="hero-badge">Powered by Claude AI</div>
-    <h1>The terminal doesn't<br>have to be <span class="highlight">scary</span></h1>
-    <p>CozyTerm is a friendly terminal coach that teaches you the command line through doing, not lectures. Ask questions, run commands, and learn along the way.</p>
+    <div class="hero-badge">v0.4.0 &mdash; Open Source</div>
+    <h1>Your AI project manager,<br>right in the <span class="highlight">terminal</span></h1>
+    <p>CozyTerm + Engie &mdash; tracks your projects, coaches you through blockers, and learns from every conversation.</p>
 
     <div id="install" class="install-box">
-      <div class="install-cmd" onclick="copyInstall(this, 'pip install git+https://github.com/engindearing-projects/cozyterm.git')">
+      <div class="install-cmd" onclick="copyInstall(this, 'git clone https://github.com/engindearing-projects/cozyterm.git')">
         <span class="tooltip">Copied!</span>
+        <span class="install-step">1</span>
         <span class="prompt">$</span>
-        <span class="cmd">pip install git+https://github.com/engindearing-projects/cozyterm.git</span>
+        <span class="cmd">git clone https://github.com/engindearing-projects/cozyterm.git</span>
+        <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      </div>
+      <div class="install-cmd" onclick="copyInstall(this, 'cd cozyterm/cli && bun install && bun link && cozy init')">
+        <span class="tooltip">Copied!</span>
+        <span class="install-step">2</span>
+        <span class="prompt">$</span>
+        <span class="cmd">cd cozyterm/cli && bun install && bun link && cozy init</span>
         <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
       </div>
     </div>
-    <p class="install-note">Then run <code>cozyterm</code> or <code>python -m cozyterm</code> &mdash; requires Python 3.10+ and an <code>ANTHROPIC_API_KEY</code></p>
+    <p class="install-note">Requires <a href="https://bun.sh" target="_blank">Bun</a> &mdash; macOS</p>
   </div>
 </section>
 
@@ -642,50 +692,56 @@
         <div class="terminal-dot red"></div>
         <div class="terminal-dot yellow"></div>
         <div class="terminal-dot green"></div>
-        <div class="terminal-title">CozyTerm &mdash; Your friendly terminal coach</div>
+        <div class="terminal-title">CozyTerm v0.4.0</div>
       </div>
       <div class="terminal-body">
         <div class="term-suggestions">
-          <div class="term-chip">ls -la</div>
-          <div class="term-chip">git status</div>
-          <div class="term-chip">pwd</div>
+          <div class="term-chip">/memory PROJ-42</div>
+          <div class="term-chip">/explain</div>
+          <div class="term-chip">cozy doctor</div>
         </div>
         <div class="term-sidebar">
-          <div class="term-sidebar-title">Files</div>
-          <div class="term-file dir">src/</div>
-          <div class="term-file dir">tests/</div>
-          <div class="term-file dir">docs/</div>
+          <div class="term-sidebar-title">Project</div>
+          <div class="term-file dir">cli/</div>
+          <div class="term-file dir">scripts/</div>
+          <div class="term-file dir">config/</div>
+          <div class="term-file file">package.json</div>
           <div class="term-file file">README.md</div>
-          <div class="term-file file">pyproject.toml</div>
-          <div class="term-file file">.gitignore</div>
+          <div class="term-file file">.env</div>
         </div>
         <div class="term-chat">
+          <div class="term-banner">
+            <span class="iris">&#10043;</span> <code>cozy v0.4.0</code> &mdash; Engie ready
+          </div>
           <div class="chat-bubble user">
-            <div class="chat-role">You</div>
-            <div class="chat-text">What does <code>git status</code> do?</div>
+            <div class="chat-role">cozy &gt;</div>
+            <div class="chat-text">what's the status on the portal launch?</div>
           </div>
           <div class="chat-bubble assistant">
-            <div class="chat-role">Claude</div>
+            <div class="chat-role">engie</div>
             <div class="chat-text">
-              <code>git status</code> shows you the current state of your project. Think of it like checking your to-do list &mdash; it tells you which files you've changed, which ones are ready to be saved, and which ones Git doesn't know about yet. It's completely safe and doesn't change anything!
+              Here's where things stand:
+              <span class="status-line"><span class="status-green">&#9679;</span> PORT-12 &mdash; normalization PRs drafted, ready for review</span>
+              <span class="status-line"><span class="status-yellow">&#9679;</span> PORT-9 &mdash; blocked on AD-1200 (env fix deployed, awaiting redeploy)</span>
+              <span class="status-line"><span class="status-red">&#9679;</span> PORT-15 &mdash; not started, blocked by PORT-9</span>
+              <span class="status-line" style="margin-top:6px;">Want me to pull up the blockers or draft a standup update?</span>
             </div>
           </div>
         </div>
         <div class="term-terminal">
-          <div class="term-terminal-title">Terminal</div>
-          <div class="term-line"><span class="prompt-sign">$ </span><span class="cmd-text">git status</span></div>
-          <div class="term-line"><span class="output">On branch main</span></div>
-          <div class="term-line"><span class="output">Your branch is up to date with 'origin/main'.</span></div>
-          <div class="term-line">&nbsp;</div>
-          <div class="term-line"><span class="highlight-green">nothing to commit, working tree clean</span></div>
+          <div class="term-terminal-title">Activity</div>
+          <div class="term-line"><span class="prompt-sign">$ </span><span class="cmd-text">cozy status</span></div>
+          <div class="term-line"><span class="output">Syncing Jira boards...</span></div>
+          <div class="term-line"><span class="highlight-green">3 active tickets</span><span class="output"> across 2 projects</span></div>
+          <div class="term-line"><span class="output">1 blocker &bull; 2 in progress &bull; next standup in 4h</span></div>
+          <div class="term-line"><span class="highlight-green">Memory updated</span><span class="output"> &mdash; 12 entries indexed</span></div>
         </div>
       </div>
       <div class="term-footer">
-        <span><kbd>Ctrl+B</kbd> Files</span>
-        <span><kbd>Ctrl+E</kbd> Explain</span>
-        <span><kbd>Ctrl+T</kbd> Terminal</span>
-        <span><kbd>Ctrl+L</kbd> Chat</span>
-        <span><kbd>Ctrl+Q</kbd> Quit</span>
+        <span><kbd>/help</kbd></span>
+        <span><kbd>/coach</kbd></span>
+        <span><kbd>/memory</kbd></span>
+        <span><kbd>/quit</kbd></span>
         <span style="margin-left:auto; color:var(--text-dim);">Ask something...<span class="input-cursor"></span></span>
       </div>
     </div>
@@ -694,37 +750,37 @@
 
 <section class="features" id="features">
   <div class="container">
-    <h2>Built for learning by doing</h2>
+    <h2>Everything you need to ship</h2>
     <div class="feature-grid">
       <div class="feature-card">
-        <div class="feature-icon">💬</div>
-        <h3>Ask anything</h3>
-        <p>Chat with Claude about terminal concepts, commands, errors &mdash; anything. Get warm, patient explanations in plain language.</p>
+        <div class="feature-icon">&#128203;</div>
+        <h3>Project tracking</h3>
+        <p>Connects to Jira boards and GitHub repos. Get daily briefs via Telegram, track blockers, and never lose context between sessions.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🔍</div>
-        <h3>Auto-explain mode</h3>
-        <p>Every command you run gets a brief, friendly explanation. Learn what happened and why without having to ask.</p>
+        <div class="feature-icon">&#128161;</div>
+        <h3>Coaching mode</h3>
+        <p>Use <code>/coach</code> or <code>/explain</code> for warm, patient explanations of commands, errors, and concepts. Learn by doing, not by reading docs.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🛡️</div>
+        <div class="feature-icon">&#9889;</div>
+        <h3>Smart router</h3>
+        <p>Heavy tasks go to Claude. Quick lookups stay local on Ollama for free. The router picks the right model automatically.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#128024;</div>
+        <h3>Memory system</h3>
+        <p>SQLite + FTS5 full-text search. Decisions, blockers, and context are captured automatically and recalled when you need them.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#128737;</div>
         <h3>Safety rails</h3>
-        <p>Destructive commands trigger a warning before running. Learn which commands are dangerous and why, before anything bad happens.</p>
+        <p>Destructive commands trigger a warning before anything happens. Force pushes, dropped tables, and <code>rm -rf</code> all get flagged first.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">📂</div>
-        <h3>File explorer</h3>
-        <p>Click any file in the sidebar to learn what it is and what it does. Explore your project structure visually.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">💡</div>
-        <h3>Smart suggestions</h3>
-        <p>Contextual command suggestions appear as clickable chips. Try new commands with confidence.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🖥️</div>
-        <h3>Works everywhere</h3>
-        <p>Same app in your terminal or browser. No code changes needed &mdash; just run and learn.</p>
+        <div class="feature-icon">&#127760;</div>
+        <h3>Multi-platform</h3>
+        <p>CLI TUI today. Web dashboard, mobile app, and Telegram bot all connect to the same brain. Your context follows you everywhere.</p>
       </div>
     </div>
   </div>
@@ -732,22 +788,22 @@
 
 <section class="how-it-works">
   <div class="container">
-    <h2>Get started in 30 seconds</h2>
+    <h2>Get started in 60 seconds</h2>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
-        <h3>Install</h3>
-        <p><code>pip install git+https://github.com/engindearing-projects/cozyterm.git</code></p>
+        <h3>Clone &amp; install</h3>
+        <p><code>git clone</code> the repo, then <code>bun install && bun link</code> from the cli/ directory.</p>
       </div>
       <div class="step">
         <div class="step-num">2</div>
-        <h3>Set your key</h3>
-        <p><code>export ANTHROPIC_API_KEY=sk-ant-...</code></p>
+        <h3>Setup</h3>
+        <p>Run <code>cozy init</code> &mdash; the setup wizard walks you through configuration.</p>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <h3>Launch</h3>
-        <p><code>cozyterm</code> and start exploring!</p>
+        <p>Type <code>cozy</code> &mdash; the TUI opens and you can start chatting with Engie.</p>
       </div>
     </div>
   </div>
@@ -758,16 +814,16 @@
     <p>
       Built by <a href="https://engindearing.soy" target="_blank">engindearing</a> &bull;
       <a href="https://github.com/engindearing-projects/cozyterm" target="_blank">GitHub</a> &bull;
-      Open source under MIT
+      MIT License
     </p>
   </div>
 </footer>
 
 <script>
 function copyInstall(el, text) {
-  navigator.clipboard.writeText(text).then(() => {
+  navigator.clipboard.writeText(text).then(function() {
     el.classList.add('copied');
-    setTimeout(() => el.classList.remove('copied'), 1500);
+    setTimeout(function() { el.classList.remove('copied'); }, 1500);
   });
 }
 
