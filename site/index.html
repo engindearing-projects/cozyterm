@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CozyTerm - Your AI Project Manager in the Terminal</title>
-  <meta name="description" content="CozyTerm is a Bun/Ink TUI AI project manager powered by Engie. Track projects, get coaching, and manage tasks right from your terminal.">
+  <title>CozyTerm - AI Project Manager in Your Terminal</title>
+  <meta name="description" content="CozyTerm is a Bun + Ink TUI that puts an AI project manager in your terminal. Built with React for the terminal, powered by Engie.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -24,6 +24,8 @@
       --yellow: #d29922;
       --red: #f85149;
       --pink: #f778ba;
+      --cyan: #06b6d4;
+      --cyan-dim: rgba(6, 182, 212, 0.15);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -110,11 +112,11 @@
     .hero-badge {
       display: inline-block;
       padding: 6px 16px;
-      background: var(--green-dim);
-      border: 1px solid var(--green);
+      background: var(--cyan-dim);
+      border: 1px solid var(--cyan);
       border-radius: 20px;
       font-size: 0.8rem;
-      color: var(--green);
+      color: var(--cyan);
       font-weight: 600;
       margin-bottom: 24px;
     }
@@ -127,17 +129,35 @@
     }
 
     .hero h1 .highlight {
-      background: linear-gradient(135deg, var(--accent), var(--purple));
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
     .hero p {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       color: var(--text-dim);
-      max-width: 600px;
+      max-width: 620px;
       margin: 0 auto 40px;
+    }
+
+    .hero .stack-tags {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+
+    .stack-tag {
+      padding: 4px 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-dim);
     }
 
     /* Install box */
@@ -270,83 +290,60 @@
     }
 
     .terminal-body {
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      grid-template-rows: auto 1fr auto;
-      min-height: 420px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.8rem;
       line-height: 1.7;
-    }
-
-    .term-suggestions {
-      grid-column: 1 / -1;
-      padding: 8px 12px;
-      border-bottom: 1px solid var(--border);
+      min-height: 420px;
       display: flex;
-      gap: 8px;
-    }
-
-    .term-chip {
-      padding: 4px 12px;
-      background: rgba(88, 166, 255, 0.1);
-      border: 1px solid var(--accent);
-      border-radius: 6px;
-      color: var(--accent);
-      font-size: 0.75rem;
-    }
-
-    .term-sidebar {
-      border-right: 1px solid var(--border);
-      padding: 8px 0;
-      grid-row: 2 / 4;
-    }
-
-    .term-sidebar-title {
-      padding: 4px 12px;
-      color: var(--text-dim);
-      font-weight: 600;
-      font-size: 0.75rem;
-      margin-bottom: 4px;
-    }
-
-    .term-file {
-      padding: 2px 12px 2px 16px;
-      color: var(--text-dim);
-      font-size: 0.75rem;
-    }
-
-    .term-file.dir { color: var(--accent); }
-    .term-file.dir::before { content: '\01F4C1 '; }
-    .term-file.file::before { content: '\01F4C4 '; }
-
-    .term-chat {
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
+      flex-direction: column;
     }
 
     .term-banner {
-      padding: 8px 14px;
-      margin-bottom: 12px;
-      color: var(--purple);
+      padding: 12px 16px 8px;
+      color: var(--cyan);
       font-size: 0.78rem;
     }
 
     .term-banner .iris {
       display: inline-block;
-      animation: irisPulse 2s ease-in-out infinite;
+      animation: irisPulse 3.1s ease-in-out infinite;
+      font-size: 1rem;
+    }
+
+    .term-banner .version { color: var(--text-dim); }
+
+    .term-banner .context-line {
+      display: block;
+      color: var(--text-dim);
+      font-size: 0.72rem;
+      margin-top: 2px;
+      padding-left: 20px;
+    }
+
+    .term-banner .tip-line {
+      display: block;
+      color: var(--text-dim);
+      font-size: 0.68rem;
+      margin-top: 2px;
+      padding-left: 22px;
+      font-style: italic;
     }
 
     @keyframes irisPulse {
-      0%, 100% { opacity: 0.6; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.15); }
+      0%, 100% { opacity: 0.5; color: #0c3d4a; }
+      50% { opacity: 1; color: var(--cyan); }
+    }
+
+    .term-chat {
+      padding: 8px 16px;
+      flex: 1;
     }
 
     .chat-bubble {
       margin-bottom: 12px;
       padding: 10px 14px;
       border-radius: 8px;
-      max-width: 90%;
+      max-width: 92%;
     }
 
     .chat-bubble.user {
@@ -384,39 +381,78 @@
     .chat-bubble .chat-text .status-yellow { color: var(--yellow); }
     .chat-bubble .chat-text .status-red { color: var(--red); }
 
-    .term-terminal {
-      padding: 12px 16px;
+    .term-suggestions {
+      padding: 6px 16px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
-    .term-terminal-title {
-      color: var(--text-dim);
-      font-weight: 600;
-      font-size: 0.75rem;
-      margin-bottom: 8px;
-      padding-bottom: 4px;
-      border-bottom: 1px solid var(--border);
+    .term-chip {
+      padding: 4px 12px;
+      background: rgba(88, 166, 255, 0.1);
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      color: var(--accent);
+      font-size: 0.72rem;
     }
 
-    .term-line { color: var(--text-dim); }
-    .term-line .prompt-sign { color: var(--green); font-weight: 700; }
-    .term-line .cmd-text { color: var(--text); }
-    .term-line .output { color: var(--text-dim); }
-    .term-line .highlight-green { color: var(--green); }
+    .term-chip.selected {
+      background: rgba(88, 166, 255, 0.25);
+    }
 
-    .term-footer {
-      grid-column: 1 / -1;
-      padding: 6px 12px;
+    .term-status-bar {
+      padding: 6px 16px;
       border-top: 1px solid var(--border);
       background: var(--bg-card);
       color: var(--text-dim);
       font-size: 0.7rem;
       display: flex;
-      gap: 24px;
+      align-items: center;
+      gap: 16px;
     }
 
-    .term-footer kbd {
-      color: var(--accent);
-      font-family: inherit;
+    .term-status-bar .dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-right: 4px;
+    }
+
+    .term-status-bar .dot.on { background: var(--green); }
+    .term-status-bar .dot.off { background: var(--red); }
+
+    .term-status-bar .session {
+      margin-left: auto;
+      color: var(--text-dim);
+    }
+
+    .term-input {
+      padding: 8px 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .term-input .prompt-sign {
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
+    .term-input .input-cursor {
+      display: inline-block;
+      width: 7px;
+      height: 14px;
+      background: var(--accent);
+      vertical-align: middle;
+      animation: typing-cursor 1s step-end infinite;
+    }
+
+    .term-input .input-placeholder {
+      color: var(--text-dim);
+      font-size: 0.75rem;
     }
 
     /* Features */
@@ -427,6 +463,13 @@
     .features h2 {
       text-align: center;
       font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .features .subtitle {
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 1rem;
       margin-bottom: 48px;
     }
 
@@ -461,6 +504,15 @@
     .feature-card p {
       color: var(--text-dim);
       font-size: 0.9rem;
+    }
+
+    .feature-card code {
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(255,255,255,0.06);
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 0.82rem;
+      color: var(--pink);
     }
 
     /* How it works */
@@ -546,17 +598,6 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Terminal input cursor */
-    .term-footer .input-cursor {
-      display: inline-block;
-      width: 7px;
-      height: 14px;
-      background: var(--accent);
-      margin-left: 4px;
-      vertical-align: middle;
-      animation: typing-cursor 1s step-end infinite;
-    }
-
     /* ---- Initial hidden states for animated elements ---- */
     .terminal-window.anim-ready .chat-bubble.user .chat-text {
       overflow: hidden;
@@ -565,16 +606,15 @@
     }
 
     .terminal-window.anim-ready .chat-bubble.assistant,
-    .terminal-window.anim-ready .term-terminal .term-line,
     .terminal-window.anim-ready .term-suggestions .term-chip {
       opacity: 0;
     }
 
     /* ---- Playing states ---- */
 
-    /* Step 1: user message types out (width expands) */
+    /* Step 1: user message types out */
     .terminal-window.anim-playing .chat-bubble.user .chat-text {
-      animation: typingWidth 1.2s steps(36, end) 0.3s forwards;
+      animation: typingWidth 1.4s steps(40, end) 0.3s forwards;
     }
 
     @keyframes typingWidth {
@@ -582,39 +622,23 @@
       to   { width: 100%; }
     }
 
-    /* Step 2: assistant bubble fades in after user finishes */
+    /* Step 2: assistant bubble fades in */
     .terminal-window.anim-playing .chat-bubble.assistant {
-      animation: fadeIn 0.6s ease 1.8s forwards;
+      animation: fadeIn 0.6s ease 2s forwards;
     }
 
-    /* Step 3: terminal command line types in */
-    .terminal-window.anim-playing .term-terminal .term-line:nth-child(2) {
-      animation: fadeIn 0.3s ease 2.8s forwards;
-    }
-
-    /* Step 4: output lines appear one by one */
-    .terminal-window.anim-playing .term-terminal .term-line:nth-child(3) {
-      animation: fadeIn 0.3s ease 3.2s forwards;
-    }
-    .terminal-window.anim-playing .term-terminal .term-line:nth-child(4) {
-      animation: fadeIn 0.3s ease 3.5s forwards;
-    }
-    .terminal-window.anim-playing .term-terminal .term-line:nth-child(5) {
-      animation: fadeIn 0.3s ease 3.8s forwards;
-    }
-    .terminal-window.anim-playing .term-terminal .term-line:nth-child(6) {
-      animation: fadeIn 0.3s ease 4.1s forwards;
-    }
-
-    /* Step 5: suggestion chips fade in */
+    /* Step 3: suggestion chips fade in */
     .terminal-window.anim-playing .term-suggestions .term-chip:nth-child(1) {
-      animation: fadeIn 0.4s ease 4.5s forwards;
+      animation: fadeIn 0.4s ease 3s forwards;
     }
     .terminal-window.anim-playing .term-suggestions .term-chip:nth-child(2) {
-      animation: fadeIn 0.4s ease 4.7s forwards;
+      animation: fadeIn 0.4s ease 3.2s forwards;
     }
     .terminal-window.anim-playing .term-suggestions .term-chip:nth-child(3) {
-      animation: fadeIn 0.4s ease 4.9s forwards;
+      animation: fadeIn 0.4s ease 3.4s forwards;
+    }
+    .terminal-window.anim-playing .term-suggestions .term-chip:nth-child(4) {
+      animation: fadeIn 0.4s ease 3.6s forwards;
     }
 
     /* ---- Feature card scroll-in ---- */
@@ -627,7 +651,6 @@
       animation: fadeInUp 0.5s ease forwards;
     }
 
-    /* stagger each card */
     .feature-card:nth-child(2).visible { animation-delay: 0.1s; }
     .feature-card:nth-child(3).visible { animation-delay: 0.2s; }
     .feature-card:nth-child(4).visible { animation-delay: 0.3s; }
@@ -636,10 +659,10 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-      .terminal-body { grid-template-columns: 1fr; }
-      .term-sidebar { display: none; }
       .steps { grid-template-columns: 1fr; }
       .install-cmd { font-size: 0.75rem; padding: 12px 16px; }
+      .hero .stack-tags { gap: 6px; }
+      .stack-tag { font-size: 0.68rem; padding: 3px 8px; }
     }
   </style>
 </head>
@@ -662,8 +685,16 @@
 <section class="hero">
   <div class="container">
     <div class="hero-badge">v0.4.0 &mdash; Open Source</div>
-    <h1>Your AI project manager,<br>right in the <span class="highlight">terminal</span></h1>
-    <p>CozyTerm + Engie &mdash; tracks your projects, coaches you through blockers, and learns from every conversation.</p>
+    <h1>An AI project manager<br>that lives in your <span class="highlight">terminal</span></h1>
+    <p>I built Engie to track my projects, remember context across sessions, and coach me through blockers &mdash; all without leaving the terminal.</p>
+
+    <div class="stack-tags">
+      <span class="stack-tag">Bun</span>
+      <span class="stack-tag">Ink / React</span>
+      <span class="stack-tag">OpenClaw</span>
+      <span class="stack-tag">SQLite + FTS5</span>
+      <span class="stack-tag">Claude + Ollama</span>
+    </div>
 
     <div id="install" class="install-box">
       <div class="install-cmd" onclick="copyInstall(this, 'git clone https://github.com/engindearing-projects/cozyterm.git')">
@@ -681,7 +712,7 @@
         <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
       </div>
     </div>
-    <p class="install-note">Requires <a href="https://bun.sh" target="_blank">Bun</a> &mdash; macOS</p>
+    <p class="install-note">Requires <a href="https://bun.sh" target="_blank">Bun</a> &mdash; macOS &mdash; <code>cozy init</code> handles the rest</p>
   </div>
 </section>
 
@@ -692,57 +723,53 @@
         <div class="terminal-dot red"></div>
         <div class="terminal-dot yellow"></div>
         <div class="terminal-dot green"></div>
-        <div class="terminal-title">CozyTerm v0.4.0</div>
+        <div class="terminal-title">cozy &mdash; Terminal</div>
       </div>
       <div class="terminal-body">
-        <div class="term-suggestions">
-          <div class="term-chip">/memory PROJ-42</div>
-          <div class="term-chip">/explain</div>
-          <div class="term-chip">cozy doctor</div>
+
+        <div class="term-banner">
+          <span class="iris">&#9673;</span> cozy <span class="version">v0.4.0</span>
+          <span class="context-line">Good morning, Grant. 3 observations today &middot; active: PORT-12, AD-1200</span>
+          <span class="tip-line">tip: /memory to search past context</span>
         </div>
-        <div class="term-sidebar">
-          <div class="term-sidebar-title">Project</div>
-          <div class="term-file dir">cli/</div>
-          <div class="term-file dir">scripts/</div>
-          <div class="term-file dir">config/</div>
-          <div class="term-file file">package.json</div>
-          <div class="term-file file">README.md</div>
-          <div class="term-file file">.env</div>
-        </div>
+
         <div class="term-chat">
-          <div class="term-banner">
-            <span class="iris">&#10043;</span> <code>cozy v0.4.0</code> &mdash; Engie ready
-          </div>
           <div class="chat-bubble user">
-            <div class="chat-role">cozy &gt;</div>
-            <div class="chat-text">what's the status on the portal launch?</div>
+            <div class="chat-role">you &gt;</div>
+            <div class="chat-text">what's blocking the portal launch? pull from memory</div>
           </div>
           <div class="chat-bubble assistant">
             <div class="chat-role">engie</div>
             <div class="chat-text">
-              Here's where things stand:
-              <span class="status-line"><span class="status-green">&#9679;</span> PORT-12 &mdash; normalization PRs drafted, ready for review</span>
-              <span class="status-line"><span class="status-yellow">&#9679;</span> PORT-9 &mdash; blocked on AD-1200 (env fix deployed, awaiting redeploy)</span>
-              <span class="status-line"><span class="status-red">&#9679;</span> PORT-15 &mdash; not started, blocked by PORT-9</span>
-              <span class="status-line" style="margin-top:6px;">Want me to pull up the blockers or draft a standup update?</span>
+              Pulled 4 observations from the last week. Here's the picture:
+              <span class="status-line"><span class="status-green">&#9679;</span> PORT-12 &mdash; normalization PRs drafted, 3 repos ready for review</span>
+              <span class="status-line"><span class="status-yellow">&#9679;</span> PORT-9 &mdash; blocked on AD-1200, env fix merged but needs redeploy</span>
+              <span class="status-line"><span class="status-red">&#9679;</span> PORT-15 &mdash; can't start until PORT-9 clears</span>
+              <span class="status-line" style="margin-top:6px;">The critical path is PORT-9 &rarr; PORT-15 &rarr; go-live. Want me to draft a standup update or file a follow-up?</span>
             </div>
           </div>
         </div>
-        <div class="term-terminal">
-          <div class="term-terminal-title">Activity</div>
-          <div class="term-line"><span class="prompt-sign">$ </span><span class="cmd-text">cozy status</span></div>
-          <div class="term-line"><span class="output">Syncing Jira boards...</span></div>
-          <div class="term-line"><span class="highlight-green">3 active tickets</span><span class="output"> across 2 projects</span></div>
-          <div class="term-line"><span class="output">1 blocker &bull; 2 in progress &bull; next standup in 4h</span></div>
-          <div class="term-line"><span class="highlight-green">Memory updated</span><span class="output"> &mdash; 12 entries indexed</span></div>
+
+        <div class="term-suggestions">
+          <div class="term-chip">/memory PORT-9</div>
+          <div class="term-chip selected">/status</div>
+          <div class="term-chip">/observe blocker resolved</div>
+          <div class="term-chip">/coach</div>
         </div>
-      </div>
-      <div class="term-footer">
-        <span><kbd>/help</kbd></span>
-        <span><kbd>/coach</kbd></span>
-        <span><kbd>/memory</kbd></span>
-        <span><kbd>/quit</kbd></span>
-        <span style="margin-left:auto; color:var(--text-dim);">Ask something...<span class="input-cursor"></span></span>
+
+        <div class="term-status-bar">
+          <span><span class="dot on"></span>gateway</span>
+          <span><span class="dot on"></span>claude</span>
+          <span><span class="dot on"></span>ollama</span>
+          <span class="session">agent:engie:cli</span>
+        </div>
+
+        <div class="term-input">
+          <span class="prompt-sign">cozy &gt;</span>
+          <span class="input-placeholder">Type a message...</span>
+          <span class="input-cursor"></span>
+        </div>
+
       </div>
     </div>
   </div>
@@ -750,37 +777,38 @@
 
 <section class="features" id="features">
   <div class="container">
-    <h2>Everything you need to ship</h2>
+    <h2>What's inside</h2>
+    <p class="subtitle">Built with Bun + Ink (React for the terminal). Every feature ships today.</p>
     <div class="feature-grid">
       <div class="feature-card">
-        <div class="feature-icon">&#128203;</div>
-        <h3>Project tracking</h3>
-        <p>Connects to Jira boards and GitHub repos. Get daily briefs via Telegram, track blockers, and never lose context between sessions.</p>
+        <div class="feature-icon">&#128024;</div>
+        <h3>Persistent memory</h3>
+        <p>SQLite database with FTS5 full-text search. Decisions, blockers, and context are captured automatically from every conversation. Use <code>/memory</code> to search or <code>/observe</code> to save notes.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">&#128161;</div>
+        <div class="feature-icon">&#128172;</div>
         <h3>Coaching mode</h3>
-        <p>Use <code>/coach</code> or <code>/explain</code> for warm, patient explanations of commands, errors, and concepts. Learn by doing, not by reading docs.</p>
+        <p>Toggle <code>/coach</code> for warm, plain-language explanations. Use <code>/explain</code> for any concept. Engie uses analogies first, then shows the technical details.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">&#9889;</div>
-        <h3>Smart router</h3>
-        <p>Heavy tasks go to Claude. Quick lookups stay local on Ollama for free. The router picks the right model automatically.</p>
+        <h3>Dual model routing</h3>
+        <p>Claude handles complex tasks through the proxy. Ollama runs locally on Apple Silicon for quick lookups at zero cost. The gateway routes automatically.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">&#128024;</div>
-        <h3>Memory system</h3>
-        <p>SQLite + FTS5 full-text search. Decisions, blockers, and context are captured automatically and recalled when you need them.</p>
+        <div class="feature-icon">&#128736;</div>
+        <h3>10-step setup wizard</h3>
+        <p><code>cozy init</code> checks prerequisites, installs OpenClaw + Ollama, configures API keys, sets up launchd services, and runs a health check. Resumes if interrupted.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">&#128737;</div>
-        <h3>Safety rails</h3>
-        <p>Destructive commands trigger a warning before anything happens. Force pushes, dropped tables, and <code>rm -rf</code> all get flagged first.</p>
+        <div class="feature-icon">&#128203;</div>
+        <h3>Context-aware banner</h3>
+        <p>The iris pulse shows Engie is alive. Below it: personalized greeting, today's observation count, active Jira tickets, and rotating tips. Updates every session.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">&#127760;</div>
-        <h3>Multi-platform</h3>
-        <p>CLI TUI today. Web dashboard, mobile app, and Telegram bot all connect to the same brain. Your context follows you everywhere.</p>
+        <div class="feature-icon">&#128268;</div>
+        <h3>Self-diagnosing</h3>
+        <p><code>cozy doctor</code> checks every service, config file, and directory. <code>--fix</code> auto-restarts unhealthy services, creates missing paths, and rotates logs.</p>
       </div>
     </div>
   </div>
@@ -788,22 +816,22 @@
 
 <section class="how-it-works">
   <div class="container">
-    <h2>Get started in 60 seconds</h2>
+    <h2>Get running</h2>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
         <h3>Clone &amp; install</h3>
-        <p><code>git clone</code> the repo, then <code>bun install && bun link</code> from the cli/ directory.</p>
+        <p><code>git clone</code> the repo, then <code>bun install && bun link</code> from the <code>cli/</code> directory.</p>
       </div>
       <div class="step">
         <div class="step-num">2</div>
-        <h3>Setup</h3>
-        <p>Run <code>cozy init</code> &mdash; the setup wizard walks you through configuration.</p>
+        <h3>Setup wizard</h3>
+        <p><code>cozy init</code> walks through 10 steps: installs deps, configures keys, starts services.</p>
       </div>
       <div class="step">
         <div class="step-num">3</div>
-        <h3>Launch</h3>
-        <p>Type <code>cozy</code> &mdash; the TUI opens and you can start chatting with Engie.</p>
+        <h3>Start talking</h3>
+        <p>Type <code>cozy</code> to open the TUI, or <code>cozy "your question"</code> for a quick one-shot answer.</p>
       </div>
     </div>
   </div>
@@ -829,7 +857,6 @@ function copyInstall(el, text) {
 
 /* --- Scroll-triggered animations --- */
 (function() {
-  // Terminal mockup animation: play once when scrolled into view
   var terminalWin = document.querySelector('.terminal-window');
   if (terminalWin) {
     var termObserver = new IntersectionObserver(function(entries) {
@@ -843,7 +870,6 @@ function copyInstall(el, text) {
     termObserver.observe(terminalWin);
   }
 
-  // Feature cards: fade in with stagger when scrolled into view
   var cards = document.querySelectorAll('.feature-card');
   if (cards.length) {
     var cardObserver = new IntersectionObserver(function(entries) {
