@@ -3,29 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CozyTerm - AI Project Manager in Your Terminal</title>
-  <meta name="description" content="CozyTerm is a Bun + Ink TUI that puts an AI project manager in your terminal. Built with React for the terminal, powered by Engie.">
+  <title>CozyTerm&trade; - AI Coding Agent for the Terminal</title>
+  <meta name="description" content="CozyTerm is an open-source AI coding agent that gets smarter the more you use it. Multi-model architecture, LSP integration, and the Forge self-training pipeline. No cloud dependency. Your code, your models.">
+  <meta property="og:title" content="CozyTerm&trade; - The AI Coding Agent That Gets Better The More You Use It">
+  <meta property="og:description" content="Open-source AI coding agent. Multi-model, LSP-aware, self-improving via Forge. Built from scratch — no cloud lock-in, no third-party agent frameworks.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cozyterm.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0d1117;
-      --bg-card: #161b22;
-      --bg-terminal: #0d1117;
-      --border: #30363d;
-      --text: #e6edf3;
-      --text-dim: #8b949e;
-      --accent: #58a6ff;
-      --accent-glow: rgba(88, 166, 255, 0.15);
-      --green: #3fb950;
-      --green-dim: rgba(63, 185, 80, 0.15);
-      --purple: #bc8cff;
-      --yellow: #d29922;
-      --red: #f85149;
-      --pink: #f778ba;
-      --cyan: #06b6d4;
-      --cyan-dim: rgba(6, 182, 212, 0.15);
+      /* CozyTerm warm palette */
+      --bg: #1A1410;
+      --bg-card: #221C16;
+      --bg-terminal: #181210;
+      --border: #3D3428;
+      --text: #F5E6D3;
+      --text-dim: #9B8B7A;
+      --accent: #E8A87C;
+      --accent-glow: rgba(232, 168, 124, 0.15);
+      --highlight: #F4C95D;
+      --green: #95C77E;
+      --green-dim: rgba(149, 199, 126, 0.15);
+      --red: #E07A5F;
+      --cyan: #7EC8C8;
+      --purple: #B8A9C9;
+      --espresso: #6B5D4E;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -50,7 +54,7 @@
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
-      background: rgba(13, 17, 23, 0.85);
+      background: rgba(26, 20, 16, 0.88);
       backdrop-filter: blur(12px);
       z-index: 100;
     }
@@ -70,6 +74,7 @@
     }
 
     .logo span { color: var(--text-dim); }
+    .logo .tm { font-size: 0.6rem; vertical-align: super; color: var(--text-dim); }
 
     nav .links {
       display: flex;
@@ -100,7 +105,6 @@
     }
 
     .gh-btn:hover { border-color: var(--accent); }
-
     .gh-btn svg { width: 18px; height: 18px; fill: var(--text); }
 
     /* Hero */
@@ -112,34 +116,42 @@
     .hero-badge {
       display: inline-block;
       padding: 6px 16px;
-      background: var(--cyan-dim);
-      border: 1px solid var(--cyan);
+      background: var(--green-dim);
+      border: 1px solid var(--green);
       border-radius: 20px;
       font-size: 0.8rem;
-      color: var(--cyan);
+      color: var(--green);
       font-weight: 600;
       margin-bottom: 24px;
     }
 
     .hero h1 {
-      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-size: clamp(2.5rem, 6vw, 3.8rem);
       font-weight: 700;
       line-height: 1.1;
       margin-bottom: 20px;
     }
 
     .hero h1 .highlight {
-      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      background: linear-gradient(135deg, var(--accent), var(--highlight));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    .hero p {
+    .hero p.tagline {
       font-size: 1.15rem;
       color: var(--text-dim);
-      max-width: 620px;
-      margin: 0 auto 40px;
+      max-width: 640px;
+      margin: 0 auto 16px;
+    }
+
+    .hero p.moat {
+      font-size: 1rem;
+      color: var(--accent);
+      font-weight: 600;
+      max-width: 640px;
+      margin: 0 auto 32px;
     }
 
     .hero .stack-tags {
@@ -219,14 +231,10 @@
 
     .install-cmd.copied .tooltip { opacity: 1; }
 
-    .install-step {
-      font-size: 0.7rem;
-      color: var(--text-dim);
-      font-family: 'Inter', sans-serif;
-      margin-right: 8px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+    .install-or {
+      font-size: 0.8rem;
+      color: var(--espresso);
+      font-weight: 500;
     }
 
     .install-note {
@@ -259,7 +267,7 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
     }
 
     .terminal-titlebar {
@@ -278,7 +286,7 @@
     }
 
     .terminal-dot.red { background: var(--red); }
-    .terminal-dot.yellow { background: var(--yellow); }
+    .terminal-dot.yellow { background: var(--highlight); }
     .terminal-dot.green { background: var(--green); }
 
     .terminal-title {
@@ -293,21 +301,15 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.8rem;
       line-height: 1.7;
-      min-height: 420px;
+      min-height: 400px;
       display: flex;
       flex-direction: column;
     }
 
     .term-banner {
       padding: 12px 16px 8px;
-      color: var(--cyan);
+      color: var(--accent);
       font-size: 0.78rem;
-    }
-
-    .term-banner .iris {
-      display: inline-block;
-      animation: irisPulse 3.1s ease-in-out infinite;
-      font-size: 1rem;
     }
 
     .term-banner .version { color: var(--text-dim); }
@@ -317,21 +319,7 @@
       color: var(--text-dim);
       font-size: 0.72rem;
       margin-top: 2px;
-      padding-left: 20px;
-    }
-
-    .term-banner .tip-line {
-      display: block;
-      color: var(--text-dim);
-      font-size: 0.68rem;
-      margin-top: 2px;
-      padding-left: 22px;
-      font-style: italic;
-    }
-
-    @keyframes irisPulse {
-      0%, 100% { opacity: 0.5; color: #0c3d4a; }
-      50% { opacity: 1; color: var(--cyan); }
+      padding-left: 2px;
     }
 
     .term-chat {
@@ -347,13 +335,13 @@
     }
 
     .chat-bubble.user {
-      background: rgba(88, 166, 255, 0.1);
-      border: 1px solid rgba(88, 166, 255, 0.3);
+      background: rgba(232, 168, 124, 0.1);
+      border: 1px solid rgba(232, 168, 124, 0.3);
     }
 
     .chat-bubble.assistant {
-      background: rgba(63, 185, 80, 0.08);
-      border: 1px solid rgba(63, 185, 80, 0.2);
+      background: rgba(149, 199, 126, 0.08);
+      border: 1px solid rgba(149, 199, 126, 0.2);
     }
 
     .chat-role {
@@ -365,41 +353,27 @@
     .chat-bubble.user .chat-role { color: var(--accent); }
     .chat-bubble.assistant .chat-role { color: var(--green); }
     .chat-bubble .chat-text { color: var(--text); font-size: 0.78rem; }
+
     .chat-bubble .chat-text code {
-      background: rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.06);
       padding: 1px 5px;
       border-radius: 3px;
-      color: var(--pink);
+      color: var(--highlight);
     }
 
-    .chat-bubble .chat-text .status-line {
+    .tool-call {
       display: block;
-      margin-top: 4px;
-    }
-
-    .chat-bubble .chat-text .status-green { color: var(--green); }
-    .chat-bubble .chat-text .status-yellow { color: var(--yellow); }
-    .chat-bubble .chat-text .status-red { color: var(--red); }
-
-    .term-suggestions {
-      padding: 6px 16px;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .term-chip {
-      padding: 4px 12px;
-      background: rgba(88, 166, 255, 0.1);
-      border: 1px solid var(--accent);
-      border-radius: 6px;
-      color: var(--accent);
+      margin: 6px 0;
+      padding: 4px 8px;
+      background: rgba(107, 93, 78, 0.2);
+      border-left: 2px solid var(--espresso);
+      border-radius: 0 4px 4px 0;
       font-size: 0.72rem;
+      color: var(--text-dim);
     }
 
-    .term-chip.selected {
-      background: rgba(88, 166, 255, 0.25);
-    }
+    .tool-call .tool-name { color: var(--cyan); }
+    .tool-call .tool-detail { color: var(--text-dim); }
 
     .term-status-bar {
       padding: 6px 16px;
@@ -421,7 +395,7 @@
     }
 
     .term-status-bar .dot.on { background: var(--green); }
-    .term-status-bar .dot.off { background: var(--red); }
+    .term-status-bar .model-tag { color: var(--purple); }
 
     .term-status-bar .session {
       margin-left: auto;
@@ -437,7 +411,7 @@
     }
 
     .term-input .prompt-sign {
-      color: var(--cyan);
+      color: var(--accent);
       font-weight: 700;
     }
 
@@ -455,9 +429,171 @@
       font-size: 0.75rem;
     }
 
+    /* Moat callout */
+    .moat-callout {
+      padding: 60px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .moat-callout h2 {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+    }
+
+    .moat-callout h2 .highlight {
+      background: linear-gradient(135deg, var(--accent), var(--highlight));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .moat-callout p {
+      font-size: 1rem;
+      color: var(--text-dim);
+      max-width: 680px;
+      margin: 0 auto 12px;
+    }
+
+    .moat-callout .emphasis {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .moat-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 700px;
+      margin: 32px auto 0;
+    }
+
+    .moat-col {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: left;
+    }
+
+    .moat-col h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .moat-col.them h4 { color: var(--text-dim); }
+    .moat-col.us h4 { color: var(--accent); }
+
+    .moat-col ul {
+      list-style: none;
+      font-size: 0.85rem;
+    }
+
+    .moat-col ul li {
+      padding: 4px 0;
+      color: var(--text-dim);
+    }
+
+    .moat-col ul li::before {
+      margin-right: 8px;
+    }
+
+    .moat-col.them ul li::before {
+      content: "—";
+      color: var(--espresso);
+    }
+
+    .moat-col.us ul li::before {
+      content: "~";
+      color: var(--green);
+    }
+
+    .moat-col.us ul li { color: var(--text); }
+
+    /* Architecture section */
+    .architecture {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .architecture h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .architecture .subtitle {
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 1rem;
+      margin-bottom: 48px;
+    }
+
+    .model-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .model-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+
+    .model-card:hover { border-color: var(--accent); }
+
+    .model-role {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .model-card:nth-child(1) .model-role { color: var(--highlight); }
+    .model-card:nth-child(2) .model-role { color: var(--accent); }
+    .model-card:nth-child(3) .model-role { color: var(--purple); }
+    .model-card:nth-child(4) .model-role { color: var(--cyan); }
+
+    .model-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .model-desc {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    .arch-note {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--espresso);
+    }
+
+    .arch-note code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-card);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+
     /* Features */
     .features {
       padding: 80px 0;
+      border-top: 1px solid var(--border);
     }
 
     .features h2 {
@@ -487,32 +623,28 @@
       transition: border-color 0.2s;
     }
 
-    .feature-card:hover {
-      border-color: var(--accent);
-    }
-
-    .feature-icon {
-      font-size: 1.8rem;
-      margin-bottom: 16px;
-    }
+    .feature-card:hover { border-color: var(--accent); }
 
     .feature-card h3 {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       margin-bottom: 8px;
+      color: var(--text);
     }
+
+    .feature-card h3 .icon { margin-right: 8px; }
 
     .feature-card p {
       color: var(--text-dim);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
 
     .feature-card code {
       font-family: 'JetBrains Mono', monospace;
-      background: rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.05);
       padding: 1px 6px;
       border-radius: 3px;
       font-size: 0.82rem;
-      color: var(--pink);
+      color: var(--highlight);
     }
 
     /* How it works */
@@ -533,9 +665,7 @@
       gap: 32px;
     }
 
-    .step {
-      text-align: center;
-    }
+    .step { text-align: center; }
 
     .step-num {
       display: inline-flex;
@@ -563,6 +693,97 @@
       font-size: 0.85rem;
     }
 
+    /* Forge section */
+    .forge {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .forge h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .forge .subtitle {
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 1rem;
+      margin-bottom: 48px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .forge-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .forge-step {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      text-align: center;
+      min-width: 140px;
+    }
+
+    .forge-step .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .forge-step .desc {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+
+    .forge-arrow {
+      color: var(--espresso);
+      font-size: 1.2rem;
+    }
+
+    .forge-note {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .forge-note code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-card);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+
+    /* Built from scratch */
+    .built-from-scratch {
+      padding: 60px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .built-from-scratch p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .built-from-scratch p strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
     /* Footer */
     footer {
       padding: 40px 0;
@@ -582,7 +803,13 @@
 
     footer a:hover { text-decoration: underline; }
 
-    /* ---- Animation keyframes ---- */
+    footer .legal {
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: var(--espresso);
+    }
+
+    /* Animations */
     @keyframes typing-cursor {
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
@@ -598,7 +825,7 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ---- Initial hidden states for animated elements ---- */
+    /* Terminal animation states */
     .terminal-window.anim-ready .chat-bubble.user .chat-text {
       overflow: hidden;
       white-space: nowrap;
@@ -606,13 +833,10 @@
     }
 
     .terminal-window.anim-ready .chat-bubble.assistant,
-    .terminal-window.anim-ready .term-suggestions .term-chip {
+    .terminal-window.anim-ready .tool-call {
       opacity: 0;
     }
 
-    /* ---- Playing states ---- */
-
-    /* Step 1: user message types out */
     .terminal-window.anim-playing .chat-bubble.user .chat-text {
       animation: typingWidth 1.4s steps(40, end) 0.3s forwards;
     }
@@ -622,47 +846,50 @@
       to   { width: 100%; }
     }
 
-    /* Step 2: assistant bubble fades in */
+    .terminal-window.anim-playing .tool-call:nth-child(1) {
+      animation: fadeIn 0.4s ease 2s forwards;
+    }
+    .terminal-window.anim-playing .tool-call:nth-child(2) {
+      animation: fadeIn 0.4s ease 2.3s forwards;
+    }
+    .terminal-window.anim-playing .tool-call:nth-child(3) {
+      animation: fadeIn 0.4s ease 2.6s forwards;
+    }
+
     .terminal-window.anim-playing .chat-bubble.assistant {
-      animation: fadeIn 0.6s ease 2s forwards;
+      animation: fadeIn 0.6s ease 3.2s forwards;
     }
 
-    /* Step 3: suggestion chips fade in */
-    .terminal-window.anim-playing .term-suggestions .term-chip:nth-child(1) {
-      animation: fadeIn 0.4s ease 3s forwards;
-    }
-    .terminal-window.anim-playing .term-suggestions .term-chip:nth-child(2) {
-      animation: fadeIn 0.4s ease 3.2s forwards;
-    }
-    .terminal-window.anim-playing .term-suggestions .term-chip:nth-child(3) {
-      animation: fadeIn 0.4s ease 3.4s forwards;
-    }
-    .terminal-window.anim-playing .term-suggestions .term-chip:nth-child(4) {
-      animation: fadeIn 0.4s ease 3.6s forwards;
-    }
-
-    /* ---- Feature card scroll-in ---- */
-    .feature-card {
+    /* Scroll reveal */
+    .feature-card, .model-card, .forge-step {
       opacity: 0;
       transform: translateY(24px);
     }
 
-    .feature-card.visible {
+    .feature-card.visible, .model-card.visible, .forge-step.visible {
       animation: fadeInUp 0.5s ease forwards;
     }
 
-    .feature-card:nth-child(2).visible { animation-delay: 0.1s; }
-    .feature-card:nth-child(3).visible { animation-delay: 0.2s; }
-    .feature-card:nth-child(4).visible { animation-delay: 0.3s; }
+    .feature-card:nth-child(2).visible, .model-card:nth-child(2).visible { animation-delay: 0.1s; }
+    .feature-card:nth-child(3).visible, .model-card:nth-child(3).visible { animation-delay: 0.2s; }
+    .feature-card:nth-child(4).visible, .model-card:nth-child(4).visible { animation-delay: 0.3s; }
     .feature-card:nth-child(5).visible { animation-delay: 0.4s; }
     .feature-card:nth-child(6).visible { animation-delay: 0.5s; }
 
     /* Responsive */
     @media (max-width: 768px) {
+      .model-grid { grid-template-columns: repeat(2, 1fr); }
+      .moat-compare { grid-template-columns: 1fr; }
       .steps { grid-template-columns: 1fr; }
       .install-cmd { font-size: 0.75rem; padding: 12px 16px; }
       .hero .stack-tags { gap: 6px; }
       .stack-tag { font-size: 0.68rem; padding: 3px 8px; }
+      .forge-flow { flex-direction: column; }
+      .forge-arrow { transform: rotate(90deg); }
+    }
+
+    @media (max-width: 480px) {
+      .model-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -670,9 +897,11 @@
 
 <nav>
   <div class="container">
-    <a href="/" class="logo">cozy<span>term</span></a>
+    <a href="/" class="logo">cozy<span>term</span><span class="tm">&trade;</span></a>
     <div class="links">
       <a href="#features">Features</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#forge">Forge</a>
       <a href="#install">Install</a>
       <a href="https://github.com/engindearing-projects/cozyterm" class="gh-btn" target="_blank">
         <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
@@ -684,35 +913,36 @@
 
 <section class="hero">
   <div class="container">
-    <div class="hero-badge">v0.4.0 &mdash; Open Source</div>
-    <h1>An AI project manager<br>that lives in your <span class="highlight">terminal</span></h1>
-    <p>I built Engie to track my projects, remember context across sessions, and coach me through blockers &mdash; all without leaving the terminal.</p>
+    <div class="hero-badge">v2.0 &mdash; Open Source &middot; MIT</div>
+    <h1>The AI coding agent that<br><span class="highlight">gets better the more you use it</span></h1>
+    <p class="tagline">Open-source terminal coding assistant powered by local models. Built from scratch &mdash; no third-party agent frameworks, no cloud lock-in.</p>
+    <p class="moat">Every session trains your models. Your code makes them smarter. Nobody else has this.</p>
 
     <div class="stack-tags">
       <span class="stack-tag">Bun</span>
+      <span class="stack-tag">TypeScript</span>
       <span class="stack-tag">Ink / React</span>
-      <span class="stack-tag">OpenClaw</span>
-      <span class="stack-tag">SQLite + FTS5</span>
-      <span class="stack-tag">Claude + Ollama</span>
+      <span class="stack-tag">Ollama</span>
+      <span class="stack-tag">LSP</span>
+      <span class="stack-tag">SQLite</span>
     </div>
 
     <div id="install" class="install-box">
-      <div class="install-cmd" onclick="copyInstall(this, 'git clone https://github.com/engindearing-projects/cozyterm.git')">
+      <div class="install-cmd" onclick="copyInstall(this, 'curl -fsSL https://cozyterm.com/install.sh | bash')">
         <span class="tooltip">Copied!</span>
-        <span class="install-step">1</span>
         <span class="prompt">$</span>
-        <span class="cmd">git clone https://github.com/engindearing-projects/cozyterm.git</span>
+        <span class="cmd">curl -fsSL https://cozyterm.com/install.sh | bash</span>
         <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
       </div>
-      <div class="install-cmd" onclick="copyInstall(this, 'cd cozyterm/cli && bun install && bun link && cozy init')">
+      <span class="install-or">or</span>
+      <div class="install-cmd" onclick="copyInstall(this, 'brew install engindearing/tap/cozyterm')">
         <span class="tooltip">Copied!</span>
-        <span class="install-step">2</span>
         <span class="prompt">$</span>
-        <span class="cmd">cd cozyterm/cli && bun install && bun link && cozy init</span>
+        <span class="cmd">brew install engindearing/tap/cozyterm</span>
         <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
       </div>
     </div>
-    <p class="install-note">Requires <a href="https://bun.sh" target="_blank">Bun</a> &mdash; macOS &mdash; <code>cozy init</code> handles the rest</p>
+    <p class="install-note">Requires <a href="https://bun.sh" target="_blank">Bun</a> (auto-installed) &middot; macOS / Linux</p>
   </div>
 </section>
 
@@ -723,50 +953,49 @@
         <div class="terminal-dot red"></div>
         <div class="terminal-dot yellow"></div>
         <div class="terminal-dot green"></div>
-        <div class="terminal-title">cozy &mdash; Terminal</div>
+        <div class="terminal-title">cozy &mdash; ~/my-project</div>
       </div>
       <div class="terminal-body">
 
         <div class="term-banner">
-          <span class="iris">&#9673;</span> cozy <span class="version">v0.4.0</span>
-          <span class="context-line">Good morning, Grant. 3 observations today &middot; active: PORT-12, AD-1200</span>
-          <span class="tip-line">tip: /memory to search past context</span>
+          cozy <span class="version">v2.0</span> &middot; multi-model &middot; coder
+          <span class="context-line">LSP: typescript-language-server &middot; 4 models ready &middot; Tab to switch modes</span>
         </div>
 
         <div class="term-chat">
           <div class="chat-bubble user">
             <div class="chat-role">you &gt;</div>
-            <div class="chat-text">what's blocking the portal launch? pull from memory</div>
+            <div class="chat-text">the login form doesn't validate email format, can you fix it?</div>
           </div>
+
+          <div class="tool-call">
+            <span class="tool-name">[glob]</span> <span class="tool-detail">src/components/Login*.tsx</span>
+          </div>
+          <div class="tool-call">
+            <span class="tool-name">[read]</span> <span class="tool-detail">src/components/LoginForm.tsx</span>
+          </div>
+          <div class="tool-call">
+            <span class="tool-name">[edit]</span> <span class="tool-detail">src/components/LoginForm.tsx +42</span>
+          </div>
+
           <div class="chat-bubble assistant">
-            <div class="chat-role">engie</div>
+            <div class="chat-role">cozy</div>
             <div class="chat-text">
-              Pulled 4 observations from the last week. Here's the picture:
-              <span class="status-line"><span class="status-green">&#9679;</span> PORT-12 &mdash; normalization PRs drafted, 3 repos ready for review</span>
-              <span class="status-line"><span class="status-yellow">&#9679;</span> PORT-9 &mdash; blocked on AD-1200, env fix merged but needs redeploy</span>
-              <span class="status-line"><span class="status-red">&#9679;</span> PORT-15 &mdash; can't start until PORT-9 clears</span>
-              <span class="status-line" style="margin-top:6px;">The critical path is PORT-9 &rarr; PORT-15 &rarr; go-live. Want me to draft a standup update or file a follow-up?</span>
+              Added email validation to <code>LoginForm.tsx</code>. The <code>handleSubmit</code> function now checks format before calling the API. LSP confirms zero errors.
             </div>
           </div>
         </div>
 
-        <div class="term-suggestions">
-          <div class="term-chip">/memory PORT-9</div>
-          <div class="term-chip selected">/status</div>
-          <div class="term-chip">/observe blocker resolved</div>
-          <div class="term-chip">/coach</div>
-        </div>
-
         <div class="term-status-bar">
-          <span><span class="dot on"></span>gateway</span>
-          <span><span class="dot on"></span>claude</span>
           <span><span class="dot on"></span>ollama</span>
-          <span class="session">agent:engie:cli</span>
+          <span class="model-tag">orchestrator: qwen2.5</span>
+          <span class="model-tag">coder: engie-coder</span>
+          <span class="session">turn 1 &middot; 847 tokens</span>
         </div>
 
         <div class="term-input">
           <span class="prompt-sign">cozy &gt;</span>
-          <span class="input-placeholder">Type a message...</span>
+          <span class="input-placeholder">Type a message or /command...</span>
           <span class="input-cursor"></span>
         </div>
 
@@ -775,65 +1004,160 @@
   </div>
 </section>
 
-<section class="features" id="features">
+<section class="moat-callout">
   <div class="container">
-    <h2>What's inside</h2>
-    <p class="subtitle">Built with Bun + Ink (React for the terminal). Every feature ships today.</p>
-    <div class="feature-grid">
-      <div class="feature-card">
-        <div class="feature-icon">&#128024;</div>
-        <h3>Persistent memory</h3>
-        <p>SQLite database with FTS5 full-text search. Decisions, blockers, and context are captured automatically from every conversation. Use <code>/memory</code> to search or <code>/observe</code> to save notes.</p>
+    <h2>The only coding agent that <span class="highlight">learns from you</span></h2>
+    <p>Other AI coding tools ship a frozen model. You use it, they get your data, and the model never changes. <span class="emphasis">CozyTerm is different.</span></p>
+    <p>The Forge pipeline captures every coding session as training data, fine-tunes your local models, and deploys them back &mdash; automatically. The more you code, the better your agent gets. <span class="emphasis">Your data stays on your machine. Your models improve for you.</span></p>
+
+    <div class="moat-compare">
+      <div class="moat-col them">
+        <h4>Other tools</h4>
+        <ul>
+          <li>Static models, same for everyone</li>
+          <li>Cloud API dependency</li>
+          <li>Your code sent to third parties</li>
+          <li>Generic, one-size-fits-all</li>
+          <li>Built on third-party frameworks</li>
+        </ul>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">&#128172;</div>
-        <h3>Coaching mode</h3>
-        <p>Toggle <code>/coach</code> for warm, plain-language explanations. Use <code>/explain</code> for any concept. Engie uses analogies first, then shows the technical details.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">&#9889;</div>
-        <h3>Dual model routing</h3>
-        <p>Claude handles complex tasks through the proxy. Ollama runs locally on Apple Silicon for quick lookups at zero cost. The gateway routes automatically.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">&#128736;</div>
-        <h3>10-step setup wizard</h3>
-        <p><code>cozy init</code> checks prerequisites, installs OpenClaw + Ollama, configures API keys, sets up launchd services, and runs a health check. Resumes if interrupted.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">&#128203;</div>
-        <h3>Context-aware banner</h3>
-        <p>The iris pulse shows Engie is alive. Below it: personalized greeting, today's observation count, active Jira tickets, and rotating tips. Updates every session.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">&#128268;</div>
-        <h3>Self-diagnosing</h3>
-        <p><code>cozy doctor</code> checks every service, config file, and directory. <code>--fix</code> auto-restarts unhealthy services, creates missing paths, and rotates logs.</p>
+      <div class="moat-col us">
+        <h4>CozyTerm&trade;</h4>
+        <ul>
+          <li>Models that learn your patterns</li>
+          <li>Runs 100% locally via Ollama</li>
+          <li>Your code never leaves your machine</li>
+          <li>Adapts to your codebase and style</li>
+          <li>Built from scratch, no dependencies on agent frameworks</li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
 
+<section class="architecture" id="architecture">
+  <div class="container">
+    <h2>Multi-model architecture</h2>
+    <p class="subtitle">Each task is routed to a specialist model. The orchestrator handles tool calling while domain experts handle the rest.</p>
+    <div class="model-grid">
+      <div class="model-card">
+        <div class="model-role">Orchestrator</div>
+        <div class="model-name">qwen2.5:7b</div>
+        <div class="model-desc">Tool calling and agent loop. Drives the read-edit-verify cycle.</div>
+      </div>
+      <div class="model-card">
+        <div class="model-role">Coder</div>
+        <div class="model-name">engie-coder</div>
+        <div class="model-desc">Code generation and editing. Fine-tuned on real coding sessions via Forge.</div>
+      </div>
+      <div class="model-card">
+        <div class="model-role">Reasoner</div>
+        <div class="model-name">glm-4.7-flash</div>
+        <div class="model-desc">Deep analysis, planning, debugging. The thinking model.</div>
+      </div>
+      <div class="model-card">
+        <div class="model-role">Chat</div>
+        <div class="model-name">llama3.2</div>
+        <div class="model-desc">Conversation and quick answers. Fast context lookup.</div>
+      </div>
+    </div>
+    <p class="arch-note">All models run locally via Ollama. Swap any model in <code>.cozyterm.json</code>. Falls back to Anthropic API when Ollama is unavailable.</p>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="container">
+    <h2>Features</h2>
+    <p class="subtitle">Everything you need to code faster from the terminal.</p>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3><span class="icon" style="color:var(--accent)">&#9881;</span> 8 built-in tools</h3>
+        <p>Read, write, edit, bash, glob, grep, undo, and diagnostics. The agent reads your code, makes changes, runs commands, and self-corrects when LSP reports errors.</p>
+      </div>
+      <div class="feature-card">
+        <h3><span class="icon" style="color:var(--green)">&#9889;</span> LSP integration</h3>
+        <p>Auto-detects TypeScript, Python, Go, and Rust. After each edit, the agent checks for diagnostics and fixes its own mistakes before you see them.</p>
+      </div>
+      <div class="feature-card">
+        <h3><span class="icon" style="color:var(--highlight)">&#128274;</span> Permission system</h3>
+        <p>Interactive prompts for risky tools. Allow once, always, or deny forever. Persistent rules saved locally. Or <code>--yes</code> to skip.</p>
+      </div>
+      <div class="feature-card">
+        <h3><span class="icon" style="color:var(--purple)">&#128268;</span> MCP support</h3>
+        <p>Connect external tools via Model Context Protocol. Define servers in <code>.cozyterm.json</code> and the agent discovers their tools at startup.</p>
+      </div>
+      <div class="feature-card">
+        <h3><span class="icon" style="color:var(--cyan)">&#127912;</span> Themes</h3>
+        <p>Three built-in themes: cozyterm (warm amber), dracula, and tokyonight. Switch with <code>--theme</code> or set in config.</p>
+      </div>
+      <div class="feature-card">
+        <h3><span class="icon" style="color:var(--accent)">&#128203;</span> Custom commands</h3>
+        <p>Create reusable prompts as markdown files in <code>.cozyterm/commands/</code>. Run them with <code>/review</code>, <code>/test</code>, or any name you choose.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="forge" id="forge">
+  <div class="container">
+    <h2>Forge&trade;: self-improving models</h2>
+    <p class="subtitle">Every coding session generates training data. Forge collects, trains, and deploys better model versions automatically. This is the CozyTerm moat &mdash; the more you use it, the smarter it gets.</p>
+    <div class="forge-flow">
+      <div class="forge-step">
+        <div class="label">Collect</div>
+        <div class="desc">Capture every interaction as JSONL training pairs</div>
+      </div>
+      <span class="forge-arrow">&rarr;</span>
+      <div class="forge-step">
+        <div class="label">Prepare</div>
+        <div class="desc">Deduplicate, format, split train/valid</div>
+      </div>
+      <span class="forge-arrow">&rarr;</span>
+      <div class="forge-step">
+        <div class="label">Train</div>
+        <div class="desc">Fine-tune with LoRA on your GPU</div>
+      </div>
+      <span class="forge-arrow">&rarr;</span>
+      <div class="forge-step">
+        <div class="label">Deploy</div>
+        <div class="desc">Quantize, register, and hot-swap in Ollama</div>
+      </div>
+      <span class="forge-arrow">&rarr;</span>
+      <div class="forge-step">
+        <div class="label">Eval</div>
+        <div class="desc">Benchmark against previous versions</div>
+      </div>
+    </div>
+    <p class="forge-note">Manage the pipeline with <code>cozy forge status</code>, <code>cozy forge train</code>, <code>cozy forge eval</code>, <code>cozy forge rollback</code></p>
+  </div>
+</section>
+
 <section class="how-it-works">
   <div class="container">
-    <h2>Get running</h2>
+    <h2>Get started</h2>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
-        <h3>Clone &amp; install</h3>
-        <p><code>git clone</code> the repo, then <code>bun install && bun link</code> from the <code>cli/</code> directory.</p>
+        <h3>Install</h3>
+        <p>One command. The installer handles Bun, clones the repo, and sets up <code>cozy</code> in your PATH.</p>
       </div>
       <div class="step">
         <div class="step-num">2</div>
-        <h3>Setup wizard</h3>
-        <p><code>cozy init</code> walks through 10 steps: installs deps, configures keys, starts services.</p>
+        <h3>Pull models</h3>
+        <p>Install <a href="https://ollama.com" style="color:var(--accent);text-decoration:none">Ollama</a>, then <code>ollama pull qwen2.5:7b-instruct</code> and any other models you want.</p>
       </div>
       <div class="step">
         <div class="step-num">3</div>
-        <h3>Start talking</h3>
-        <p>Type <code>cozy</code> to open the TUI, or <code>cozy "your question"</code> for a quick one-shot answer.</p>
+        <h3>Code</h3>
+        <p><code>cozy</code> for the interactive TUI. <code>cozy "fix the bug"</code> for one-shot. <code>cozy --plan</code> for read-only analysis.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="built-from-scratch">
+  <div class="container">
+    <p><strong>CozyTerm is built from scratch.</strong> No OpenClaw, no LangChain, no AutoGen, no third-party agent frameworks. The entire agent loop, tool system, provider abstraction, TUI, and training pipeline are original TypeScript written by <a href="https://engindearing.soy" target="_blank" style="color:var(--accent)">engindearing</a>. We took architectural inspiration from open-source projects (as any good project does), but every line of code is ours.</p>
   </div>
 </section>
 
@@ -844,6 +1168,7 @@
       <a href="https://github.com/engindearing-projects/cozyterm" target="_blank">GitHub</a> &bull;
       MIT License
     </p>
+    <p class="legal">CozyTerm&trade; and Forge&trade; are trademarks of engindearing projects. All rights reserved.</p>
   </div>
 </footer>
 
@@ -855,8 +1180,8 @@ function copyInstall(el, text) {
   });
 }
 
-/* --- Scroll-triggered animations --- */
 (function() {
+  // Terminal animation
   var terminalWin = document.querySelector('.terminal-window');
   if (terminalWin) {
     var termObserver = new IntersectionObserver(function(entries) {
@@ -870,8 +1195,9 @@ function copyInstall(el, text) {
     termObserver.observe(terminalWin);
   }
 
-  var cards = document.querySelectorAll('.feature-card');
-  if (cards.length) {
+  // Scroll-reveal for cards
+  var animated = document.querySelectorAll('.feature-card, .model-card, .forge-step');
+  if (animated.length) {
     var cardObserver = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting) {
@@ -880,7 +1206,7 @@ function copyInstall(el, text) {
         }
       });
     }, { threshold: 0.15 });
-    cards.forEach(function(card) { cardObserver.observe(card); });
+    animated.forEach(function(el) { cardObserver.observe(el); });
   }
 })();
 </script>
