@@ -2,77 +2,125 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**An AI project manager that lives in your terminal.**
+**The AI coding agent that gets better the more you use it.**
 
-CozyTerm connects to Jira, Slack, and GitHub through a custom-built gateway running Claude and Ollama. It tracks projects, remembers context across sessions in a local SQLite database, sends morning briefs to Telegram, and routes tasks between Claude (heavy lifting) and Ollama (quick local stuff) automatically.
+CozyTerm is an open-source terminal coding assistant with a multi-model architecture, LSP integration, and a self-improving training pipeline called Forge. Every session trains your local models. Your code makes them smarter.
+
+Built from scratch — no third-party agent frameworks.
 
 **[cozyterm.com](https://cozyterm.com)**
 
 ## Install
 
-Requires [Bun](https://bun.sh) and macOS.
-
 ```bash
-git clone https://github.com/engindearing-projects/engie.git
-cd engie/cli && bun install
-bun run bin/cozy.mjs init
+curl -fsSL https://cozyterm.com/install.sh | bash
 ```
 
-The setup wizard walks you through everything: global `engie` command, Ollama install, API keys, MCP bridge, launchd services, and a connectivity check. Picks up where it left off if you interrupt it.
+Or with Homebrew:
+
+```bash
+brew install engindearing/tap/cozyterm
+```
+
+The installer handles Bun, clones the repo, and puts `cozy` in your PATH. Then pull some models:
+
+```bash
+ollama pull qwen2.5:7b-instruct   # orchestrator (tool calling)
+ollama pull llama3.2               # chat
+```
 
 ## Usage
 
 ```bash
-engie                              # interactive TUI
-engie"what's blocking PORT-9?"     # one-shot, then exit
-engiestatus                        # service health
-engiedoctor --fix                  # diagnose and auto-repair
-engieobserve "switched to FTS5"    # save a note
-engiestart / engiestop             # manage services
+cozy                          # interactive TUI
+cozy "fix the login bug"      # one-shot mode
+cozy --plan                   # read-only analysis (no file changes)
+cozy /review                  # run a custom command
+cozy models                   # check model availability
 ```
 
-## Commands
+## Engine (always-on brain)
 
-Inside the TUI:
+The engine runs in the background — watching repos, running tasks autonomously, creating PRs for you to review, and sending notifications. Every action feeds training data back to Forge.
 
-| Command | What it does |
-|---------|-------------|
-| `/memory [query]` | Search memory (FTS5). No query = recent entries |
-| `/observe <text>` | Save a note to memory |
-| `/todo [add\|done]` | Manage todos (Shift+Tab to view panel) |
-| `/coach` | Toggle coaching mode |
-| `/explain <topic>` | Plain-language explanation of anything |
-| `/suggest` | Contextual next-step suggestions |
-| `/forge [cmd]` | Training pipeline controls |
-| `/status` | Live service health |
-| `/help` | All commands |
-| `/clear` | Clear chat |
-| `/quit` | Exit |
+```bash
+cozy engine install           # install as launchd service
+cozy engine start             # start the daemon
+cozy engine status            # check if it's running
+cozy engine logs              # tail engine output
+cozy engine stop              # stop the daemon
+```
 
-Press **Shift+Tab** to toggle the task panel — shows active tool calls, your todos, and recent observations.
+## Multi-Model Architecture
+
+Each task is routed to the right specialist:
+
+| Role | Default Model | Purpose |
+|------|--------------|---------|
+| **Orchestrator** | qwen2.5:7b-instruct | Tool calling and agent loop |
+| **Coder** | engie-coder:latest | Code generation (Forge-trained) |
+| **Reasoner** | glm-4.7-flash | Analysis, planning, debugging |
+| **Chat** | llama3.2 | Conversation, quick answers |
+
+All models run locally via [Ollama](https://ollama.com). Swap any model in `.cozyterm.json`. Falls back to Anthropic API when Ollama is unavailable.
+
+## Tools
+
+The agent has 8 built-in tools:
+
+| Tool | What it does |
+|------|-------------|
+| `read` | Read files with line numbers |
+| `write` | Create or overwrite files |
+| `edit` | Find-and-replace with uniqueness check |
+| `bash` | Run shell commands (with safety blocks) |
+| `glob` | Find files by pattern |
+| `grep` | Search file contents |
+| `undo` | Revert file changes |
+| `diagnostics` | Check LSP errors after edits |
+
+Plus any tools discovered via MCP servers defined in your config.
+
+## Forge (self-improving models)
+
+Every coding session is captured as training data. Forge fine-tunes your models and deploys better versions automatically.
+
+```bash
+cozy forge status             # training stats and collector data
+cozy forge train              # run full pipeline: prepare → train → deploy → eval
+cozy forge eval               # benchmark against previous versions
+cozy forge versions           # model version history
+cozy forge rollback           # revert to previous version
+```
+
+The pipeline: **Collect** → **Prepare** → **Train** (LoRA) → **Deploy** (quantize + register in Ollama) → **Eval** (benchmark).
 
 ## Features
 
-- **Persistent memory** — SQLite + FTS5 full-text search. Decisions, blockers, and ticket references get captured automatically from conversations
-- **Smart routing** — Claude handles complex tasks through the proxy, Ollama runs locally on Apple Silicon for quick lookups at zero API cost
-- **Task panel** — Shift+Tab opens a side panel showing what's in progress, your todo list, and recent context
-- **Coaching mode** — `/coach` for warmer explanations, `/explain` for plain-language breakdowns of any concept
-- **Morning briefs** — Cron jobs check Jira and GitHub every morning, send a summary to Telegram
-- **Self-diagnosing** — `engiedoctor` checks services, configs, and directories. `--fix` auto-repairs what it can
-- **Web dashboard** — Browser-based chat and memory browser that connects to the same gateway
-- **MCP bridge** — Exposes Engie as an MCP server so other AI tools can call into it
-- **One-shot mode** — `engie"question"` for quick scripted answers
+- **LSP integration** — auto-detects TypeScript, Python, Go, Rust. Self-corrects after edits.
+- **Permission system** — interactive prompts for risky tools. Allow once, always, or deny forever.
+- **Custom commands** — markdown files in `.cozyterm/commands/`. Run with `/review`, `/test`, etc.
+- **Session persistence** — SQLite-backed conversation history with file edit snapshots.
+- **MCP support** — connect external tools via Model Context Protocol.
+- **Themes** — cozyterm (warm amber), dracula, tokyonight. Switch with `--theme`.
 
-## Stack
+## Project Structure
 
-- **Runtime**: Bun
-- **TUI**: Ink 5 + React 18
-- **Gateway**: Custom WebSocket server
-- **AI**: Claude (via proxy) + Ollama (local, Apple Silicon Metal)
-- **Memory**: SQLite + FTS5
-- **Web**: Vite + React + TypeScript
-- **Services**: macOS launchd
-- **Messaging**: Telegram Bot API
+```
+packages/
+  cli/          Interactive coding agent TUI
+  engine/       Always-on brain (daemon, gateway, memory, channels)
+  trainer/      Forge pipeline (collect, prepare, train, deploy, eval)
+  shared/       Constants, types, theme
+site/           cozyterm.com
+install.sh      One-line installer
+```
+
+## Config
+
+Project config: `.cozyterm.json` in your project root.
+Global config: `~/.cozyterm/config.json`.
+Custom commands: `.cozyterm/commands/*.md` (project or global).
 
 ## License
 

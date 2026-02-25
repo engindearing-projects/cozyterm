@@ -765,6 +765,90 @@
       font-size: 0.8rem;
     }
 
+    /* 4-col steps */
+    .steps-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .step-cmd {
+      display: block;
+      margin-top: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-card);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      word-break: break-all;
+    }
+
+    /* Engine section */
+    .engine-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .engine-section h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .engine-section .subtitle {
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 1rem;
+      margin-bottom: 48px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .engine-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .engine-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+    }
+
+    .engine-card:hover { border-color: var(--accent); }
+
+    .engine-card h3 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .engine-card p {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .engine-cmds {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .engine-cmds code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
     /* Built from scratch */
     .built-from-scratch {
       padding: 60px 0;
@@ -861,12 +945,12 @@
     }
 
     /* Scroll reveal */
-    .feature-card, .model-card, .forge-step {
+    .feature-card, .model-card, .forge-step, .engine-card {
       opacity: 0;
       transform: translateY(24px);
     }
 
-    .feature-card.visible, .model-card.visible, .forge-step.visible {
+    .feature-card.visible, .model-card.visible, .forge-step.visible, .engine-card.visible {
       animation: fadeInUp 0.5s ease forwards;
     }
 
@@ -880,16 +964,20 @@
     @media (max-width: 768px) {
       .model-grid { grid-template-columns: repeat(2, 1fr); }
       .moat-compare { grid-template-columns: 1fr; }
-      .steps { grid-template-columns: 1fr; }
+      .steps, .steps-4 { grid-template-columns: repeat(2, 1fr); }
+      .engine-grid { grid-template-columns: 1fr; }
       .install-cmd { font-size: 0.75rem; padding: 12px 16px; }
       .hero .stack-tags { gap: 6px; }
       .stack-tag { font-size: 0.68rem; padding: 3px 8px; }
       .forge-flow { flex-direction: column; }
       .forge-arrow { transform: rotate(90deg); }
+      .engine-cmds { gap: 8px; }
+      .engine-cmds code { font-size: 0.7rem; padding: 4px 10px; }
     }
 
     @media (max-width: 480px) {
       .model-grid { grid-template-columns: 1fr; }
+      .steps, .steps-4 { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -901,6 +989,7 @@
     <div class="links">
       <a href="#features">Features</a>
       <a href="#architecture">Architecture</a>
+      <a href="#engine">Engine</a>
       <a href="#forge">Forge</a>
       <a href="#install">Install</a>
       <a href="https://github.com/engindearing-projects/cozyterm" class="gh-btn" target="_blank">
@@ -1134,30 +1223,71 @@
 
 <section class="how-it-works">
   <div class="container">
-    <h2>Get started</h2>
-    <div class="steps">
+    <h2>Get started in 4 steps</h2>
+    <div class="steps steps-4">
       <div class="step">
         <div class="step-num">1</div>
         <h3>Install</h3>
-        <p>One command. The installer handles Bun, clones the repo, and sets up <code>cozy</code> in your PATH.</p>
+        <p>One command. The installer handles Bun, clones the repo, and puts <code>cozy</code> in your PATH.</p>
+        <code class="step-cmd">curl -fsSL cozyterm.com/install.sh | bash</code>
       </div>
       <div class="step">
         <div class="step-num">2</div>
         <h3>Pull models</h3>
-        <p>Install <a href="https://ollama.com" style="color:var(--accent);text-decoration:none">Ollama</a>, then <code>ollama pull qwen2.5:7b-instruct</code> and any other models you want.</p>
+        <p>Install <a href="https://ollama.com" style="color:var(--accent);text-decoration:none">Ollama</a>, then pull the models you want to run locally.</p>
+        <code class="step-cmd">ollama pull qwen2.5:7b-instruct</code>
       </div>
       <div class="step">
         <div class="step-num">3</div>
-        <h3>Code</h3>
-        <p><code>cozy</code> for the interactive TUI. <code>cozy "fix the bug"</code> for one-shot. <code>cozy --plan</code> for read-only analysis.</p>
+        <h3>Start the engine</h3>
+        <p>The always-on brain. It watches your repos, runs tasks autonomously, creates PRs, and sends you notifications.</p>
+        <code class="step-cmd">cozy engine install && cozy engine start</code>
       </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Code</h3>
+        <p><code>cozy</code> for the interactive TUI. <code>cozy "fix the bug"</code> for one-shot. Both feed training data to Forge.</p>
+        <code class="step-cmd">cozy</code>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="engine-section" id="engine">
+  <div class="container">
+    <h2>The engine: your always-on brain</h2>
+    <p class="subtitle">CozyTerm isn't just a tool you open and close. The engine runs in the background &mdash; watching, learning, acting. It creates PRs while you sleep and gets smarter with every session.</p>
+    <div class="engine-grid">
+      <div class="engine-card">
+        <h3>Autonomous agents</h3>
+        <p>The engine can spin up coding agents on its own. It notices failing CI, stale PRs, open issues &mdash; fixes them and opens a PR for you to review.</p>
+      </div>
+      <div class="engine-card">
+        <h3>Persistent memory</h3>
+        <p>SQLite + FTS5 full-text search. Everything the engine learns from your codebase, your conversations, and your patterns is stored locally and searchable.</p>
+      </div>
+      <div class="engine-card">
+        <h3>Channels</h3>
+        <p>Get notifications via Telegram, Slack, or webhooks. Morning briefs, PR summaries, training reports &mdash; delivered wherever you want them.</p>
+      </div>
+      <div class="engine-card">
+        <h3>Scheduled tasks</h3>
+        <p>Cron-powered jobs for nightly training runs, weekly reports, repo health checks. Runs via launchd, survives reboots.</p>
+      </div>
+    </div>
+    <div class="engine-cmds">
+      <code>cozy engine install</code>
+      <code>cozy engine start</code>
+      <code>cozy engine status</code>
+      <code>cozy engine logs</code>
+      <code>cozy engine stop</code>
     </div>
   </div>
 </section>
 
 <section class="built-from-scratch">
   <div class="container">
-    <p><strong>CozyTerm is built from scratch.</strong> No OpenClaw, no LangChain, no AutoGen, no third-party agent frameworks. The entire agent loop, tool system, provider abstraction, TUI, and training pipeline are original TypeScript written by <a href="https://engindearing.soy" target="_blank" style="color:var(--accent)">engindearing</a>. We took architectural inspiration from open-source projects (as any good project does), but every line of code is ours.</p>
+    <p><strong>CozyTerm is built from scratch.</strong> No OpenClaw, no LangChain, no AutoGen, no third-party agent frameworks. The entire agent loop, tool system, provider abstraction, TUI, engine daemon, and training pipeline are original code by <a href="https://engindearing.soy" target="_blank" style="color:var(--accent)">engindearing</a>. One monorepo, four packages, zero framework lock-in.</p>
   </div>
 </section>
 
@@ -1196,7 +1326,7 @@ function copyInstall(el, text) {
   }
 
   // Scroll-reveal for cards
-  var animated = document.querySelectorAll('.feature-card, .model-card, .forge-step');
+  var animated = document.querySelectorAll('.feature-card, .model-card, .forge-step, .engine-card');
   if (animated.length) {
     var cardObserver = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
