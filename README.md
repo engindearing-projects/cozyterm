@@ -13,12 +13,12 @@ CozyTerm connects to Jira, Slack, and GitHub through a custom-built gateway runn
 Requires [Bun](https://bun.sh) and macOS.
 
 ```bash
-git clone https://github.com/engindearing-projects/cozyterm.git
-cd cozyterm/cli && bun install && bun link
-engie init
+git clone https://github.com/engindearing-projects/engie.git
+cd engie/cli && bun install
+bun run bin/cozy.mjs init
 ```
 
-The setup wizard walks you through everything: prerequisites, Ollama install, API keys, launchd services, and a connectivity check. Picks up where it left off if you interrupt it.
+The setup wizard walks you through everything: global `engie` command, Ollama install, API keys, MCP bridge, launchd services, and a connectivity check. Picks up where it left off if you interrupt it.
 
 ## Usage
 
