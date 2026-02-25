@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CozyTerm - AI Project Manager in Your Terminal</title>
-  <meta name="description" content="CozyTerm is a Bun + Ink TUI that puts an AI project manager in your terminal. Built with React for the terminal, powered by Engie.">
+  <meta name="description" content="An AI project manager that lives in your terminal. Tracks projects across Jira and GitHub, remembers context, sends daily briefs, and routes tasks between Claude and Ollama.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -491,9 +491,14 @@
       border-color: var(--accent);
     }
 
-    .feature-icon {
-      font-size: 1.8rem;
-      margin-bottom: 16px;
+    .feature-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--cyan);
+      margin-bottom: 10px;
     }
 
     .feature-card h3 {
@@ -684,14 +689,14 @@
 
 <section class="hero">
   <div class="container">
-    <div class="hero-badge">v0.4.0 &mdash; Open Source</div>
+    <div class="hero-badge">v0.6.0 &mdash; Open Source</div>
     <h1>An AI project manager<br>that lives in your <span class="highlight">terminal</span></h1>
-    <p>I built Engie to track my projects, remember context across sessions, and coach me through blockers &mdash; all without leaving the terminal.</p>
+    <p>Tracks projects across Jira and GitHub, remembers context between sessions, sends morning briefs to Telegram, and routes tasks between Claude and a local Ollama model. Custom-built gateway, no third-party agent framework.</p>
 
     <div class="stack-tags">
       <span class="stack-tag">Bun</span>
       <span class="stack-tag">Ink / React</span>
-      <span class="stack-tag">OpenClaw</span>
+      <span class="stack-tag">Custom Gateway</span>
       <span class="stack-tag">SQLite + FTS5</span>
       <span class="stack-tag">Claude + Ollama</span>
     </div>
@@ -728,33 +733,33 @@
       <div class="terminal-body">
 
         <div class="term-banner">
-          <span class="iris">&#9673;</span> cozy <span class="version">v0.4.0</span>
-          <span class="context-line">Good morning, Grant. 3 observations today &middot; active: PORT-12, AD-1200</span>
-          <span class="tip-line">tip: /memory to search past context</span>
+          <span class="iris">&#9673;</span> cozy <span class="version">v0.6.0</span>
+          <span class="context-line">Good morning. 3 observations today &middot; active: PROJ-12, FEAT-7</span>
+          <span class="tip-line">tip: shift+tab for task panel</span>
         </div>
 
         <div class="term-chat">
           <div class="chat-bubble user">
             <div class="chat-role">you &gt;</div>
-            <div class="chat-text">what's blocking the portal launch? pull from memory</div>
+            <div class="chat-text">what's blocking the launch? pull from memory</div>
           </div>
           <div class="chat-bubble assistant">
             <div class="chat-role">engie</div>
             <div class="chat-text">
-              Pulled 4 observations from the last week. Here's the picture:
-              <span class="status-line"><span class="status-green">&#9679;</span> PORT-12 &mdash; normalization PRs drafted, 3 repos ready for review</span>
-              <span class="status-line"><span class="status-yellow">&#9679;</span> PORT-9 &mdash; blocked on AD-1200, env fix merged but needs redeploy</span>
-              <span class="status-line"><span class="status-red">&#9679;</span> PORT-15 &mdash; can't start until PORT-9 clears</span>
-              <span class="status-line" style="margin-top:6px;">The critical path is PORT-9 &rarr; PORT-15 &rarr; go-live. Want me to draft a standup update or file a follow-up?</span>
+              Found 4 observations from the last week:
+              <span class="status-line"><span class="status-green">&#9679;</span> PROJ-12 &mdash; normalization PRs drafted, 3 repos ready for review</span>
+              <span class="status-line"><span class="status-yellow">&#9679;</span> FEAT-7 &mdash; blocked on env config, fix merged but needs redeploy</span>
+              <span class="status-line"><span class="status-red">&#9679;</span> PROJ-15 &mdash; depends on FEAT-7, can't start yet</span>
+              <span class="status-line" style="margin-top:6px;">Critical path is FEAT-7 &rarr; PROJ-15 &rarr; go-live. Want me to draft a standup update?</span>
             </div>
           </div>
         </div>
 
         <div class="term-suggestions">
-          <div class="term-chip">/memory PORT-9</div>
-          <div class="term-chip selected">/status</div>
+          <div class="term-chip">/memory FEAT-7</div>
+          <div class="term-chip selected">/todo add follow up on redeploy</div>
           <div class="term-chip">/observe blocker resolved</div>
-          <div class="term-chip">/coach</div>
+          <div class="term-chip">/status</div>
         </div>
 
         <div class="term-status-bar">
@@ -777,38 +782,38 @@
 
 <section class="features" id="features">
   <div class="container">
-    <h2>What's inside</h2>
-    <p class="subtitle">Built with Bun + Ink (React for the terminal). Every feature ships today.</p>
+    <h2>What you get</h2>
+    <p class="subtitle">Everything runs locally on your Mac. No hosted services, no data leaving your machine.</p>
     <div class="feature-grid">
       <div class="feature-card">
-        <div class="feature-icon">&#128024;</div>
-        <h3>Persistent memory</h3>
-        <p>SQLite database with FTS5 full-text search. Decisions, blockers, and context are captured automatically from every conversation. Use <code>/memory</code> to search or <code>/observe</code> to save notes.</p>
+        <div class="feature-label">memory</div>
+        <h3>Remembers everything</h3>
+        <p>SQLite database with full-text search. Decisions, blockers, and ticket references get captured automatically from conversations. Search with <code>/memory</code> or save notes with <code>/observe</code>.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">&#128172;</div>
-        <h3>Coaching mode</h3>
-        <p>Toggle <code>/coach</code> for warm, plain-language explanations. Use <code>/explain</code> for any concept. Engie uses analogies first, then shows the technical details.</p>
+        <div class="feature-label">routing</div>
+        <h3>Picks the right model</h3>
+        <p>Complex tasks (refactoring, multi-file edits) go to Claude through your existing subscription. Quick stuff (status checks, summaries) runs on Ollama locally for free. The router decides automatically.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">&#9889;</div>
-        <h3>Dual model routing</h3>
-        <p>Claude handles complex tasks through the proxy. Ollama runs locally on Apple Silicon for quick lookups at zero cost. The gateway routes automatically.</p>
+        <div class="feature-label">tasks</div>
+        <h3>Task panel and todos</h3>
+        <p>Press Shift+Tab to open the task panel. See active tool calls, your todo list, and recent observations at a glance. Manage todos with <code>/todo add</code> and <code>/todo done</code>.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">&#128736;</div>
-        <h3>10-step setup wizard</h3>
-        <p><code>cozy init</code> checks prerequisites, installs OpenClaw + Ollama, configures API keys, sets up launchd services, and runs a health check. Resumes if interrupted.</p>
+        <div class="feature-label">coaching</div>
+        <h3>Explains things clearly</h3>
+        <p>Toggle <code>/coach</code> for warmer explanations. <code>/explain</code> breaks down any concept in plain language first, then shows the technical details.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">&#128203;</div>
-        <h3>Context-aware banner</h3>
-        <p>The iris pulse shows Engie is alive. Below it: personalized greeting, today's observation count, active Jira tickets, and rotating tips. Updates every session.</p>
+        <div class="feature-label">briefs</div>
+        <h3>Morning updates</h3>
+        <p>Cron jobs check your Jira boards and GitHub activity every morning. You get a formatted brief on Telegram before your first coffee. Afternoon follow-ups catch anything that changed.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">&#128268;</div>
-        <h3>Self-diagnosing</h3>
-        <p><code>cozy doctor</code> checks every service, config file, and directory. <code>--fix</code> auto-restarts unhealthy services, creates missing paths, and rotates logs.</p>
+        <div class="feature-label">diagnostics</div>
+        <h3>Fixes itself</h3>
+        <p><code>cozy doctor</code> checks every service, config file, and directory. Add <code>--fix</code> to auto-restart unhealthy services, create missing paths, and rotate logs.</p>
       </div>
     </div>
   </div>
@@ -820,18 +825,18 @@
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
-        <h3>Clone &amp; install</h3>
+        <h3>Clone and install</h3>
         <p><code>git clone</code> the repo, then <code>bun install && bun link</code> from the <code>cli/</code> directory.</p>
       </div>
       <div class="step">
         <div class="step-num">2</div>
-        <h3>Setup wizard</h3>
-        <p><code>cozy init</code> walks through 10 steps: installs deps, configures keys, starts services.</p>
+        <h3>Run the wizard</h3>
+        <p><code>cozy init</code> installs Ollama, configures API keys, and starts launchd services. Picks up where it left off if interrupted.</p>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <h3>Start talking</h3>
-        <p>Type <code>cozy</code> to open the TUI, or <code>cozy "your question"</code> for a quick one-shot answer.</p>
+        <p>Type <code>cozy</code> to open the TUI, or <code>cozy "your question"</code> for a quick answer from the command line.</p>
       </div>
     </div>
   </div>
@@ -840,7 +845,7 @@
 <footer>
   <div class="container">
     <p>
-      Built by <a href="https://engindearing.soy" target="_blank">engindearing</a> &bull;
+      Built by <a href="https://engindearing.com" target="_blank">engindearing</a> &bull;
       <a href="https://github.com/engindearing-projects/cozyterm" target="_blank">GitHub</a> &bull;
       MIT License
     </p>
