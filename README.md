@@ -15,7 +15,7 @@ Requires [Bun](https://bun.sh) and macOS.
 ```bash
 git clone https://github.com/engindearing-projects/cozyterm.git
 cd cozyterm/cli && bun install && bun link
-cozy init
+engie init
 ```
 
 The setup wizard walks you through everything: prerequisites, Ollama install, API keys, launchd services, and a connectivity check. Picks up where it left off if you interrupt it.
@@ -23,12 +23,12 @@ The setup wizard walks you through everything: prerequisites, Ollama install, AP
 ## Usage
 
 ```bash
-cozy                               # interactive TUI
-cozy "what's blocking PORT-9?"     # one-shot, then exit
-cozy status                        # service health
-cozy doctor --fix                  # diagnose and auto-repair
-cozy observe "switched to FTS5"    # save a note
-cozy start / cozy stop             # manage services
+engie                              # interactive TUI
+engie"what's blocking PORT-9?"     # one-shot, then exit
+engiestatus                        # service health
+engiedoctor --fix                  # diagnose and auto-repair
+engieobserve "switched to FTS5"    # save a note
+engiestart / engiestop             # manage services
 ```
 
 ## Commands
@@ -58,10 +58,10 @@ Press **Shift+Tab** to toggle the task panel — shows active tool calls, your t
 - **Task panel** — Shift+Tab opens a side panel showing what's in progress, your todo list, and recent context
 - **Coaching mode** — `/coach` for warmer explanations, `/explain` for plain-language breakdowns of any concept
 - **Morning briefs** — Cron jobs check Jira and GitHub every morning, send a summary to Telegram
-- **Self-diagnosing** — `cozy doctor` checks services, configs, and directories. `--fix` auto-repairs what it can
+- **Self-diagnosing** — `engiedoctor` checks services, configs, and directories. `--fix` auto-repairs what it can
 - **Web dashboard** — Browser-based chat and memory browser that connects to the same gateway
 - **MCP bridge** — Exposes Engie as an MCP server so other AI tools can call into it
-- **One-shot mode** — `cozy "question"` for quick scripted answers
+- **One-shot mode** — `engie"question"` for quick scripted answers
 
 ## Stack
 
