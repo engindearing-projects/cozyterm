@@ -1,0 +1,251 @@
+{
+  "version": 1,
+  "jobs": [
+    {
+      "id": "6f977d1c-a2e2-45f3-baea-d90ceae75293",
+      "agentId": "engie",
+      "name": "Morning Brief",
+      "enabled": true,
+      "createdAtMs": 1771289943856,
+      "updatedAtMs": 1771948819519,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 8 * * 1-5",
+        "tz": "America/Los_Angeles"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Morning brief time. Do the following:\n1. Check all configured Jira boards for: overdue tickets, tickets due this week, in-progress tickets with no recent updates (48h+), and any high-priority items.\n2. Check recent GitHub activity on tracked repos — any overnight PRs merged, CI failures, deploys.\n3. Pull top 3 most urgent action items.\n4. Check memory for yesterday's notes for continuity.\n5. Deliver a concise morning brief via Telegram in this format:\n\n☀️ Morning Brief — [Day Date]\n\n🔴 Top Priority Today\n1. [Most urgent item + due date]\n2. [Second]\n3. [Third]\n\n⚠️ Blockers\n- [Blocked tickets or stale items]\n\n📅 Due This Week\n- [Tickets due in next 5 days]\n\nKeep it under 300 words. Lead with what needs action today.\n\n6. For each finding (blockers, task updates, insights), call engie_observe with the appropriate type, summary, and tags (e.g. ticket IDs). This stores structured data in memory for future context."
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "bestEffort": true
+      },
+      "state": {
+        "nextRunAtMs": 1772035200000,
+        "lastRunAtMs": 1771948800020,
+        "lastStatus": "ok",
+        "lastDurationMs": 19499,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "b3a67c67-3045-405a-bdb4-9e17ed076aae",
+      "agentId": "engie",
+      "name": "Afternoon Follow-up",
+      "enabled": true,
+      "createdAtMs": 1771289950483,
+      "updatedAtMs": 1771970419499,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 14 * * 1-5",
+        "tz": "America/Los_Angeles"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Afternoon follow-up. Check for any new Jira updates since this morning. If workspace/HANDOFF.md exists and has pending work, continue it. For each status change or finding, call engie_observe with the appropriate type (task_update, blocker, insight), a concise summary, and relevant tags (ticket IDs). This stores structured data in memory for future context."
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "bestEffort": true
+      },
+      "state": {
+        "nextRunAtMs": 1772056800000,
+        "lastRunAtMs": 1771970400011,
+        "lastStatus": "ok",
+        "lastDurationMs": 19488,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "6e6b342d-20c6-4dfb-b873-edd38e340948",
+      "agentId": "engie",
+      "name": "Research Report Delivery",
+      "enabled": true,
+      "createdAtMs": 1771483926790,
+      "updatedAtMs": 1771947019526,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 7 * * *",
+        "tz": "America/Los_Angeles"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Check if /Users/grantjwylie/.openclaw/workspace/research/DONE.md exists. If it does, read research/overnight-report.md and research/anthropic-job-hunt.md and send J a Telegram message. Format:\n\n🔬 Overnight Research Ready\n\n🎯 Anthropic Path — Top Actions\n[Top 3 most actionable concrete steps from anthropic-job-hunt.md]\n\n📊 Project Market Analysis\n[1-2 sentence summary per project from overnight-report.md]\n\n📁 Full reports in workspace/research/\n\nIf DONE.md does NOT exist, send: ⏳ Research still running — full report coming in morning brief."
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "bestEffort": true
+      },
+      "state": {
+        "nextRunAtMs": 1772033400000,
+        "lastRunAtMs": 1771947000012,
+        "lastStatus": "ok",
+        "lastDurationMs": 19514,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "f71c7e02-68ae-4c34-83b6-4e67e087e83f",
+      "agentId": "engie",
+      "name": "Devops Thread Monitor — Patient Portal Blockers",
+      "enabled": false,
+      "createdAtMs": 1771529700000,
+      "updatedAtMs": 1771617361204,
+      "schedule": {
+        "kind": "cron",
+        "expr": "*/30 8-18 * * 1-5",
+        "tz": "America/Los_Angeles"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Check Slack thread for new replies. Channel: C05LSEMPMDG, thread_ts: 1771529551.687709. This is a thread in #devops asking about patient portal blockers (PR #483, AD-1205, AD-1206).\n\n1. Call slack_get_thread_replies for channel C05LSEMPMDG thread 1771529551.687709\n2. Count the replies. The thread was created with 2 bot messages (the original post + a links reply). Any messages beyond those 2 are new human replies.\n3. If there are new replies, send Grant a Telegram message with the content:\n\n📬 New reply in #devops patient portal thread\n\n[Quote each new reply with the author and text]\n\nIf no new replies, do nothing — no Telegram message needed.\n\nIMPORTANT: This is a temporary monitor. Once all 3 items (PR #483 merged, AD-1205 done, AD-1206 done) are resolved, disable this job by noting it in your response."
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "bestEffort": true
+      },
+      "state": {
+        "lastRunAtMs": 1771615800025,
+        "lastStatus": "ok",
+        "lastDurationMs": 14256,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "f38695fa-88c1-443f-a4df-a47835ebf22e",
+      "agentId": "engie",
+      "name": "Amatya Thread Monitor — hos-portal-api PRs",
+      "enabled": false,
+      "createdAtMs": 1771530000000,
+      "updatedAtMs": 1771534851558,
+      "schedule": {
+        "kind": "cron",
+        "expr": "*/30 8-18 * * 1-5",
+        "tz": "America/Los_Angeles"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Check Slack thread for new replies. Channel: C0A7KA6RUQN, thread_ts: 1771529993.026749. This is a thread in #tech-hos-works asking the Amatya team to review hos-portal-api PRs #19 and #20 for the patient portal.\n\n1. Call slack_get_thread_replies for channel C0A7KA6RUQN thread 1771529993.026749\n2. Count the replies. The thread was created with 1 bot message (the original post). Any messages beyond that 1 are new human replies.\n3. If there are new replies, send Grant a Telegram message with the content:\n\n📬 New reply in #tech-hos-works patient portal PR review thread\n\n[Quote each new reply with the author and text]\n\nIf no new replies, do nothing — no Telegram message needed.\n\nIMPORTANT: This is a temporary monitor. Once both PRs (#19 and #20) are reviewed/merged, disable this job by noting it in your response."
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "bestEffort": true
+      },
+      "state": {
+        "lastRunAtMs": 1771534819028,
+        "lastStatus": "ok",
+        "lastDurationMs": 15388,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "a1b2c3d4-forge-nightly-training",
+      "agentId": "engie",
+      "name": "Forge Nightly Training",
+      "enabled": true,
+      "createdAtMs": 1771548000000,
+      "updatedAtMs": 1771946203810,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 2 * * *",
+        "tz": "America/Los_Angeles"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Forge nightly training check. Run this sequence:\n\n1. Read the forge DB stats by running: bun -e 'import { getForgeStats } from \"/Users/grantjwylie/engie/trainer/forge-db.js\"; console.log(JSON.stringify(getForgeStats()));'\n2. Check if unusedPairs >= 50. If not, report 'Not enough new pairs for training (N unused)' via Telegram and stop.\n3. If >= 50 pairs, FIRST unload all Ollama models to free VRAM:\n   curl -s http://localhost:11434/api/generate -d '{\"model\":\"engie-coder:latest\",\"keep_alive\":0}'\n   curl -s http://localhost:11434/api/generate -d '{\"model\":\"llama3.2\",\"keep_alive\":0}'\n   curl -s http://localhost:11434/api/generate -d '{\"model\":\"llama3.1\",\"keep_alive\":0}'\n4. Run the full training pipeline:\n   a. cd ~/engie/trainer && .venv/bin/python scripts/prepare-data.py\n   b. .venv/bin/python scripts/train.py\n   c. .venv/bin/python scripts/evaluate.py\n   d. .venv/bin/python scripts/fuse-and-deploy.py\n5. After deploy, run self-iterate benchmark to collect new training traces:\n   bun ~/engie/trainer/self-iterate.mjs --model engie-coder:latest\n6. Send a Telegram summary:\n\nForge Nightly Training Complete\nTraining: Version [version], Train loss [loss], [count] examples\nBenchmark: Overall [score]%, Change [+/-delta] vs previous\nSelf-Iterate: [passed]/[total] tasks\nModel: engie-coder:[version] deployed\n\nIf any step fails, report the error and which step failed via Telegram."
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "bestEffort": true
+      },
+      "state": {
+        "consecutiveErrors": 0,
+        "nextRunAtMs": 1772013600000,
+        "lastRunAtMs": 1771946184164,
+        "lastStatus": "ok",
+        "lastDurationMs": 19646
+      }
+    },
+    {
+      "id": "e5f6a7b8-forge-weekly-report",
+      "agentId": "engie",
+      "name": "Forge Weekly Report",
+      "enabled": true,
+      "createdAtMs": 1771548000000,
+      "updatedAtMs": 1771866600038,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9 * * 1",
+        "tz": "America/Los_Angeles"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Forge weekly report. Compile a comprehensive training status:\n\n1. Read forge DB stats: bun -e 'import { getForgeStats, getAllVersions, getAllRuns, getAllEvaluations } from \"/Users/grantjwylie/engie/trainer/forge-db.js\"; console.log(JSON.stringify({ stats: getForgeStats(), versions: getAllVersions(), runs: getAllRuns(), evals: getAllEvaluations() }));'\n2. Run a fresh benchmark: cd ~/engie/trainer && .venv/bin/python scripts/evaluate.py\n3. Send a Telegram report:\n\n📊 Forge Weekly Report\n\n🗂️ Data Collection\n- Total pairs: [N]\n- This week: [N new]\n- Categories: [breakdown]\n\n🏋️ Training History\n- Total runs: [N]\n- Latest: [version] ([date])\n- Best benchmark: [score]%\n\n📈 Improvement Trend\n[Version history with scores]\n\n🎯 Router Threshold\n- Current: [threshold]\n- Tasks routed to local: [%]\n\n💡 Recommendations\n[Suggest if more data needed, if threshold should adjust, etc.]\n\nKeep it under 500 words."
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "bestEffort": true
+      },
+      "state": {
+        "consecutiveErrors": 1,
+        "nextRunAtMs": 1772470800000,
+        "lastRunAtMs": 1771866000015,
+        "lastStatus": "error",
+        "lastDurationMs": 600023,
+        "lastError": "Error: cron: job execution timed out"
+      }
+    },
+    {
+      "id": "c3d2497e-6d8a-4f24-bf48-0de0f35fdd3a",
+      "name": "Deploy Thread Monitor — hos-portal-api dev redeploy",
+      "enabled": true,
+      "createdAtMs": 1771617861697,
+      "updatedAtMs": 1771979419229,
+      "schedule": {
+        "kind": "cron",
+        "expr": "*/30 8-18 * * 1-5",
+        "tz": "America/Los_Angeles"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Check Slack thread for new replies. Channel: C06FA42E8SK, thread_ts: 1771617837.420859. This is a thread in #tech-hos-deploy requesting a dev redeploy of hos-portal-api.\n\n1. Call slack_get_thread_replies for channel C06FA42E8SK thread 1771617837.420859\n2. The original message is the only one so far. Any additional messages are new replies.\n3. If there are new replies, send Grant a Telegram message:\n\n📬 Reply in #tech-hos-deploy (hos-portal-api redeploy)\n\n[Quote each new reply with the author and text]\n\n4. If someone confirms the deploy is done, note it in your response and this job can be disabled.\n\nIf no new replies, do nothing — no Telegram message needed."
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "bestEffort": true
+      },
+      "state": {
+        "nextRunAtMs": 1771981200000,
+        "lastRunAtMs": 1771979400015,
+        "lastStatus": "ok",
+        "lastDurationMs": 19214,
+        "consecutiveErrors": 0
+      }
+    }
+  ]
+}

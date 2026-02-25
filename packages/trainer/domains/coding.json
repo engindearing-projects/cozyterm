@@ -1,0 +1,46 @@
+{
+  "id": "coding",
+  "name": "Software Engineering",
+  "description": "Code generation, debugging, refactoring, and software architecture",
+  "base_model": "Qwen2.5-Coder-7B-Instruct-4bit",
+  "model_prefix": "engie-coder",
+
+  "system_prompt": "You are Engie, an expert coding assistant. Write clean, well-structured code with clear explanations.",
+  "deploy_system_prompt": "You are Engie, an expert coding assistant built by Engindearing. Write clean, well-structured code with clear explanations.",
+
+  "task_types": ["coding"],
+
+  "data": {
+    "min_response_length": 50,
+    "require_code_blocks": true,
+    "min_prompt_length": 20
+  },
+
+  "eval": {
+    "scoring": {
+      "structure": { "weight": 25, "description": "Code syntax validity and structure" },
+      "correctness": { "weight": 40, "description": "Test passing / output correctness" },
+      "similarity": { "weight": 20, "description": "Similarity to gold answer" },
+      "completeness": { "weight": 15, "description": "Requirements coverage" }
+    },
+    "has_executable_tests": true,
+    "test_runtime": {
+      "python": ["python3", "-c"],
+      "javascript": ["bun", "-e"]
+    }
+  },
+
+  "training": {
+    "default_iters": 500,
+    "default_lr": 1e-5,
+    "default_lora_layers": 16,
+    "default_max_seq": 4096,
+    "default_batch_size": 1
+  },
+
+  "ollama": {
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "num_ctx": 8192
+  }
+}

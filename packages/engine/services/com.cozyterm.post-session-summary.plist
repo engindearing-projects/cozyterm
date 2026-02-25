@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.cozyterm.post-session-summary</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/bun</string>
+        <string>post-session-summary.mjs</string>
+        <string>REPO_PATH</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>COZYTERM_SCRIPTS_DIR</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin</string>
+    </dict>
+
+    <key>StartInterval</key>
+    <integer>RUN_INTERVAL</integer>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>COZYTERM_LOG_DIR/post-session-summary.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>COZYTERM_LOG_DIR/post-session-summary.error.log</string>
+</dict>
+</plist>

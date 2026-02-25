@@ -1,0 +1,17 @@
+{
+  "name": "@cozyterm/trainer",
+  "version": "2.0.0",
+  "description": "Forge training pipeline — collect, prepare, train, deploy, eval",
+  "type": "module",
+  "scripts": {
+    "status": "bun run src/forge-cli.mjs status",
+    "train": "bun run src/forge-cli.mjs train",
+    "eval": "bun run src/forge-cli.mjs eval",
+    "serve": "bun run src/serve.mjs",
+    "typecheck": "echo 'trainer: mixed JS/TS (partial typecheck)'"
+  },
+  "dependencies": {
+    "@cozyterm/shared": "workspace:*",
+    "chalk": "^5.4.1"
+  }
+}

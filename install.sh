@@ -8,7 +8,7 @@
 set -euo pipefail
 
 REPO="https://github.com/engindearing-projects/cozyterm.git"
-BRANCH="v2-rewrite"
+BRANCH="main"
 INSTALL_DIR="${COZYTERM_DIR:-$HOME/.cozyterm}"
 BIN_DIR="${COZYTERM_BIN:-$HOME/.local/bin}"
 
@@ -100,7 +100,7 @@ cat > "$BIN_DIR/cozy" << 'WRAPPER'
 #!/usr/bin/env bash
 # CozyTerm launcher
 COZYTERM_DIR="${COZYTERM_DIR:-$HOME/.cozyterm}"
-exec bun run "$COZYTERM_DIR/bin/cozy.ts" "$@"
+exec bun run "$COZYTERM_DIR/packages/cli/bin/cozy.ts" "$@"
 WRAPPER
 chmod +x "$BIN_DIR/cozy"
 ok "Installed 'cozy' to $BIN_DIR/cozy"

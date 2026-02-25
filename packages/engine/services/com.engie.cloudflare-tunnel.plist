@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.engie.cloudflare-tunnel</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/grantjwylie/engie/scripts/start-tunnel.sh</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/grantjwylie/wyliewhimsyco</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>ENGIE_PROXY_PORT</key>
+        <string>18791</string>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+        <key>HOME</key>
+        <string>/Users/grantjwylie</string>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/grantjwylie/.openclaw/logs/tunnel-launchd.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/grantjwylie/.openclaw/logs/tunnel-launchd.error.log</string>
+
+    <key>ThrottleInterval</key>
+    <integer>30</integer>
+</dict>
+</plist>

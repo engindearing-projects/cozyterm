@@ -1,0 +1,18 @@
+{
+  "name": "@cozyterm/engine",
+  "version": "2.0.0",
+  "description": "Always-on AI brain — daemon, gateway, memory, autonomous agents",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run src/daemon/daemon.mjs",
+    "gateway": "bun run src/gateway.mjs",
+    "typecheck": "echo 'engine: JS-only (no typecheck)'"
+  },
+  "dependencies": {
+    "@cozyterm/shared": "workspace:*",
+    "@cozyterm/trainer": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "chalk": "^5.4.1",
+    "ws": "^8.18.0"
+  }
+}

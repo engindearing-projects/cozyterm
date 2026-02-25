@@ -1,34 +1,20 @@
 {
   "name": "cozyterm",
-  "version": "0.2.0",
-  "description": "AI coding agent for the terminal",
+  "version": "2.0.0",
+  "private": true,
+  "description": "AI coding agent for the terminal — gets better the more you use it",
   "type": "module",
-  "bin": {
-    "cozy": "./bin/cozy.ts"
-  },
+  "workspaces": [
+    "packages/cli",
+    "packages/engine",
+    "packages/trainer",
+    "packages/shared"
+  ],
   "scripts": {
-    "dev": "bun run bin/cozy.ts",
-    "build": "bun build bin/cozy.ts --outdir dist --target bun",
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@anthropic-ai/sdk": "^0.39.0",
-    "chalk": "^5.4.1",
-    "commander": "^13.1.0",
-    "glob": "^11.0.1",
-    "ink": "^5.1.0",
-    "ink-spinner": "^5.0.0",
-    "ink-text-input": "^6.0.0",
-    "openai": "^4.82.0",
-    "react": "^18.3.1",
-    "vscode-jsonrpc": "^8.2.1",
-    "vscode-languageserver-protocol": "^3.17.5",
-    "zod": "^3.24.2"
-  },
-  "devDependencies": {
-    "@types/bun": "^1.2.4",
-    "@types/react": "^18.3.18",
-    "typescript": "^5.7.3"
+    "dev": "bun run --filter '@cozyterm/cli' dev",
+    "dev:engine": "bun run --filter '@cozyterm/engine' dev",
+    "typecheck": "bun run --filter '*' typecheck",
+    "build": "bun run --filter '*' build"
   },
   "license": "MIT",
   "homepage": "https://cozyterm.com",

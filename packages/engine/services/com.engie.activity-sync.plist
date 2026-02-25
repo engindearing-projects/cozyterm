@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.engie.activity-sync</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/bun</string>
+        <string>run</string>
+        <string>activity-server.mjs</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>ENGIE_SCRIPTS_DIR</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>ACTIVITY_PORT</key>
+        <string>18790</string>
+        <key>ACTIVITY_BIND</key>
+        <string>0.0.0.0</string>
+        <key>PATH</key>
+        <string>/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin</string>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>ENGIE_LOG_DIR/activity-sync.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>ENGIE_LOG_DIR/activity-sync.error.log</string>
+
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+</dict>
+</plist>
