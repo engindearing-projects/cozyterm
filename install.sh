@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Engie installer
-# Usage: curl -fsSL https://cozyterm.com/install.sh | bash
+# Usage: curl -fsSL https://engie.engindearing.soy/install.sh | bash
 #
 # Installs:
 #   1. Engie brain (always-on AI assistant + self-improving models)
@@ -264,5 +264,5 @@ echo ""
 echo -e "  ${DIM}Every coding session trains your local models.${RESET}"
 echo -e "  ${DIM}Your code never leaves your machine.${RESET}"
 echo ""
-echo -e "  ${DIM}Docs: https://cozyterm.com${RESET}"
+echo -e "  ${DIM}Docs: https://engie.engindearing.soy${RESET}"
 echo ""
