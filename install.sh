@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Engie installer
-# Usage: curl -fsSL https://engie.engindearing.soy/install.sh | bash
+# Familiar installer
+# Usage: curl -fsSL https://familiar.run/install.sh | bash
 #
 # Installs:
-#   1. Engie brain (always-on AI assistant + self-improving models)
-#   2. OpenCode (terminal coding agent) — wired to engie
+#   1. Familiar (always-on AI companion + self-improving models)
+#   2. OpenCode (terminal coding agent) — wired to Familiar
 #   3. Ollama models (local, private)
 #
 # Requirements: macOS or Linux, git
@@ -13,8 +13,8 @@ set -euo pipefail
 
 REPO="https://github.com/engindearing-projects/cozyterm.git"
 BRANCH="main"
-INSTALL_DIR="${ENGIE_DIR:-$HOME/.engie}"
-BIN_DIR="${ENGIE_BIN:-$HOME/.local/bin}"
+INSTALL_DIR="${FAMILIAR_DIR:-$HOME/.familiar}"
+BIN_DIR="${FAMILIAR_BIN:-$HOME/.local/bin}"
 CONFIG_DIR="$HOME/.config/opencode"
 
 # Colors
@@ -32,8 +32,8 @@ warn()  { echo -e "${YELLOW}  $1${RESET}"; }
 err()   { echo -e "${RED}  $1${RESET}"; exit 1; }
 
 echo ""
-echo -e "${BOLD}  Engie Installer${RESET}"
-echo -e "${DIM}  AI that gets better the more you use it${RESET}"
+echo -e "${BOLD}  Familiar${RESET}"
+echo -e "${DIM}  AI that knows you${RESET}"
 echo ""
 
 # ── Step 1: Check OS ──────────────────────────────────────────────────────────
@@ -71,7 +71,7 @@ if ! command -v git &>/dev/null; then
   err "git is required. Install it and try again."
 fi
 
-# ── Step 4: Clone or update engie repo ────────────────────────────────────────
+# ── Step 4: Clone or update repo ─────────────────────────────────────────────
 if [ -d "$INSTALL_DIR/.git" ]; then
   info "Updating existing installation..."
   cd "$INSTALL_DIR"
@@ -85,7 +85,7 @@ else
     mv "$INSTALL_DIR" "${INSTALL_DIR}.bak.$(date +%s)"
   fi
 
-  info "Cloning Engie..."
+  info "Cloning Familiar..."
   git clone --branch "$BRANCH" --depth 1 "$REPO" "$INSTALL_DIR"
   ok "Cloned to $INSTALL_DIR"
 fi
@@ -105,17 +105,17 @@ else
   warn "OpenCode install may need PATH update (see below)"
 fi
 
-# ── Step 7: Wire OpenCode to Engie ───────────────────────────────────────────
+# ── Step 7: Wire OpenCode to Familiar ────────────────────────────────────────
 mkdir -p "$CONFIG_DIR/plugins"
 
-# OpenCode config — points at local Ollama models with engie MCP bridge
+# OpenCode config — points at local Ollama models with Familiar MCP bridge
 cat > "$CONFIG_DIR/opencode.json" << OCEOF
 {
   "\$schema": "https://opencode.ai/config.json",
   "provider": {
-    "engie": {
+    "familiar": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "Engie (local)",
+      "name": "Familiar (local)",
       "options": {
         "baseURL": "http://localhost:11434/v1"
       },
@@ -124,8 +124,8 @@ cat > "$CONFIG_DIR/opencode.json" << OCEOF
           "name": "Qwen 2.5 7B (orchestrator)",
           "limit": { "context": 32768, "output": 8192 }
         },
-        "engie-coder:latest": {
-          "name": "engie-coder (Forge-trained)",
+        "familiar-coder:latest": {
+          "name": "familiar-coder (Forge-trained)",
           "limit": { "context": 6144, "output": 2048 }
         },
         "llama3.2": {
@@ -135,9 +135,9 @@ cat > "$CONFIG_DIR/opencode.json" << OCEOF
       }
     }
   },
-  "model": "engie/qwen2.5:7b-instruct",
+  "model": "familiar/qwen2.5:7b-instruct",
   "mcp": {
-    "engie": {
+    "familiar": {
       "type": "local",
       "command": ["bun", "run", "$INSTALL_DIR/packages/engine/src/mcp-bridge/index.mjs"],
       "enabled": true,
@@ -147,10 +147,10 @@ cat > "$CONFIG_DIR/opencode.json" << OCEOF
   "theme": "dark"
 }
 OCEOF
-ok "OpenCode wired to Engie brain"
+ok "OpenCode wired to Familiar"
 
-# Engie sync plugin — logs OpenCode sessions to engie activity server
-cat > "$CONFIG_DIR/plugins/engie-sync.ts" << 'PLUGINEOF'
+# Familiar sync plugin — logs OpenCode sessions to activity server
+cat > "$CONFIG_DIR/plugins/familiar-sync.ts" << 'PLUGINEOF'
 const ACTIVITY_URL = process.env.ACTIVITY_URL || "http://localhost:18790";
 
 async function post(data: Record<string, unknown>) {
@@ -167,7 +167,7 @@ async function post(data: Record<string, unknown>) {
   } catch {}
 }
 
-export const EngieSync = async ({ directory }: any) => {
+export const FamiliarSync = async ({ directory }: any) => {
   const key = `opencode-${Date.now()}`;
   return {
     "session.created": async () => {
@@ -182,16 +182,16 @@ export const EngieSync = async ({ directory }: any) => {
 PLUGINEOF
 ok "Session sync plugin installed"
 
-# ── Step 8: Create engie wrapper ──────────────────────────────────────────────
+# ── Step 8: Create familiar wrapper ──────────────────────────────────────────
 mkdir -p "$BIN_DIR"
 
-cat > "$BIN_DIR/engie" << WRAPPER
+cat > "$BIN_DIR/familiar" << WRAPPER
 #!/usr/bin/env bash
-ENGIE_DIR="\${ENGIE_DIR:-\$HOME/.engie}"
-exec bun run "\$ENGIE_DIR/packages/cli/bin/cozy.ts" "\$@"
+FAMILIAR_DIR="\${FAMILIAR_DIR:-\$HOME/.familiar}"
+exec bun run "\$FAMILIAR_DIR/packages/cli/bin/cozy.ts" "\$@"
 WRAPPER
-chmod +x "$BIN_DIR/engie"
-ok "Installed 'engie' to $BIN_DIR/engie"
+chmod +x "$BIN_DIR/familiar"
+ok "Installed 'familiar' to $BIN_DIR/familiar"
 
 # ── Step 9: Check PATH ───────────────────────────────────────────────────────
 if [[ ":$PATH:" != *":$BIN_DIR:"* ]]; then
@@ -246,23 +246,23 @@ else
 fi
 
 # ── Step 11: Create data dirs ─────────────────────────────────────────────────
-mkdir -p "$HOME/.engie/forge"
-mkdir -p "$HOME/.engie/data"
-mkdir -p "$HOME/.engie/memory"
-mkdir -p "$HOME/.engie/logs"
+mkdir -p "$HOME/.familiar/forge"
+mkdir -p "$HOME/.familiar/data"
+mkdir -p "$HOME/.familiar/memory"
+mkdir -p "$HOME/.familiar/logs"
 
 # ── Done ─────────────────────────────────────────────────────────────────────
 echo ""
-echo -e "${BOLD}${GREEN}  Engie installed.${RESET}"
+echo -e "${BOLD}${GREEN}  Familiar installed.${RESET}"
 echo ""
 echo -e "  ${DIM}What you get:${RESET}"
-echo -e "    ${CYAN}opencode${RESET}              Coding agent (wired to engie)"
-echo -e "    ${CYAN}engie${RESET}                 Direct engie CLI"
-echo -e "    ${CYAN}engie engine start${RESET}    Start the always-on brain"
-echo -e "    ${CYAN}engie forge status${RESET}    Check model training stats"
+echo -e "    ${CYAN}opencode${RESET}              Coding agent (wired to Familiar)"
+echo -e "    ${CYAN}familiar${RESET}              Direct CLI"
+echo -e "    ${CYAN}familiar start${RESET}        Start the always-on brain"
+echo -e "    ${CYAN}familiar forge status${RESET}  Check model training stats"
 echo ""
-echo -e "  ${DIM}Every coding session trains your local models.${RESET}"
-echo -e "  ${DIM}Your code never leaves your machine.${RESET}"
+echo -e "  ${DIM}Every session teaches your models something new.${RESET}"
+echo -e "  ${DIM}Your data never leaves your machine.${RESET}"
 echo ""
-echo -e "  ${DIM}Docs: https://engie.engindearing.soy${RESET}"
+echo -e "  ${DIM}Docs: https://familiar.run${RESET}"
 echo ""

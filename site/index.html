@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Engie &mdash; AI That Gets Better The More You Use It</title>
-  <meta name="description" content="Engie is an open-source AI brain that installs alongside OpenCode. Every coding session trains your local models. Self-improving, private, built from scratch.">
-  <meta property="og:title" content="Engie &mdash; AI That Gets Better The More You Use It">
-  <meta property="og:description" content="Self-improving AI brain that powers OpenCode. Local models, private data, automatic training. No cloud lock-in.">
+  <title>Familiar &mdash; AI That Knows You</title>
+  <meta name="description" content="Familiar is an open-source AI companion that learns from everything you do. It installs alongside OpenCode, trains local models on your sessions, and gets smarter over time. Private, self-improving, yours.">
+  <meta property="og:title" content="Familiar &mdash; AI That Knows You">
+  <meta property="og:description" content="Self-improving AI companion. Local models, private data, automatic training. Learns things you didn't teach it.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://engie.engindearing.soy">
+  <meta property="og:url" content="https://familiar.run">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -854,7 +854,7 @@
 
 <nav>
   <div class="container">
-    <a href="/" class="logo">engie</a>
+    <a href="/" class="logo">familiar</a>
     <div class="links">
       <a href="#architecture">How it works</a>
       <a href="#features">Features</a>
@@ -871,9 +871,9 @@
 <section class="hero">
   <div class="container">
     <div class="hero-badge">Open Source &middot; MIT &middot; Runs 100% locally</div>
-    <h1>AI that <span class="highlight">gets better<br>the more you use it</span></h1>
-    <p class="tagline">Engie is an AI brain that powers your coding tools. Install it once &mdash; it installs <a href="https://opencode.ai" target="_blank" style="color:var(--cyan);text-decoration:none">OpenCode</a>, wires up local models, and starts learning from every session.</p>
-    <p class="moat">Every session trains your models. Your code makes them smarter. Your data never leaves your machine.</p>
+    <h1>AI that <span class="highlight">learns things<br>you didn't teach it</span></h1>
+    <p class="tagline">Familiar is an AI companion that lives on your machine. It installs alongside <a href="https://opencode.ai" target="_blank" style="color:var(--cyan);text-decoration:none">OpenCode</a>, trains local models on every session, and develops knowledge you never explicitly gave it.</p>
+    <p class="moat">The more you use it, the more it knows. Your data never leaves your machine.</p>
 
     <div class="stack-tags">
       <span class="stack-tag">OpenCode</span>
@@ -885,14 +885,14 @@
     </div>
 
     <div id="install" class="install-box">
-      <div class="install-cmd" onclick="copyInstall(this, 'curl -fsSL https://engie.engindearing.soy/install.sh | bash')">
+      <div class="install-cmd" onclick="copyInstall(this, 'curl -fsSL https://familiar.run/install.sh | bash')">
         <span class="tooltip">Copied!</span>
         <span class="prompt">$</span>
-        <span class="cmd">curl -fsSL engie.engindearing.soy/install.sh | bash</span>
+        <span class="cmd">curl -fsSL familiar.run/install.sh | bash</span>
         <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
       </div>
     </div>
-    <p class="install-note">Installs Engie + <a href="https://opencode.ai" target="_blank">OpenCode</a> + Ollama models &middot; macOS / Linux</p>
+    <p class="install-note">Installs Familiar + <a href="https://opencode.ai" target="_blank">OpenCode</a> + Ollama models &middot; macOS / Linux</p>
   </div>
 </section>
 
@@ -903,12 +903,12 @@
         <div class="terminal-dot red"></div>
         <div class="terminal-dot yellow"></div>
         <div class="terminal-dot green"></div>
-        <div class="terminal-title">opencode &mdash; ~/my-project &mdash; powered by engie</div>
+        <div class="terminal-title">opencode &mdash; ~/my-project &mdash; powered by familiar</div>
       </div>
       <div class="terminal-body">
         <div class="term-banner">
-          opencode <span class="version">v1.2</span> &middot; engie/qwen2.5:7b-instruct
-          <span class="context-line">MCP: engie (14 tools) &middot; LSP: typescript &middot; Forge: 47 pairs today</span>
+          opencode <span class="version">v1.2</span> &middot; familiar/qwen2.5:7b-instruct
+          <span class="context-line">MCP: familiar (14 tools) &middot; LSP: typescript &middot; Forge: 47 pairs today</span>
         </div>
         <div class="term-chat">
           <div class="chat-bubble user">
@@ -925,14 +925,14 @@
             <span class="tool-name">[edit]</span> src/components/LoginForm.tsx +42
           </div>
           <div class="chat-bubble assistant">
-            <div class="chat-role">engie</div>
+            <div class="chat-role">familiar</div>
             <div class="chat-text">
               Added email validation to <code>LoginForm.tsx</code>. The <code>handleSubmit</code> function now checks format before calling the API. LSP confirms zero errors. <em style="color:var(--text-dim)">(session logged to Forge)</em>
             </div>
           </div>
         </div>
         <div class="term-status-bar">
-          <span><span class="dot on"></span>engie brain</span>
+          <span><span class="dot on"></span>familiar</span>
           <span class="model-tag">model: qwen2.5:7b</span>
           <span class="model-tag">forge: training</span>
           <span class="session">turn 1 &middot; 847 tokens</span>
@@ -950,8 +950,8 @@
 <section class="moat-callout">
   <div class="container">
     <h2>The only AI that <span class="highlight">learns from you</span></h2>
-    <p>Other AI coding tools ship a frozen model. You use it, they get your data, the model never changes. <span class="emphasis">Engie is different.</span></p>
-    <p>The Forge&trade; pipeline captures every coding session as training data, fine-tunes your local models, and deploys them back &mdash; automatically. The more you code, the better your AI gets. <span class="emphasis">Your data stays on your machine. Your models improve for you.</span></p>
+    <p>Other AI tools ship a frozen model. You use it, they get your data, the model never changes. <span class="emphasis">Familiar is different.</span></p>
+    <p>The Forge&trade; pipeline captures every session as training data, fine-tunes your local models, and deploys them back &mdash; automatically. The more you work, the more it understands. Not just code &mdash; your patterns, your decisions, your thinking. <span class="emphasis">Your data stays on your machine. Your models improve for you.</span></p>
 
     <div class="moat-compare">
       <div class="moat-col them">
@@ -959,18 +959,18 @@
         <ul>
           <li>Static models, same for everyone</li>
           <li>Cloud API dependency</li>
-          <li>Your code sent to third parties</li>
+          <li>Your data sent to third parties</li>
           <li>Generic, one-size-fits-all</li>
           <li>No memory between sessions</li>
         </ul>
       </div>
       <div class="moat-col us">
-        <h4>Engie</h4>
+        <h4>Familiar</h4>
         <ul>
           <li>Models that learn your patterns</li>
           <li>Runs 100% locally via Ollama</li>
-          <li>Your code never leaves your machine</li>
-          <li>Adapts to your codebase and style</li>
+          <li>Your data never leaves your machine</li>
+          <li>Adapts to your style and thinking</li>
           <li>Persistent memory across all platforms</li>
         </ul>
       </div>
@@ -980,13 +980,13 @@
 
 <section class="architecture" id="architecture">
   <div class="container">
-    <h2>How Engie works</h2>
-    <p class="subtitle">Engie is the brain. OpenCode is the hands. Together they form a self-improving coding system that runs entirely on your machine.</p>
+    <h2>How Familiar works</h2>
+    <p class="subtitle">Familiar is the brain. OpenCode is the hands. Together they form a self-improving system that runs entirely on your machine.</p>
 
     <div class="arch-diagram">
       <div class="arch-brain">
-        <h3>Engie Brain</h3>
-        <p>Always-on AI that remembers everything, trains on every session, and gets smarter over time.</p>
+        <h3>Familiar</h3>
+        <p>Always-on AI companion that remembers everything, trains on every session, and develops knowledge you didn't give it.</p>
         <div class="brain-features">
           <div><span>~</span> Persistent memory (SQLite + FTS5)</div>
           <div><span>~</span> Multi-model routing</div>
@@ -1000,15 +1000,15 @@
       <div class="arch-interfaces">
         <div class="arch-interface">
           <h4>OpenCode <span class="tag tag-green">coding</span></h4>
-          <p>Terminal coding agent by the Charm team. Engie installs it, configures your local models as the provider, and connects via MCP so every tool call, file edit, and session is synced to the brain.</p>
+          <p>Terminal coding agent by the Charm team. Familiar installs it, configures your local models as the provider, and connects via MCP so every tool call, file edit, and session feeds back into the brain.</p>
         </div>
         <div class="arch-interface">
           <h4>Telegram / Slack <span class="tag tag-purple">channels</span></h4>
-          <p>Get notifications, morning briefs, PR summaries, and training reports. Ask Engie questions from your phone. All conversations feed back into model training.</p>
+          <p>Get notifications, morning briefs, PR summaries, and training reports. Ask Familiar questions from your phone. All conversations feed back into model training.</p>
         </div>
         <div class="arch-interface">
           <h4>MCP Bridge <span class="tag tag-cyan">14 tools</span></h4>
-          <p>Engie exposes 14 MCP tools: memory search, observations, system status, smart routing, and more. Any MCP-compatible client can connect to the brain.</p>
+          <p>Familiar exposes 14 MCP tools: memory search, observations, system status, smart routing, and more. Any MCP-compatible client can connect to the brain.</p>
         </div>
       </div>
     </div>
@@ -1020,19 +1020,19 @@
 <section class="features" id="features">
   <div class="container">
     <h2>What you get</h2>
-    <p class="subtitle">One install. Two powerful tools. Self-improving models.</p>
+    <p class="subtitle">One install. A companion that grows with you.</p>
     <div class="feature-grid">
       <div class="feature-card">
         <h3>OpenCode integration</h3>
-        <p>The installer sets up OpenCode with your local Ollama models as the provider and Engie as an MCP server. OpenCode handles the coding; Engie handles the learning.</p>
+        <p>The installer sets up OpenCode with your local Ollama models as the provider and Familiar as an MCP server. OpenCode handles the coding; Familiar handles the learning.</p>
       </div>
       <div class="feature-card">
         <h3>Self-improving models</h3>
-        <p>Every coding session generates training data. Forge fine-tunes your local models and deploys better versions. Version 1 was good. Version 15 knows your codebase.</p>
+        <p>Every session generates training data. Forge fine-tunes your local models and deploys better versions. Version 1 was generic. Version 15 knows how you think.</p>
       </div>
       <div class="feature-card">
         <h3>Persistent memory</h3>
-        <p>SQLite + full-text search. Engie remembers your decisions, blockers, preferences, and project context. Search across sessions with <code>engie_memory_search</code>.</p>
+        <p>SQLite + full-text search. Familiar remembers your decisions, blockers, preferences, and context. Search across sessions with <code>familiar_memory_search</code>.</p>
       </div>
       <div class="feature-card">
         <h3>Cross-platform sync</h3>
@@ -1044,7 +1044,7 @@
       </div>
       <div class="feature-card">
         <h3>100% private</h3>
-        <p>Models run on your machine via Ollama. Training happens locally. No data leaves your network. No API keys required for local operation. Your code, your models.</p>
+        <p>Models run on your machine via Ollama. Training happens locally. No data leaves your network. No API keys required for local operation. Your companion, your data.</p>
       </div>
     </div>
   </div>
@@ -1053,11 +1053,11 @@
 <section class="forge" id="forge">
   <div class="container">
     <h2>Forge&trade;: the training loop</h2>
-    <p class="subtitle">This is the moat. Every coding session feeds the pipeline. Your models get better automatically. Nobody else has this.</p>
+    <p class="subtitle">This is what makes Familiar alive. Every session feeds the pipeline. Your models develop understanding you never explicitly taught them.</p>
     <div class="forge-flow">
       <div class="forge-step">
         <div class="label">Collect</div>
-        <div class="desc">Every OpenCode session saved as JSONL training pairs</div>
+        <div class="desc">Every session saved as JSONL training pairs</div>
       </div>
       <span class="forge-arrow">&rarr;</span>
       <div class="forge-step">
@@ -1080,7 +1080,7 @@
         <div class="desc">Benchmark against previous versions</div>
       </div>
     </div>
-    <p class="forge-note">Manage with <code>engie forge status</code>, <code>engie forge train</code>, <code>engie forge eval</code>, <code>engie forge rollback</code></p>
+    <p class="forge-note">Manage with <code>familiar forge status</code>, <code>familiar forge train</code>, <code>familiar forge eval</code>, <code>familiar forge rollback</code></p>
   </div>
 </section>
 
@@ -1091,20 +1091,20 @@
       <div class="step">
         <div class="step-num">1</div>
         <h3>Install</h3>
-        <p>One command installs Engie, OpenCode, and wires them together. Pulls recommended Ollama models automatically.</p>
-        <code class="step-cmd">curl -fsSL engie.engindearing.soy/install.sh | bash</code>
+        <p>One command installs Familiar, OpenCode, and wires them together. Pulls recommended Ollama models automatically.</p>
+        <code class="step-cmd">curl -fsSL familiar.run/install.sh | bash</code>
       </div>
       <div class="step">
         <div class="step-num">2</div>
-        <h3>Code</h3>
-        <p>Open any project and run <code>opencode</code>. It's already configured with your local models and connected to the Engie brain.</p>
+        <h3>Use it</h3>
+        <p>Open any project and run <code>opencode</code>. It's already configured with your local models and connected to Familiar.</p>
         <code class="step-cmd">cd my-project && opencode</code>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <h3>Watch it learn</h3>
-        <p>After a few sessions, run Forge to train. Your model improves. Keep coding. Keep training. The loop never stops.</p>
-        <code class="step-cmd">engie forge train</code>
+        <p>After a few sessions, run Forge to train. Your models improve. Keep working. Keep training. It never stops learning.</p>
+        <code class="step-cmd">familiar forge train</code>
       </div>
     </div>
   </div>
@@ -1112,7 +1112,7 @@
 
 <section class="built-from-scratch">
   <div class="container">
-    <p><strong>Engie is built from scratch.</strong> No LangChain, no AutoGen, no third-party agent frameworks. The training pipeline, memory system, activity sync, MCP bridge, and model serving layer are all original code by <a href="https://engindearing.soy" target="_blank" style="color:var(--accent)">engindearing</a>. OpenCode handles the coding TUI because it's already the best terminal agent out there. We focus on making your models better.</p>
+    <p><strong>Familiar is built from scratch.</strong> No LangChain, no AutoGen, no third-party agent frameworks. The training pipeline, memory system, activity sync, MCP bridge, and model serving layer are all original code by <a href="https://engindearing.soy" target="_blank" style="color:var(--accent)">engindearing</a>. OpenCode handles the coding TUI because it's already the best terminal agent out there. We focus on making your AI smarter.</p>
   </div>
 </section>
 
