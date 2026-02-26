@@ -111,6 +111,13 @@
       text-align: center;
     }
 
+    .hero-logo {
+      display: block;
+      max-width: 280px;
+      margin: 0 auto 32px;
+      filter: drop-shadow(0 0 30px rgba(149, 199, 126, 0.3));
+    }
+
     .hero-badge {
       display: inline-block;
       padding: 6px 16px;
@@ -870,6 +877,7 @@
 
 <section class="hero">
   <div class="container">
+    <img src="familiar-logo.png" alt="Familiar — ASCII wolf with glowing eyes" class="hero-logo">
     <div class="hero-badge">Open Source &middot; MIT &middot; Runs 100% locally</div>
     <h1>AI that <span class="highlight">learns things<br>you didn't teach it</span></h1>
     <p class="tagline">Familiar is an AI companion that lives on your machine. It installs alongside <a href="https://opencode.ai" target="_blank" style="color:var(--cyan);text-decoration:none">OpenCode</a>, trains local models on every session, and develops knowledge you never explicitly gave it.</p>
