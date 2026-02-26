@@ -1,7 +1,7 @@
 // Status bar — shows model, tokens, session info at the bottom
 
 import React from "react";
-import { Box, Text } from "ink";
+import { Box, Text, useStdout } from "ink";
 import type { Theme } from "../themes/theme.js";
 
 interface StatusBarProps {
@@ -25,6 +25,8 @@ export function StatusBar({
   forgeStats,
   lspServers,
 }: StatusBarProps) {
+  const { stdout } = useStdout();
+  const cols = stdout?.columns || 80;
   const totalTokens = tokens.input + tokens.output;
   const tokenStr =
     totalTokens > 0 ? `${(totalTokens / 1000).toFixed(1)}k tokens` : "";
@@ -35,6 +37,7 @@ export function StatusBar({
       borderColor={theme.borderDim}
       paddingX={1}
       justifyContent="space-between"
+      width={cols}
     >
       <Box gap={2}>
         <Text color={theme.accent} bold>

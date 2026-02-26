@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CozyTerm&trade; - AI Coding Agent for the Terminal</title>
-  <meta name="description" content="CozyTerm is an open-source AI coding agent that gets smarter the more you use it. Multi-model architecture, LSP integration, and the Forge self-training pipeline. No cloud dependency. Your code, your models.">
-  <meta property="og:title" content="CozyTerm&trade; - The AI Coding Agent That Gets Better The More You Use It">
-  <meta property="og:description" content="Open-source AI coding agent. Multi-model, LSP-aware, self-improving via Forge. Built from scratch — no cloud lock-in, no third-party agent frameworks.">
+  <title>Engie &mdash; AI That Gets Better The More You Use It</title>
+  <meta name="description" content="Engie is an open-source AI brain that installs alongside OpenCode. Every coding session trains your local models. Self-improving, private, built from scratch.">
+  <meta property="og:title" content="Engie &mdash; AI That Gets Better The More You Use It">
+  <meta property="og:description" content="Self-improving AI brain that powers OpenCode. Local models, private data, automatic training. No cloud lock-in.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://cozyterm.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +14,6 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* CozyTerm warm palette */
       --bg: #1A1410;
       --bg-card: #221C16;
       --bg-terminal: #181210;
@@ -73,8 +72,7 @@
       text-decoration: none;
     }
 
-    .logo span { color: var(--text-dim); }
-    .logo .tm { font-size: 0.6rem; vertical-align: super; color: var(--text-dim); }
+    .logo span { color: var(--text-dim); font-weight: 400; }
 
     nav .links {
       display: flex;
@@ -142,7 +140,7 @@
     .hero p.tagline {
       font-size: 1.15rem;
       color: var(--text-dim);
-      max-width: 640px;
+      max-width: 660px;
       margin: 0 auto 16px;
     }
 
@@ -231,23 +229,9 @@
 
     .install-cmd.copied .tooltip { opacity: 1; }
 
-    .install-or {
-      font-size: 0.8rem;
-      color: var(--espresso);
-      font-weight: 500;
-    }
-
     .install-note {
       font-size: 0.85rem;
       color: var(--text-dim);
-    }
-
-    .install-note code {
-      font-family: 'JetBrains Mono', monospace;
-      background: var(--bg-card);
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 0.8rem;
     }
 
     .install-note a {
@@ -319,7 +303,6 @@
       color: var(--text-dim);
       font-size: 0.72rem;
       margin-top: 2px;
-      padding-left: 2px;
     }
 
     .term-chat {
@@ -373,7 +356,6 @@
     }
 
     .tool-call .tool-name { color: var(--cyan); }
-    .tool-call .tool-detail { color: var(--text-dim); }
 
     .term-status-bar {
       padding: 6px 16px;
@@ -396,11 +378,7 @@
 
     .term-status-bar .dot.on { background: var(--green); }
     .term-status-bar .model-tag { color: var(--purple); }
-
-    .term-status-bar .session {
-      margin-left: auto;
-      color: var(--text-dim);
-    }
+    .term-status-bar .session { margin-left: auto; }
 
     .term-input {
       padding: 8px 16px;
@@ -410,17 +388,13 @@
       gap: 8px;
     }
 
-    .term-input .prompt-sign {
-      color: var(--accent);
-      font-weight: 700;
-    }
+    .term-input .prompt-sign { color: var(--accent); font-weight: 700; }
 
     .term-input .input-cursor {
       display: inline-block;
       width: 7px;
       height: 14px;
       background: var(--accent);
-      vertical-align: middle;
       animation: typing-cursor 1s step-end infinite;
     }
 
@@ -429,7 +403,7 @@
       font-size: 0.75rem;
     }
 
-    /* Moat callout */
+    /* Sections */
     .moat-callout {
       padding: 60px 0;
       border-top: 1px solid var(--border);
@@ -455,10 +429,7 @@
       margin: 0 auto 12px;
     }
 
-    .moat-callout .emphasis {
-      color: var(--text);
-      font-weight: 600;
-    }
+    .moat-callout .emphasis { color: var(--text); font-weight: 600; }
 
     .moat-compare {
       display: grid;
@@ -486,34 +457,14 @@
 
     .moat-col.them h4 { color: var(--text-dim); }
     .moat-col.us h4 { color: var(--accent); }
-
-    .moat-col ul {
-      list-style: none;
-      font-size: 0.85rem;
-    }
-
-    .moat-col ul li {
-      padding: 4px 0;
-      color: var(--text-dim);
-    }
-
-    .moat-col ul li::before {
-      margin-right: 8px;
-    }
-
-    .moat-col.them ul li::before {
-      content: "—";
-      color: var(--espresso);
-    }
-
-    .moat-col.us ul li::before {
-      content: "~";
-      color: var(--green);
-    }
-
+    .moat-col ul { list-style: none; font-size: 0.85rem; }
+    .moat-col ul li { padding: 4px 0; color: var(--text-dim); }
+    .moat-col ul li::before { margin-right: 8px; }
+    .moat-col.them ul li::before { content: "\2014"; color: var(--espresso); }
+    .moat-col.us ul li::before { content: "~"; color: var(--green); }
     .moat-col.us ul li { color: var(--text); }
 
-    /* Architecture section */
+    /* Architecture */
     .architecture {
       padding: 80px 0;
       border-top: 1px solid var(--border);
@@ -532,47 +483,86 @@
       margin-bottom: 48px;
     }
 
-    .model-grid {
+    .arch-diagram {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 24px;
+      grid-template-columns: 1fr 2fr;
+      gap: 32px;
+      margin-bottom: 32px;
+      align-items: start;
     }
 
-    .model-card {
+    .arch-brain {
+      background: var(--bg-card);
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+    }
+
+    .arch-brain h3 {
+      color: var(--accent);
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .arch-brain p {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+    }
+
+    .arch-brain .brain-features {
+      text-align: left;
+      font-size: 0.82rem;
+    }
+
+    .arch-brain .brain-features div {
+      padding: 4px 0;
+      color: var(--text);
+    }
+
+    .arch-brain .brain-features span {
+      color: var(--green);
+      margin-right: 6px;
+    }
+
+    .arch-interfaces {
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .arch-interface {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 24px 20px;
-      text-align: center;
+      padding: 20px;
       transition: border-color 0.2s;
     }
 
-    .model-card:hover { border-color: var(--accent); }
+    .arch-interface:hover { border-color: var(--accent); }
 
-    .model-role {
+    .arch-interface h4 {
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .arch-interface h4 .tag {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 8px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      vertical-align: middle;
     }
 
-    .model-card:nth-child(1) .model-role { color: var(--highlight); }
-    .model-card:nth-child(2) .model-role { color: var(--accent); }
-    .model-card:nth-child(3) .model-role { color: var(--purple); }
-    .model-card:nth-child(4) .model-role { color: var(--cyan); }
+    .tag-green { background: var(--green-dim); color: var(--green); }
+    .tag-purple { background: rgba(184, 169, 201, 0.15); color: var(--purple); }
+    .tag-cyan { background: rgba(126, 200, 200, 0.15); color: var(--cyan); }
 
-    .model-name {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    .model-desc {
-      font-size: 0.8rem;
+    .arch-interface p {
+      font-size: 0.82rem;
       color: var(--text-dim);
     }
 
@@ -631,8 +621,6 @@
       color: var(--text);
     }
 
-    .feature-card h3 .icon { margin-right: 8px; }
-
     .feature-card p {
       color: var(--text-dim);
       font-size: 0.88rem;
@@ -647,53 +635,7 @@
       color: var(--highlight);
     }
 
-    /* How it works */
-    .how-it-works {
-      padding: 80px 0;
-      border-top: 1px solid var(--border);
-    }
-
-    .how-it-works h2 {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 48px;
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
-    }
-
-    .step { text-align: center; }
-
-    .step-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 48px;
-      height: 48px;
-      background: var(--accent-glow);
-      border: 2px solid var(--accent);
-      border-radius: 50%;
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 16px;
-    }
-
-    .step h3 { margin-bottom: 8px; }
-    .step p { color: var(--text-dim); font-size: 0.9rem; }
-
-    .step code {
-      font-family: 'JetBrains Mono', monospace;
-      background: var(--bg-card);
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 0.85rem;
-    }
-
-    /* Forge section */
+    /* Forge */
     .forge {
       padding: 80px 0;
       border-top: 1px solid var(--border);
@@ -746,10 +688,7 @@
       margin-top: 4px;
     }
 
-    .forge-arrow {
-      color: var(--espresso);
-      font-size: 1.2rem;
-    }
+    .forge-arrow { color: var(--espresso); font-size: 1.2rem; }
 
     .forge-note {
       text-align: center;
@@ -765,9 +704,50 @@
       font-size: 0.8rem;
     }
 
-    /* 4-col steps */
-    .steps-4 {
-      grid-template-columns: repeat(4, 1fr);
+    /* How it works */
+    .how-it-works {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .how-it-works h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 48px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .step { text-align: center; }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background: var(--accent-glow);
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .step h3 { margin-bottom: 8px; }
+    .step p { color: var(--text-dim); font-size: 0.9rem; }
+
+    .step code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-card);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
     }
 
     .step-cmd {
@@ -780,73 +760,6 @@
       font-size: 0.75rem;
       color: var(--text-dim);
       word-break: break-all;
-    }
-
-    /* Engine section */
-    .engine-section {
-      padding: 80px 0;
-      border-top: 1px solid var(--border);
-    }
-
-    .engine-section h2 {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 12px;
-    }
-
-    .engine-section .subtitle {
-      text-align: center;
-      color: var(--text-dim);
-      font-size: 1rem;
-      margin-bottom: 48px;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .engine-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      margin-bottom: 32px;
-    }
-
-    .engine-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
-      transition: border-color 0.2s;
-    }
-
-    .engine-card:hover { border-color: var(--accent); }
-
-    .engine-card h3 {
-      font-size: 1rem;
-      margin-bottom: 8px;
-      color: var(--text);
-    }
-
-    .engine-card p {
-      font-size: 0.85rem;
-      color: var(--text-dim);
-    }
-
-    .engine-cmds {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .engine-cmds code {
-      font-family: 'JetBrains Mono', monospace;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-size: 0.78rem;
-      color: var(--text-dim);
     }
 
     /* Built from scratch */
@@ -875,23 +788,10 @@
       text-align: center;
     }
 
-    footer p {
-      color: var(--text-dim);
-      font-size: 0.85rem;
-    }
-
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
+    footer p { color: var(--text-dim); font-size: 0.85rem; }
+    footer a { color: var(--accent); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
-
-    footer .legal {
-      margin-top: 8px;
-      font-size: 0.75rem;
-      color: var(--espresso);
-    }
+    footer .legal { margin-top: 8px; font-size: 0.75rem; color: var(--espresso); }
 
     /* Animations */
     @keyframes typing-cursor {
@@ -909,75 +809,44 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Terminal animation states */
     .terminal-window.anim-ready .chat-bubble.user .chat-text {
-      overflow: hidden;
-      white-space: nowrap;
-      width: 0;
+      overflow: hidden; white-space: nowrap; width: 0;
     }
-
     .terminal-window.anim-ready .chat-bubble.assistant,
-    .terminal-window.anim-ready .tool-call {
-      opacity: 0;
-    }
-
+    .terminal-window.anim-ready .tool-call { opacity: 0; }
     .terminal-window.anim-playing .chat-bubble.user .chat-text {
       animation: typingWidth 1.4s steps(40, end) 0.3s forwards;
     }
+    @keyframes typingWidth { from { width: 0; } to { width: 100%; } }
+    .terminal-window.anim-playing .tool-call:nth-child(1) { animation: fadeIn 0.4s ease 2s forwards; }
+    .terminal-window.anim-playing .tool-call:nth-child(2) { animation: fadeIn 0.4s ease 2.3s forwards; }
+    .terminal-window.anim-playing .tool-call:nth-child(3) { animation: fadeIn 0.4s ease 2.6s forwards; }
+    .terminal-window.anim-playing .chat-bubble.assistant { animation: fadeIn 0.6s ease 3.2s forwards; }
 
-    @keyframes typingWidth {
-      from { width: 0; }
-      to   { width: 100%; }
-    }
-
-    .terminal-window.anim-playing .tool-call:nth-child(1) {
-      animation: fadeIn 0.4s ease 2s forwards;
-    }
-    .terminal-window.anim-playing .tool-call:nth-child(2) {
-      animation: fadeIn 0.4s ease 2.3s forwards;
-    }
-    .terminal-window.anim-playing .tool-call:nth-child(3) {
-      animation: fadeIn 0.4s ease 2.6s forwards;
-    }
-
-    .terminal-window.anim-playing .chat-bubble.assistant {
-      animation: fadeIn 0.6s ease 3.2s forwards;
-    }
-
-    /* Scroll reveal */
-    .feature-card, .model-card, .forge-step, .engine-card {
+    .feature-card, .forge-step, .arch-interface {
       opacity: 0;
       transform: translateY(24px);
     }
-
-    .feature-card.visible, .model-card.visible, .forge-step.visible, .engine-card.visible {
+    .feature-card.visible, .forge-step.visible, .arch-interface.visible {
       animation: fadeInUp 0.5s ease forwards;
     }
-
-    .feature-card:nth-child(2).visible, .model-card:nth-child(2).visible { animation-delay: 0.1s; }
-    .feature-card:nth-child(3).visible, .model-card:nth-child(3).visible { animation-delay: 0.2s; }
-    .feature-card:nth-child(4).visible, .model-card:nth-child(4).visible { animation-delay: 0.3s; }
+    .feature-card:nth-child(2).visible { animation-delay: 0.1s; }
+    .feature-card:nth-child(3).visible { animation-delay: 0.2s; }
+    .feature-card:nth-child(4).visible { animation-delay: 0.3s; }
     .feature-card:nth-child(5).visible { animation-delay: 0.4s; }
     .feature-card:nth-child(6).visible { animation-delay: 0.5s; }
 
-    /* Responsive */
     @media (max-width: 768px) {
-      .model-grid { grid-template-columns: repeat(2, 1fr); }
+      .arch-diagram { grid-template-columns: 1fr; }
       .moat-compare { grid-template-columns: 1fr; }
-      .steps, .steps-4 { grid-template-columns: repeat(2, 1fr); }
-      .engine-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: repeat(2, 1fr); }
       .install-cmd { font-size: 0.75rem; padding: 12px 16px; }
-      .hero .stack-tags { gap: 6px; }
-      .stack-tag { font-size: 0.68rem; padding: 3px 8px; }
       .forge-flow { flex-direction: column; }
       .forge-arrow { transform: rotate(90deg); }
-      .engine-cmds { gap: 8px; }
-      .engine-cmds code { font-size: 0.7rem; padding: 4px 10px; }
     }
 
     @media (max-width: 480px) {
-      .model-grid { grid-template-columns: 1fr; }
-      .steps, .steps-4 { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -985,11 +854,10 @@
 
 <nav>
   <div class="container">
-    <a href="/" class="logo">cozy<span>term</span><span class="tm">&trade;</span></a>
+    <a href="/" class="logo">engie</a>
     <div class="links">
+      <a href="#architecture">How it works</a>
       <a href="#features">Features</a>
-      <a href="#architecture">Architecture</a>
-      <a href="#engine">Engine</a>
       <a href="#forge">Forge</a>
       <a href="#install">Install</a>
       <a href="https://github.com/engindearing-projects/cozyterm" class="gh-btn" target="_blank">
@@ -1002,18 +870,18 @@
 
 <section class="hero">
   <div class="container">
-    <div class="hero-badge">v2.0 &mdash; Open Source &middot; MIT</div>
-    <h1>The AI coding agent that<br><span class="highlight">gets better the more you use it</span></h1>
-    <p class="tagline">Open-source terminal coding assistant powered by local models. Built from scratch &mdash; no third-party agent frameworks, no cloud lock-in.</p>
-    <p class="moat">Every session trains your models. Your code makes them smarter. Nobody else has this.</p>
+    <div class="hero-badge">Open Source &middot; MIT &middot; Runs 100% locally</div>
+    <h1>AI that <span class="highlight">gets better<br>the more you use it</span></h1>
+    <p class="tagline">Engie is an AI brain that powers your coding tools. Install it once &mdash; it installs <a href="https://opencode.ai" target="_blank" style="color:var(--cyan);text-decoration:none">OpenCode</a>, wires up local models, and starts learning from every session.</p>
+    <p class="moat">Every session trains your models. Your code makes them smarter. Your data never leaves your machine.</p>
 
     <div class="stack-tags">
+      <span class="stack-tag">OpenCode</span>
+      <span class="stack-tag">Ollama</span>
+      <span class="stack-tag">Forge&trade;</span>
+      <span class="stack-tag">MCP</span>
       <span class="stack-tag">Bun</span>
       <span class="stack-tag">TypeScript</span>
-      <span class="stack-tag">Ink / React</span>
-      <span class="stack-tag">Ollama</span>
-      <span class="stack-tag">LSP</span>
-      <span class="stack-tag">SQLite</span>
     </div>
 
     <div id="install" class="install-box">
@@ -1023,15 +891,8 @@
         <span class="cmd">curl -fsSL https://cozyterm.com/install.sh | bash</span>
         <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
       </div>
-      <span class="install-or">or</span>
-      <div class="install-cmd" onclick="copyInstall(this, 'brew install engindearing/tap/cozyterm')">
-        <span class="tooltip">Copied!</span>
-        <span class="prompt">$</span>
-        <span class="cmd">brew install engindearing/tap/cozyterm</span>
-        <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-      </div>
     </div>
-    <p class="install-note">Requires <a href="https://bun.sh" target="_blank">Bun</a> (auto-installed) &middot; macOS / Linux</p>
+    <p class="install-note">Installs Engie + <a href="https://opencode.ai" target="_blank">OpenCode</a> + Ollama models &middot; macOS / Linux</p>
   </div>
 </section>
 
@@ -1042,52 +903,45 @@
         <div class="terminal-dot red"></div>
         <div class="terminal-dot yellow"></div>
         <div class="terminal-dot green"></div>
-        <div class="terminal-title">cozy &mdash; ~/my-project</div>
+        <div class="terminal-title">opencode &mdash; ~/my-project &mdash; powered by engie</div>
       </div>
       <div class="terminal-body">
-
         <div class="term-banner">
-          cozy <span class="version">v2.0</span> &middot; multi-model &middot; coder
-          <span class="context-line">LSP: typescript-language-server &middot; 4 models ready &middot; Tab to switch modes</span>
+          opencode <span class="version">v1.2</span> &middot; engie/qwen2.5:7b-instruct
+          <span class="context-line">MCP: engie (14 tools) &middot; LSP: typescript &middot; Forge: 47 pairs today</span>
         </div>
-
         <div class="term-chat">
           <div class="chat-bubble user">
             <div class="chat-role">you &gt;</div>
             <div class="chat-text">the login form doesn't validate email format, can you fix it?</div>
           </div>
-
           <div class="tool-call">
-            <span class="tool-name">[glob]</span> <span class="tool-detail">src/components/Login*.tsx</span>
+            <span class="tool-name">[glob]</span> src/components/Login*.tsx
           </div>
           <div class="tool-call">
-            <span class="tool-name">[read]</span> <span class="tool-detail">src/components/LoginForm.tsx</span>
+            <span class="tool-name">[read]</span> src/components/LoginForm.tsx
           </div>
           <div class="tool-call">
-            <span class="tool-name">[edit]</span> <span class="tool-detail">src/components/LoginForm.tsx +42</span>
+            <span class="tool-name">[edit]</span> src/components/LoginForm.tsx +42
           </div>
-
           <div class="chat-bubble assistant">
-            <div class="chat-role">cozy</div>
+            <div class="chat-role">engie</div>
             <div class="chat-text">
-              Added email validation to <code>LoginForm.tsx</code>. The <code>handleSubmit</code> function now checks format before calling the API. LSP confirms zero errors.
+              Added email validation to <code>LoginForm.tsx</code>. The <code>handleSubmit</code> function now checks format before calling the API. LSP confirms zero errors. <em style="color:var(--text-dim)">(session logged to Forge)</em>
             </div>
           </div>
         </div>
-
         <div class="term-status-bar">
-          <span><span class="dot on"></span>ollama</span>
-          <span class="model-tag">orchestrator: qwen2.5</span>
-          <span class="model-tag">coder: engie-coder</span>
+          <span><span class="dot on"></span>engie brain</span>
+          <span class="model-tag">model: qwen2.5:7b</span>
+          <span class="model-tag">forge: training</span>
           <span class="session">turn 1 &middot; 847 tokens</span>
         </div>
-
         <div class="term-input">
-          <span class="prompt-sign">cozy &gt;</span>
-          <span class="input-placeholder">Type a message or /command...</span>
+          <span class="prompt-sign">&gt;</span>
+          <span class="input-placeholder">ask anything...</span>
           <span class="input-cursor"></span>
         </div>
-
       </div>
     </div>
   </div>
@@ -1095,9 +949,9 @@
 
 <section class="moat-callout">
   <div class="container">
-    <h2>The only coding agent that <span class="highlight">learns from you</span></h2>
-    <p>Other AI coding tools ship a frozen model. You use it, they get your data, and the model never changes. <span class="emphasis">CozyTerm is different.</span></p>
-    <p>The Forge pipeline captures every coding session as training data, fine-tunes your local models, and deploys them back &mdash; automatically. The more you code, the better your agent gets. <span class="emphasis">Your data stays on your machine. Your models improve for you.</span></p>
+    <h2>The only AI that <span class="highlight">learns from you</span></h2>
+    <p>Other AI coding tools ship a frozen model. You use it, they get your data, the model never changes. <span class="emphasis">Engie is different.</span></p>
+    <p>The Forge&trade; pipeline captures every coding session as training data, fine-tunes your local models, and deploys them back &mdash; automatically. The more you code, the better your AI gets. <span class="emphasis">Your data stays on your machine. Your models improve for you.</span></p>
 
     <div class="moat-compare">
       <div class="moat-col them">
@@ -1107,17 +961,17 @@
           <li>Cloud API dependency</li>
           <li>Your code sent to third parties</li>
           <li>Generic, one-size-fits-all</li>
-          <li>Built on third-party frameworks</li>
+          <li>No memory between sessions</li>
         </ul>
       </div>
       <div class="moat-col us">
-        <h4>CozyTerm&trade;</h4>
+        <h4>Engie</h4>
         <ul>
           <li>Models that learn your patterns</li>
           <li>Runs 100% locally via Ollama</li>
           <li>Your code never leaves your machine</li>
           <li>Adapts to your codebase and style</li>
-          <li>Built from scratch, no dependencies on agent frameworks</li>
+          <li>Persistent memory across all platforms</li>
         </ul>
       </div>
     </div>
@@ -1126,62 +980,71 @@
 
 <section class="architecture" id="architecture">
   <div class="container">
-    <h2>Multi-model architecture</h2>
-    <p class="subtitle">Each task is routed to a specialist model. The orchestrator handles tool calling while domain experts handle the rest.</p>
-    <div class="model-grid">
-      <div class="model-card">
-        <div class="model-role">Orchestrator</div>
-        <div class="model-name">qwen2.5:7b</div>
-        <div class="model-desc">Tool calling and agent loop. Drives the read-edit-verify cycle.</div>
+    <h2>How Engie works</h2>
+    <p class="subtitle">Engie is the brain. OpenCode is the hands. Together they form a self-improving coding system that runs entirely on your machine.</p>
+
+    <div class="arch-diagram">
+      <div class="arch-brain">
+        <h3>Engie Brain</h3>
+        <p>Always-on AI that remembers everything, trains on every session, and gets smarter over time.</p>
+        <div class="brain-features">
+          <div><span>~</span> Persistent memory (SQLite + FTS5)</div>
+          <div><span>~</span> Multi-model routing</div>
+          <div><span>~</span> Forge training pipeline</div>
+          <div><span>~</span> Activity sync across platforms</div>
+          <div><span>~</span> Autonomous background agents</div>
+          <div><span>~</span> Scheduled tasks (cron)</div>
+        </div>
       </div>
-      <div class="model-card">
-        <div class="model-role">Coder</div>
-        <div class="model-name">engie-coder</div>
-        <div class="model-desc">Code generation and editing. Fine-tuned on real coding sessions via Forge.</div>
-      </div>
-      <div class="model-card">
-        <div class="model-role">Reasoner</div>
-        <div class="model-name">glm-4.7-flash</div>
-        <div class="model-desc">Deep analysis, planning, debugging. The thinking model.</div>
-      </div>
-      <div class="model-card">
-        <div class="model-role">Chat</div>
-        <div class="model-name">llama3.2</div>
-        <div class="model-desc">Conversation and quick answers. Fast context lookup.</div>
+
+      <div class="arch-interfaces">
+        <div class="arch-interface">
+          <h4>OpenCode <span class="tag tag-green">coding</span></h4>
+          <p>Terminal coding agent by the Charm team. Engie installs it, configures your local models as the provider, and connects via MCP so every tool call, file edit, and session is synced to the brain.</p>
+        </div>
+        <div class="arch-interface">
+          <h4>Telegram / Slack <span class="tag tag-purple">channels</span></h4>
+          <p>Get notifications, morning briefs, PR summaries, and training reports. Ask Engie questions from your phone. All conversations feed back into model training.</p>
+        </div>
+        <div class="arch-interface">
+          <h4>MCP Bridge <span class="tag tag-cyan">14 tools</span></h4>
+          <p>Engie exposes 14 MCP tools: memory search, observations, system status, smart routing, and more. Any MCP-compatible client can connect to the brain.</p>
+        </div>
       </div>
     </div>
-    <p class="arch-note">All models run locally via Ollama. Swap any model in <code>.cozyterm.json</code>. Falls back to Anthropic API when Ollama is unavailable.</p>
+
+    <p class="arch-note">All models run locally via <a href="https://ollama.com" target="_blank" style="color:var(--accent);text-decoration:none">Ollama</a>. Swap models in <code>opencode.json</code>. Falls back to cloud APIs when local models are unavailable.</p>
   </div>
 </section>
 
 <section class="features" id="features">
   <div class="container">
-    <h2>Features</h2>
-    <p class="subtitle">Everything you need to code faster from the terminal.</p>
+    <h2>What you get</h2>
+    <p class="subtitle">One install. Two powerful tools. Self-improving models.</p>
     <div class="feature-grid">
       <div class="feature-card">
-        <h3><span class="icon" style="color:var(--accent)">&#9881;</span> 8 built-in tools</h3>
-        <p>Read, write, edit, bash, glob, grep, undo, and diagnostics. The agent reads your code, makes changes, runs commands, and self-corrects when LSP reports errors.</p>
+        <h3>OpenCode integration</h3>
+        <p>The installer sets up OpenCode with your local Ollama models as the provider and Engie as an MCP server. OpenCode handles the coding; Engie handles the learning.</p>
       </div>
       <div class="feature-card">
-        <h3><span class="icon" style="color:var(--green)">&#9889;</span> LSP integration</h3>
-        <p>Auto-detects TypeScript, Python, Go, and Rust. After each edit, the agent checks for diagnostics and fixes its own mistakes before you see them.</p>
+        <h3>Self-improving models</h3>
+        <p>Every coding session generates training data. Forge fine-tunes your local models and deploys better versions. Version 1 was good. Version 15 knows your codebase.</p>
       </div>
       <div class="feature-card">
-        <h3><span class="icon" style="color:var(--highlight)">&#128274;</span> Permission system</h3>
-        <p>Interactive prompts for risky tools. Allow once, always, or deny forever. Persistent rules saved locally. Or <code>--yes</code> to skip.</p>
+        <h3>Persistent memory</h3>
+        <p>SQLite + full-text search. Engie remembers your decisions, blockers, preferences, and project context. Search across sessions with <code>engie_memory_search</code>.</p>
       </div>
       <div class="feature-card">
-        <h3><span class="icon" style="color:var(--purple)">&#128268;</span> MCP support</h3>
-        <p>Connect external tools via Model Context Protocol. Define servers in <code>.cozyterm.json</code> and the agent discovers their tools at startup.</p>
+        <h3>Cross-platform sync</h3>
+        <p>Code in OpenCode, check in from Telegram, review on Slack. All activity syncs through the brain. One unified timeline of everything you're doing.</p>
       </div>
       <div class="feature-card">
-        <h3><span class="icon" style="color:var(--cyan)">&#127912;</span> Themes</h3>
-        <p>Three built-in themes: cozyterm (warm amber), dracula, and tokyonight. Switch with <code>--theme</code> or set in config.</p>
+        <h3>14 MCP tools</h3>
+        <p>Memory search, observations, chat routing, system status, session management, and more. Any MCP client connects to the full brain. Not just OpenCode.</p>
       </div>
       <div class="feature-card">
-        <h3><span class="icon" style="color:var(--accent)">&#128203;</span> Custom commands</h3>
-        <p>Create reusable prompts as markdown files in <code>.cozyterm/commands/</code>. Run them with <code>/review</code>, <code>/test</code>, or any name you choose.</p>
+        <h3>100% private</h3>
+        <p>Models run on your machine via Ollama. Training happens locally. No data leaves your network. No API keys required for local operation. Your code, your models.</p>
       </div>
     </div>
   </div>
@@ -1189,17 +1052,17 @@
 
 <section class="forge" id="forge">
   <div class="container">
-    <h2>Forge&trade;: self-improving models</h2>
-    <p class="subtitle">Every coding session generates training data. Forge collects, trains, and deploys better model versions automatically. This is the CozyTerm moat &mdash; the more you use it, the smarter it gets.</p>
+    <h2>Forge&trade;: the training loop</h2>
+    <p class="subtitle">This is the moat. Every coding session feeds the pipeline. Your models get better automatically. Nobody else has this.</p>
     <div class="forge-flow">
       <div class="forge-step">
         <div class="label">Collect</div>
-        <div class="desc">Capture every interaction as JSONL training pairs</div>
+        <div class="desc">Every OpenCode session saved as JSONL training pairs</div>
       </div>
       <span class="forge-arrow">&rarr;</span>
       <div class="forge-step">
         <div class="label">Prepare</div>
-        <div class="desc">Deduplicate, format, split train/valid</div>
+        <div class="desc">Deduplicate, filter, split train/valid</div>
       </div>
       <span class="forge-arrow">&rarr;</span>
       <div class="forge-step">
@@ -1209,7 +1072,7 @@
       <span class="forge-arrow">&rarr;</span>
       <div class="forge-step">
         <div class="label">Deploy</div>
-        <div class="desc">Quantize, register, and hot-swap in Ollama</div>
+        <div class="desc">Quantize and hot-swap in Ollama</div>
       </div>
       <span class="forge-arrow">&rarr;</span>
       <div class="forge-step">
@@ -1217,77 +1080,39 @@
         <div class="desc">Benchmark against previous versions</div>
       </div>
     </div>
-    <p class="forge-note">Manage the pipeline with <code>cozy forge status</code>, <code>cozy forge train</code>, <code>cozy forge eval</code>, <code>cozy forge rollback</code></p>
+    <p class="forge-note">Manage with <code>engie forge status</code>, <code>engie forge train</code>, <code>engie forge eval</code>, <code>engie forge rollback</code></p>
   </div>
 </section>
 
 <section class="how-it-works">
   <div class="container">
-    <h2>Get started in 4 steps</h2>
-    <div class="steps steps-4">
+    <h2>Get started in 3 steps</h2>
+    <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
         <h3>Install</h3>
-        <p>One command. The installer handles Bun, clones the repo, and puts <code>cozy</code> in your PATH.</p>
+        <p>One command installs Engie, OpenCode, and wires them together. Pulls recommended Ollama models automatically.</p>
         <code class="step-cmd">curl -fsSL cozyterm.com/install.sh | bash</code>
       </div>
       <div class="step">
         <div class="step-num">2</div>
-        <h3>Pull models</h3>
-        <p>Install <a href="https://ollama.com" style="color:var(--accent);text-decoration:none">Ollama</a>, then pull the models you want to run locally.</p>
-        <code class="step-cmd">ollama pull qwen2.5:7b-instruct</code>
+        <h3>Code</h3>
+        <p>Open any project and run <code>opencode</code>. It's already configured with your local models and connected to the Engie brain.</p>
+        <code class="step-cmd">cd my-project && opencode</code>
       </div>
       <div class="step">
         <div class="step-num">3</div>
-        <h3>Start the engine</h3>
-        <p>The always-on brain. It watches your repos, runs tasks autonomously, creates PRs, and sends you notifications.</p>
-        <code class="step-cmd">cozy engine install && cozy engine start</code>
+        <h3>Watch it learn</h3>
+        <p>After a few sessions, run Forge to train. Your model improves. Keep coding. Keep training. The loop never stops.</p>
+        <code class="step-cmd">engie forge train</code>
       </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <h3>Code</h3>
-        <p><code>cozy</code> for the interactive TUI. <code>cozy "fix the bug"</code> for one-shot. Both feed training data to Forge.</p>
-        <code class="step-cmd">cozy</code>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="engine-section" id="engine">
-  <div class="container">
-    <h2>The engine: your always-on brain</h2>
-    <p class="subtitle">CozyTerm isn't just a tool you open and close. The engine runs in the background &mdash; watching, learning, acting. It creates PRs while you sleep and gets smarter with every session.</p>
-    <div class="engine-grid">
-      <div class="engine-card">
-        <h3>Autonomous agents</h3>
-        <p>The engine can spin up coding agents on its own. It notices failing CI, stale PRs, open issues &mdash; fixes them and opens a PR for you to review.</p>
-      </div>
-      <div class="engine-card">
-        <h3>Persistent memory</h3>
-        <p>SQLite + FTS5 full-text search. Everything the engine learns from your codebase, your conversations, and your patterns is stored locally and searchable.</p>
-      </div>
-      <div class="engine-card">
-        <h3>Channels</h3>
-        <p>Get notifications via Telegram, Slack, or webhooks. Morning briefs, PR summaries, training reports &mdash; delivered wherever you want them.</p>
-      </div>
-      <div class="engine-card">
-        <h3>Scheduled tasks</h3>
-        <p>Cron-powered jobs for nightly training runs, weekly reports, repo health checks. Runs via launchd, survives reboots.</p>
-      </div>
-    </div>
-    <div class="engine-cmds">
-      <code>cozy engine install</code>
-      <code>cozy engine start</code>
-      <code>cozy engine status</code>
-      <code>cozy engine logs</code>
-      <code>cozy engine stop</code>
     </div>
   </div>
 </section>
 
 <section class="built-from-scratch">
   <div class="container">
-    <p><strong>CozyTerm is built from scratch.</strong> No OpenClaw, no LangChain, no AutoGen, no third-party agent frameworks. The entire agent loop, tool system, provider abstraction, TUI, engine daemon, and training pipeline are original code by <a href="https://engindearing.soy" target="_blank" style="color:var(--accent)">engindearing</a>. One monorepo, four packages, zero framework lock-in.</p>
+    <p><strong>Engie is built from scratch.</strong> No LangChain, no AutoGen, no third-party agent frameworks. The training pipeline, memory system, activity sync, MCP bridge, and model serving layer are all original code by <a href="https://engindearing.soy" target="_blank" style="color:var(--accent)">engindearing</a>. OpenCode handles the coding TUI because it's already the best terminal agent out there. We focus on making your models better.</p>
   </div>
 </section>
 
@@ -1298,7 +1123,7 @@
       <a href="https://github.com/engindearing-projects/cozyterm" target="_blank">GitHub</a> &bull;
       MIT License
     </p>
-    <p class="legal">CozyTerm&trade; and Forge&trade; are trademarks of engindearing projects. All rights reserved.</p>
+    <p class="legal">Forge&trade; is a trademark of engindearing projects. OpenCode is built by <a href="https://opencode.ai" target="_blank">anomalyco</a>.</p>
   </div>
 </footer>
 
@@ -1311,7 +1136,6 @@ function copyInstall(el, text) {
 }
 
 (function() {
-  // Terminal animation
   var terminalWin = document.querySelector('.terminal-window');
   if (terminalWin) {
     var termObserver = new IntersectionObserver(function(entries) {
@@ -1325,8 +1149,7 @@ function copyInstall(el, text) {
     termObserver.observe(terminalWin);
   }
 
-  // Scroll-reveal for cards
-  var animated = document.querySelectorAll('.feature-card, .model-card, .forge-step, .engine-card');
+  var animated = document.querySelectorAll('.feature-card, .forge-step, .arch-interface');
   if (animated.length) {
     var cardObserver = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {

@@ -1,7 +1,7 @@
-// Editor component — input with ! bash shortcut and history
+// Editor component — input with history and loading state
 
 import React, { useState, useCallback } from "react";
-import { Box, Text, useInput } from "ink";
+import { Box, Text, useInput, useStdout } from "ink";
 import TextInput from "ink-text-input";
 import type { Theme } from "../themes/theme.js";
 
@@ -13,6 +13,8 @@ interface EditorProps {
 }
 
 export function Editor({ theme, onSubmit, isLoading, placeholder }: EditorProps) {
+  const { stdout } = useStdout();
+  const cols = stdout?.columns || 80;
   const [value, setValue] = useState("");
   const [history, setHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
@@ -57,6 +59,7 @@ export function Editor({ theme, onSubmit, isLoading, placeholder }: EditorProps)
       borderStyle="single"
       borderColor={isLoading ? theme.borderDim : theme.borderFocused}
       paddingX={1}
+      width={cols}
     >
       <Text color={theme.accent} bold>
         {isLoading ? "..." : ">"}{" "}

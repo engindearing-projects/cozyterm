@@ -20,6 +20,7 @@ import { MultiModelProvider, DEFAULT_ROLES } from "../src/providers/multi-model.
 import { createCoderAgent } from "../src/agents/coder.js";
 import { createPlannerAgent } from "../src/agents/planner.js";
 import { ForgeCollector } from "@cozyterm/trainer/src/collector.js";
+import { logSession, extractFilesChanged, countToolCalls } from "../src/activity/logger.js";
 import { LSPManager } from "../src/lsp/manager.js";
 import { InteractivePermissionManager } from "../src/permissions/manager.js";
 import { loadMCPTools, type MCPConfig } from "../src/mcp/client.js";
@@ -517,9 +518,12 @@ async function runOneShot(
   try {
     const result = await agent.run(prompt);
     console.log("");
-    console.log(result);
+    // Word-wrap the result to terminal width
+    const cols = process.stdout.columns || 80;
+    console.log(wordWrap(result, cols - 2));
 
     // Collect for training
+    const duration = Date.now() - startTime;
     collector.wrapRun(
       provider.name,
       provider.model,
@@ -529,12 +533,56 @@ async function runOneShot(
         : ["read_file", "edit_file", "write_file", "bash", "glob", "grep"],
       agent.history,
       agent.tokenUsage,
-      Date.now() - startTime,
+      duration,
     );
+
+    // Log to engie brain (await so process doesn't exit before it completes)
+    const { count: toolCallCount, tools: toolNames } = countToolCalls(agent.history);
+    const filesChanged = extractFilesChanged(agent.history);
+    await logSession({
+      prompt,
+      result,
+      tools: toolNames,
+      toolCalls: toolCallCount,
+      filesChanged,
+      tokenUsage: agent.tokenUsage,
+      duration,
+      provider: provider.name,
+      model: provider.model,
+      mode: planMode ? "planner" : "coder",
+      cwd,
+    });
   } catch (err) {
     console.error(chalk.red(`Error: ${(err as Error).message}`));
     process.exit(1);
   }
+}
+
+/** Wrap text at word boundaries to fit terminal width. */
+function wordWrap(text: string, maxWidth: number): string {
+  return text
+    .split("\n")
+    .map((line) => {
+      if (line.length <= maxWidth) return line;
+      // Don't break code-like lines (indented or starts with special chars)
+      if (line.startsWith("  ") || line.startsWith("```") || line.startsWith("|")) return line;
+
+      const words = line.split(" ");
+      const lines: string[] = [];
+      let current = "";
+
+      for (const word of words) {
+        if (current.length + word.length + 1 > maxWidth && current.length > 0) {
+          lines.push(current);
+          current = word;
+        } else {
+          current = current ? `${current} ${word}` : word;
+        }
+      }
+      if (current) lines.push(current);
+      return lines.join("\n");
+    })
+    .join("\n");
 }
 
 program.parse();

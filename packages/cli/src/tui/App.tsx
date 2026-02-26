@@ -10,6 +10,7 @@ import { InteractivePermissionManager, type PromptFn } from "../permissions/mana
 import { createCoderAgent } from "../agents/coder.js";
 import { createPlannerAgent } from "../agents/planner.js";
 import { ForgeCollector } from "@cozyterm/trainer/src/collector.js";
+import { logSession, extractFilesChanged, countToolCalls } from "../activity/logger.js";
 import { getTheme } from "./themes/theme.js";
 import { Chat, type ChatMessage } from "./components/Chat.js";
 import { Editor } from "./components/Editor.js";
@@ -173,6 +174,7 @@ export function App({
           { role: "assistant", content: finalMessage },
         ]);
 
+        const duration = Date.now() - startTime;
         collector.current.wrapRun(
           provider.name,
           provider.model,
@@ -180,8 +182,25 @@ export function App({
           agent.config.tools.map((t: Tool) => t.name),
           agent.history,
           usage,
-          Date.now() - startTime,
+          duration,
         );
+
+        // Log to engie brain (fire-and-forget)
+        const { count: toolCallCount, tools: toolNames } = countToolCalls(agent.history);
+        const filesChanged = extractFilesChanged(agent.history);
+        logSession({
+          prompt: text,
+          result: finalMessage,
+          tools: toolNames,
+          toolCalls: toolCallCount,
+          filesChanged,
+          tokenUsage: usage,
+          duration,
+          provider: provider.name,
+          model: provider.model,
+          mode: agentMode,
+          cwd,
+        });
       } catch (err) {
         setMessages((prev) => [
           ...prev,
@@ -194,10 +213,13 @@ export function App({
     [agentMode, provider, cwd, maxTurns, lsp, mcpTools],
   );
 
-  const chatHeight = rows - 6;
+  const cols = stdout?.columns || 80;
+  // Editor border (2) + padding (2) + content (1) = ~3 lines
+  // Status bar border (2) + padding (0) + content (1) = ~3 lines
+  const chatHeight = Math.max(rows - 8, 10);
 
   return (
-    <Box flexDirection="column" height={rows}>
+    <Box flexDirection="column" height={rows} width={cols}>
       <Chat theme={theme} messages={messages} height={chatHeight} />
 
       {permPrompt ? (
