@@ -117,7 +117,7 @@ cat > "$CONFIG_DIR/opencode.json" << OCEOF
       "npm": "@ai-sdk/openai-compatible",
       "name": "Familiar (local)",
       "options": {
-        "baseURL": "http://localhost:11434/v1"
+        "baseURL": "http://localhost:11435/v1"
       },
       "models": {
         "qwen2.5:7b-instruct": {
