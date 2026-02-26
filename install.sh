@@ -120,17 +120,25 @@ cat > "$CONFIG_DIR/opencode.json" << OCEOF
         "baseURL": "http://localhost:11435/v1"
       },
       "models": {
-        "qwen2.5:7b-instruct": {
-          "name": "Qwen 2.5 7B (orchestrator)",
-          "limit": { "context": 32768, "output": 8192 }
-        },
         "familiar-coder:latest": {
-          "name": "familiar-coder (Forge-trained)",
+          "name": "Familiar Coder (Forge-trained)",
           "limit": { "context": 6144, "output": 2048 }
         },
-        "llama3.2": {
-          "name": "Llama 3.2 (chat)",
-          "limit": { "context": 131072, "output": 4096 }
+        "familiar-chat:latest": {
+          "name": "Familiar Chat (Forge-trained)",
+          "limit": { "context": 32768, "output": 8192 }
+        },
+        "familiar-reason:latest": {
+          "name": "Familiar Reason (Forge-trained)",
+          "limit": { "context": 32768, "output": 4096 }
+        },
+        "familiar-tools:latest": {
+          "name": "Familiar Tools (Forge-trained)",
+          "limit": { "context": 6144, "output": 2048 }
+        },
+        "qwen2.5:7b-instruct": {
+          "name": "Qwen 2.5 7B (stock fallback)",
+          "limit": { "context": 32768, "output": 8192 }
         }
       }
     }
